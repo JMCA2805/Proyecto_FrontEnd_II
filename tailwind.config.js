@@ -22,6 +22,10 @@ module.exports = {
           //Colores personalizados
           "white-smoke": "#f5f5f5",
           woodsmoke: "#141414",
+          azulO: "#131c53",
+          azulC: "#4d76ff",
+          azul: "#213ae1",
+          azulW: "#dbebff"
         },
         fontFamily: {
           poppins: ['Poppins', 'Arial', 'sans-serif'],
