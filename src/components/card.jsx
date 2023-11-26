@@ -41,7 +41,7 @@ function Card() {
       ) : (
         <>
          
-          <div className="grid grid-cols-5 gap-4 p-12 pt-6 md:grid-cols-3 ssm:grid-cols-2 ssm:p-4">
+          <div className="w-2/3 grid grid-cols-5 gap-4 p-12 pt-6 md:grid-cols-3 ssm:grid-cols-2 ssm:p-4">
             {items.map((item) =>
                 <div
                   key={item._id}
@@ -52,15 +52,15 @@ function Card() {
                 > 
 
 
-<div className="flex justify-between">
-  <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full" > 
+<div className="flex justify-end space-x-1">
+  <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white " > 
     <button>
-      <FaShoppingCart style={{ color: 'blue' }} />
+      <FaShoppingCart className="text-azulC dark:text-white" />
     </button>
   </div>
-  <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full">
+  <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white">
     <button>
-      <FaHeart style={{ color: 'blue' }} />
+      <FaHeart className="text-azulC dark:text-white" />
       
     </button>
    
@@ -104,12 +104,8 @@ function Card() {
                           {item.cantidad}
                         </span>
                       </div>
-                      <div className="flex text-xs">
-                        <span className="text-xs font-bold">Precio:</span>
-                        <span className="font-normal text-center ml-1  ">
-                          {item.precio}
-                        </span>
-                      </div>
+                    
+                     
                       <div className="flex text-xs">
                         <span className="text-xs font-bold">Categoria:</span>
                         <span className="font-normal text-center ml-1 ">
@@ -118,10 +114,16 @@ function Card() {
                       </div>
                     </div>
                   </div>
-                 <div>
-                 <button type="button" className="w-auto text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                 <div className="flex justify-between">
+                  <div> <span className="font-bold text-2xl mb-2">
+                          ${item.precio}
+                        </span></div>
+                    <div>
+                    <button type="button" className="w-auto text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 dark:text-white">
                  Comprar<FaCreditCard />
 </button>
+                    </div>
+               
                  </div>
                    
           
