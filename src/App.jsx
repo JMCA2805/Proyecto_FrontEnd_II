@@ -5,6 +5,8 @@ import Home from "./components/Home"
 import Login from "./components/Login"
 import Registro from "./components/Registro"
 import Card from "./components/card";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
@@ -12,13 +14,18 @@ function App() {
       <AuthProvider>
         <DarkModeGlobal>
           <BrowserRouter>
-            {/* <Header /> */}
+            <Header />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Registro" element={<Registro />} />
               <Route path="/Card" element={<Card />} />
-
+              <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+                <Route
+                  path="/Admin"
+                  element={<Home />}
+                />
+              </Route>
             </Routes>
             {/* <Footer /> */}
           </BrowserRouter>
