@@ -26,6 +26,11 @@ function AddOff({ openModal, handleModalSet, handleUp }) {
     // Verificar que los campos obligatorios no estén vacíos
     if (!oferta || !descripcion || !icono) {
       console.log("Por favor, completa todos los campos.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Por favor, completa todos los campos.",
+      }).then({});
       return;
     }
 
