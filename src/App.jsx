@@ -1,8 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthProvider from "./contexts/AuthProvider";
 import DarkModeGlobal from "./contexts/DarkModeProvider";
-import Home from "./components/Home";
+import Home from "./components/Home"
+import Login from "./components/Login"
+import Registro from "./components/Registro"
+import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
+
 function App() {
   return (
     <>
@@ -12,6 +16,17 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/Login" element={<Login />} />
+              <Route path="/Registro" element={<Registro />} />
+
+              <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+                <Route
+                  path="/Admin"
+                  element={<Home />}
+                />
+              </Route>
+
+
             </Routes>
             {/* <Footer /> */}
           </BrowserRouter>
