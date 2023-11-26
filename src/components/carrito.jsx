@@ -35,10 +35,11 @@ const Carrito = () => {
     }
   }, [cartItems]);
 
-  const handleQuantityChange = (itemId, event) => {
+  const handleQuantityChange = (itemserial, event) => {
+    const { value } = event.target;
     const newCartItems = cartItems.map(item => {
-      if (item.id === itemId) {
-        return { ...item, quantity: parseInt(event.target.value) };
+      if (item.serial === itemserial) {
+        return { ...item, quantity: parseInt(value) };
       }
       return item;
     });
@@ -49,7 +50,7 @@ const Carrito = () => {
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">Carrito de compra</h2>
       {cartItems.map(item => (
-        <div key={item.id} className="mb-4">
+        <div key={item.serial} className="mb-4">
           <h4 className="text-lg font-bold">{item.nombre}</h4>
           <p>{item.descripcion}</p>
           <p>Precio: ${item.precio}</p>
@@ -57,7 +58,7 @@ const Carrito = () => {
             type="number"
             min="1"
             value={item.quantity || 1}
-            onChange={event => handleQuantityChange(item.id, event)}
+            onChange={event => handleQuantityChange(item.serial, event)}
             className="border border-gray-400 rounded px-2 py-1 mt-2"
           />
         </div>
