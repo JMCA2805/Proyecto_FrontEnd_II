@@ -1,5 +1,5 @@
 import { useMatch, useNavigate } from "react-router-dom";
-import React , {useState, useEffect} from "react";
+import React,{useState, useEffect} from "react";
 import { FaHeart, FaShoppingCart, FaCreditCard } from 'react-icons/fa';
 import imagen1 from "/001.png";
 import { Link, useLocation } from "react-router-dom";
