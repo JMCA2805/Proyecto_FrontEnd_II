@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import CrearArticulo from "./CrearArticulo";
+import AddArt from "./Modal/AddArt"
 
 const API = import.meta.env.VITE_GETART_URL;
 const APIDELETE = import.meta.env.VITE_DELETEART_URL
@@ -12,7 +12,14 @@ const ArticuloTable = () => {
   const [articuloSeleccionado, setArticuloSeleccionado] = useState(null);
   const [datosActualizados, setDatosActualizados] = useState({});
   const [imagen, setImagen] = useState('');
-  const [mostrarCrearArticulo, setMostrarCrearArticulo] = useState(false);
+
+
+
+  const [up, setUp] = useState(true);
+  const handleUp = () => setUp(!up);
+
+  const [openModal, setOpenModal] = useState(false);
+  const handleModalSet = () => setOpenModal(!openModal);
 
 
   useEffect(() => {
@@ -27,7 +34,6 @@ const ArticuloTable = () => {
         console.log(error);
       });
   }, []);
-  
   
   
 
@@ -49,11 +55,6 @@ const ArticuloTable = () => {
     formData.append("tituloviejo", articuloSeleccionado.titulo);
     formData.append("texto", datosActualizados.texto);
     formData.append("imagen", imagen);
-
-
-    
-
-
 
     axios
       .put(APIEDIT, formData)
@@ -144,16 +145,21 @@ const ArticuloTable = () => {
       }
     });
   };
-
-  const abrirModalCrearArticulo = () => {
-    setMostrarCrearArticulo(true);
-  };
-
-  const cerrarModalCrearArticulo = () => {
-    setMostrarCrearArticulo(false);
-  };
-
   return (
+    <>
+<AddArt
+        openModal={openModal}
+        handleModalSet={handleModalSet}
+        handleUp={handleUp}
+      />
+      <div className="w-full flex justify-end items-end  px-4 sm:px-28 mt-4">
+        <button
+          className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
+          onClick={handleModalSet}
+        >
+          Agregar un artículo
+        </button>
+      </div>
     <div className="font-[Barlow] mb-8">
   <div className="bg-azulC dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-8 border dark:border-azulC border-azulO">
     <h2 className="text-white text-3xl font-bold text-center">Lista de Artículos</h2>
@@ -279,26 +285,11 @@ const ArticuloTable = () => {
     </form>
   </div>
 )}
-      <button
-  onClick={abrirModalCrearArticulo}
-  className="bg-azulO hover:bg-azulW hover:text-black dark:bg-azulC text-white font-bold py-2 px-4 rounded mt-4"
-  style={{ display: mostrarCrearArticulo ? 'none' : 'block' }}
->
-  Crear Artículo
-</button>
-                      {mostrarCrearArticulo && (
-        <div>
-          <CrearArticulo />
-          <button
-            onClick={cerrarModalCrearArticulo}
-            className="bg-azulO hover:bg-azulW hover:text-black dark:bg-azulC text-white font-bold py-2 px-4 rounded mt-4"
-          >
-            Cerrar Creador de Artículos
-          </button>
-        </div>
-      )}
     </div>
-  );
-};
+
+    </>
+    )
+                      }
+    
 
 export default ArticuloTable;

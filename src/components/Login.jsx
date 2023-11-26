@@ -75,16 +75,16 @@ const Login = () => {
     >
       <img className="h-40 inline " src="./logo.png" alt="" />
     </a>
-    <div className="w-full bg-azulW rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-azulO dark:border-azulC">
+    <div className="w-full bg-azulC rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-azulO dark:border-azulC">
       <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-        <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl">
+        <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl">
           Accede a tu cuenta
         </h1>
         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-black"
+              className="block mb-2 text-sm font-medium text-white"
             >
               Correo Electrónico
             </label>
@@ -102,7 +102,7 @@ const Login = () => {
           <div>
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-black"
+              className="block mb-2 text-sm font-medium text-white"
             >
               Contraseña
             </label>
@@ -120,18 +120,18 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full rounded-lg py-3.5 font-semibold text-center border-b-4 dark:border-azulC border-azulO hover:bg-azulO/50 dark:hover:bg-azulC/70 focus-within:bg-azulO text-white bg-azulO/30 dark:bg-azulW"
+            className="w-full rounded-lg py-3.5 font-semibold text-center border-b-4 dark:border-azulC border-azulO hover:bg-azulO/50 dark:hover:bg-azulC/70 focus-within:bg-azulO text-white bg-azulO/30 dark:bg-azulC"
           >
             Ingresar
           </button>
         </form>
       </div>
-      <div className="flex items-center justify-center p-4 bg-azulW border-t dark:bg-azulO dark:border-azulC/50 border-azulO">
-        <span className="text-sm text-black">
+      <div className="flex items-center justify-center p-4 bg-azulC border-t dark:bg-azulO dark:border-azulC/50 border-azulO">
+        <span className="text-sm text-white">
           ¿No tienes una cuenta?{" "}
           <Link
             to="/Registro"
-            className="text-black font-bold hover:text-azulO/80"
+            className="text-white font-bold hover:text-azulW "
           >
             Registro
           </Link>
