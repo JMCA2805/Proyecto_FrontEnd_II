@@ -8,6 +8,7 @@ import Card from "./components/card";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Payment from "./components/Payment"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Registro" element={<Registro />} />
               <Route path="/Card" element={<Card />} />
+              <Route path="/Payment" element={<Payment />} />
               <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
                 <Route
                   path="/Admin"
