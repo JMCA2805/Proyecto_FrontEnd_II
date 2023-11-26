@@ -11,6 +11,7 @@ import Payment from "./components/Payment";
 import CartButton from "./components/cartButton";
 import HeroBlog from "./components/Blog/HeroBlog"
 import TablaArt from "./components/Admin/TablaArt"
+import Profile from "./components/Profile"
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
              
 
               <Route path="/Registro" element={<Registro />} />
+              <Route path="/Profile" element={<Profile />} />
+
               <Route path="/Payment" element={<Payment />} />
               <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
                 <Route
