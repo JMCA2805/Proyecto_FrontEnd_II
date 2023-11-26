@@ -23,7 +23,54 @@ const UserTable = () => {
       });
   }, []);
 
-  
+  const editarUsuario = (usuario) => {
+    setUsuarioSeleccionado(usuario);
+    setDatosActualizados({ ...usuario });
+  };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setDatosActualizados({ ...datosActualizados, [name]: value });
+  };
+
+  const actualizarUsuario = (event) => {
+    event.preventDefault(); // Evita que la página se reinicie por defecto
+
+    axios
+      .put(APIEDIT, {
+        correo: usuarioSeleccionado.correo,
+        datosActualizados,
+      })
+      .then((response) => {
+        const usuariosActualizados = users.map((usuario) => {
+          if (usuario.correo === usuarioSeleccionado.correo) {
+            return { ...usuario, ...datosActualizados };
+          }
+          return usuario;
+        });
+        setUsers(usuariosActualizados);
+
+        setUsuarioSeleccionado(null);
+        setDatosActualizados({});
+
+        // Mensaje de confirmación
+        Swal.fire({
+          icon: "success",
+          title: "Usuario actualizado",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el usuario:", error);
+
+        // Mensaje de error
+        Swal.fire({
+          icon: "error",
+          title: "Error al actualizar el usuario",
+          text: "Ocurrió un error al actualizar los datos del usuario. Por favor, inténtalo nuevamente.",
+        });
+      });
+  };
 
   const eliminarUsuario = (correo) => {
     // Mostrar confirmación con SweetAlert
