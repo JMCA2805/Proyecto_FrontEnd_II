@@ -1,9 +1,24 @@
 import { useMatch, useNavigate } from "react-router-dom";
+import React , {useState, useEffect} from "react";
 import { FaHeart, FaShoppingCart, FaCreditCard } from 'react-icons/fa';
 import imagen1 from "/001.png";
 import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 function Card() {
-   const items = [
+   const API = import.meta.env.VITE_BACKEND_URL;
+   const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    axios.get(API)
+      .then(response => {
+        setItems(response.data);
+      })
+      .catch(error => {
+        console.error('Hubo un error!', error);
+      });
+  }, []);
+   const items1 = [
       {
          "_id": "1",
          "serial": "25485140005",
@@ -25,6 +40,8 @@ function Card() {
          "imagen": imagen1
       }
    ];
+
+
    const location = useLocation();
    const navigate = useNavigate();
    const handleOpenCreate = () => {
