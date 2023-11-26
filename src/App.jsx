@@ -14,7 +14,8 @@ import TablaArt from "./components/Admin/TablaArt"
 import Profile from "./components/Profile"
 import TablaOffers from "./components/Admin/Tablaoffers";
 import Carrito from "./components/carrito"
-
+import Card from "./components/card"
+import CrearProduct from "./components/CrearProduct"
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
               <Route path="/Registro" element={<Registro />} />
               <Route path="/Profile" element={<Profile />} />
               <Route path="/carrito" element={<Carrito />} />
+              <Route path="/Card" element={<Card />} />
+              <Route path="/CrearP" element={<CrearProduct />} />
               <Route path="/Payment" element={<Payment />} />
               <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
                 <Route
