@@ -9,7 +9,7 @@ const API = import.meta.env.VITE_USERS_URL
 const CartButton = () => {
 
   const [selectedProductsCount, setSelectedProductsCount] = useState(0);
-  const { user } = useContext(AuthContext);
+  const { user, loggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchCartProductsCount = async () => {
@@ -29,9 +29,11 @@ const CartButton = () => {
     }
   }, [user.id]);
 
-  useContext(AuthContext)
   return (
-    <Link
+    <>
+    {loggedIn && (
+    
+      <Link
       to="/carrito"
       className="fixed bottom-8 bg-azul text-white right-8 rounded-full p-3 shadow-lg z-10 p-7 hover:bg-azulC hover:shadow-xl transition-all duration-500 ease-in-out"
     >
@@ -42,6 +44,10 @@ const CartButton = () => {
         </span>
       )}
     </Link>
+    
+    
+    )}
+    </>
   );
 };
 
