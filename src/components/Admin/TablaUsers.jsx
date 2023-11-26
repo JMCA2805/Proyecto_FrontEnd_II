@@ -23,7 +23,52 @@ const UserTable = () => {
       });
   }, []);
 
+  
 
+  const eliminarUsuario = (correo) => {
+    // Mostrar confirmación con SweetAlert
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará al usuario. ¿Deseas continuar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        axios
+          .delete(APIDELETE, { data: { correo: correo } })
+          .then((response) => {
+            // Filtra los usuarios y excluye al usuario eliminado
+            const usuariosActualizados = users.filter(
+              (usuario) => usuario.correo !== correo
+            );
+            setUsers(usuariosActualizados);
+
+            // Mensaje de confirmación
+            Swal.fire({
+              icon: "success",
+              title: "Usuario eliminado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((error) => {
+            console.error("Error al eliminar el usuario:", error);
+
+            // Mensaje de error
+            Swal.fire({
+              icon: "error",
+              title: "Error al eliminar el usuario",
+              text: "Ocurrió un error al eliminar el usuario. Por favor, inténtalo nuevamente.",
+            });
+          });
+      }
+    });
+  };
 
   return (
     <div className="font-[Barlow] mb-8">
