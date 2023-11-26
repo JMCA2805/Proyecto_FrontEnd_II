@@ -1,70 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from "../contexts/AuthProvider";
 
 const API = import.meta.env.VITE_PAYMENT_URL;
 
 const PaymentForm = () => {
-  const [clientData, setClientData] = useState({
-    nombre: '',
-    apellido: '',
-    cedula: '',
-    telefono: '',
-    direccion: ''
-  });
 
-  const [productData, setProductData] = useState({
-    nombreProducto: '',
-    cantidad: '',
-    precio: ''
-  });
+    const { user } = useContext(AuthContext)
 
-  const [paymentData, setPaymentData] = useState({
-    numeroTarjeta: '',
-    fechaVencimiento: '',
-    cvc: ''
-  });
+    const [clientData, setClientData] = useState({
+        id: user.id,
+        nombre: '',
+        apellido: '',
+        cedula: '',
+        telefono: '',
+        direccion: '',
+        correo: ''
+    });
 
-  const handleClientDataChange = e => {
-    const { name, value } = e.target;
-    setClientData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
+    const [productData, setProductData] = useState({
+        nombreProducto: '',
+        cantidad: '',
+        precio: ''
+    });
 
-  const handlePurchaseDataChange = e => {
-    const { name, value } = e.target;
-    setProductData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
+    const [paymentData, setPaymentData] = useState({
+        numeroTarjeta: '',
+        fechaVencimiento: '',
+        cvc: ''
+    });
 
-  const handlePaymentDataChange = e => {
-    const { name, value } = e.target;
-    setPaymentData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    const data = {
-      clientData,
-      productData,
-      paymentData
+    const handleClientDataChange = e => {
+        const { name, value } = e.target;
+        setClientData(prevData => ({
+        ...prevData,
+        [name]: value
+        }));
     };
 
-    axios.post(API, data)
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
+    const handlePurchaseDataChange = e => {
+        const { name, value } = e.target;
+        setProductData(prevData => ({
+        ...prevData,
+        [name]: value
+        }));
+    };
+
+    const handlePaymentDataChange = e => {
+        const { name, value } = e.target;
+        setPaymentData(prevData => ({
+        ...prevData,
+        [name]: value
+        }));
+    };
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        const data = {
+        clientData,
+        productData,
+        paymentData
+        };
+
+        axios.post(API, data)
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white-smokeshadow">
@@ -99,6 +105,18 @@ const PaymentForm = () => {
           className="w-full p-2 border border-gray-300 rounded"
         />
       </div>
+      
+      <div className="mb-4">
+        <label className="block font-bold mb-1">Correo:</label>
+        <input
+          type="email"
+          name="correo"
+          value={clientData.correo}
+          onChange={handleClientDataChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
       <div className="mb-4">
         <label className="block font-bold mb-1">Teléfono:</label>
         <input
@@ -134,7 +152,7 @@ const PaymentForm = () => {
       <div className="mb-4">
         <label className="block font-bold mb-1">Cantidad:</label>
         <input
-          type="text"
+          type="number"
           name="cantidad"
           value={productData.cantidad}
           onChange={handlePurchaseDataChange}
@@ -144,7 +162,7 @@ const PaymentForm = () => {
       <div className="mb-4">
         <label className="block font-bold mb-1">Precio:</label>
         <input
-          type="text"
+          type="number"
           name="precio"
           value={productData.precio}
           onChange={handlePurchaseDataChange}
@@ -157,7 +175,7 @@ const PaymentForm = () => {
         <div className="mb-4">
             <label className="block font-bold mb-1 text-white">Número de tarjeta:</label>
             <input
-            type="text"
+            type="number"
             name="numeroTarjeta"
             value={paymentData.numeroTarjeta}
             onChange={handlePaymentDataChange}
@@ -180,7 +198,7 @@ const PaymentForm = () => {
             <div className="w-1/2 ml-2">
             <label className="block font-bold mb-1 text-white">CVC:</label>
             <input
-                type="text"
+                type="number"
                 name="cvc"
                 value={paymentData.cvc}
                 onChange={handlePaymentDataChange}
