@@ -38,13 +38,13 @@ function Header() {
 
   return (
     // Barra de navegacion
-    <nav className="bg-white dark:bg-black">
+    <nav className="bg-azulC dark:bg-black">
       <div className="w-full flex items-center justify-center h-16 px-4 shadow-lg font-poppins dark:border-b dark:border-azul/80">
         <div className="w-full">
           {/* Logo */}
           <Link
             to={"/"}
-            className="flex font-extrabold text-azulO dark:text-azulW md:text-2xl text-md"
+            className="flex font-extrabold text-white dark:text-azulW md:text-2xl text-md"
           >
             <div className="flex justify-center items-center">
               <img

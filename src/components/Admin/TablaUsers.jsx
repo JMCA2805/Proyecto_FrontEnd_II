@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import CrearArticulo from "./Modal/AddArt";
-
 const API = import.meta.env.VITE_USERS_URL;
 const APIEDIT = import.meta.env.VITE_EDIT_URL;
 const APIDELETE = import.meta.env.VITE_ELIMINARUSUARIO_URL;
@@ -25,99 +23,7 @@ const UserTable = () => {
       });
   }, []);
 
-  const editarUsuario = (usuario) => {
-    setUsuarioSeleccionado(usuario);
-    setDatosActualizados({ ...usuario });
-  };
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setDatosActualizados({ ...datosActualizados, [name]: value });
-  };
 
-  const actualizarUsuario = (event) => {
-    event.preventDefault(); // Evita que la página se reinicie por defecto
-
-    axios
-      .put(APIEDIT, {
-        correo: usuarioSeleccionado.correo,
-        datosActualizados,
-      })
-      .then((response) => {
-        const usuariosActualizados = users.map((usuario) => {
-          if (usuario.correo === usuarioSeleccionado.correo) {
-            return { ...usuario, ...datosActualizados };
-          }
-          return usuario;
-        });
-        setUsers(usuariosActualizados);
-
-        setUsuarioSeleccionado(null);
-        setDatosActualizados({});
-
-        // Mensaje de confirmación
-        Swal.fire({
-          icon: "success",
-          title: "Usuario actualizado",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => {
-        console.error("Error al actualizar el usuario:", error);
-
-        // Mensaje de error
-        Swal.fire({
-          icon: "error",
-          title: "Error al actualizar el usuario",
-          text: "Ocurrió un error al actualizar los datos del usuario. Por favor, inténtalo nuevamente.",
-        });
-      });
-  };
-
-  const eliminarUsuario = (correo) => {
-    // Mostrar confirmación con SweetAlert
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Esta acción eliminará al usuario. ¿Deseas continuar?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        
-        axios
-          .delete(APIDELETE, { data: { correo: correo } })
-          .then((response) => {
-            // Filtra los usuarios y excluye al usuario eliminado
-            const usuariosActualizados = users.filter(
-              (usuario) => usuario.correo !== correo
-            );
-            setUsers(usuariosActualizados);
-
-            // Mensaje de confirmación
-            Swal.fire({
-              icon: "success",
-              title: "Usuario eliminado",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          })
-          .catch((error) => {
-            console.error("Error al eliminar el usuario:", error);
-
-            // Mensaje de error
-            Swal.fire({
-              icon: "error",
-              title: "Error al eliminar el usuario",
-              text: "Ocurrió un error al eliminar el usuario. Por favor, inténtalo nuevamente.",
-            });
-          });
-      }
-    });
-  };
 
   return (
     <div className="font-[Barlow] mb-8">

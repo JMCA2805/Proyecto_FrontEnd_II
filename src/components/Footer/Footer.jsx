@@ -9,7 +9,7 @@ const Footer = () => {
 
   return (
     <div className="mt-auto overflow-hidden">
-      <footer className="px-4 bg-white md:px-8 lg:px-10 border-t border-gray-200 dark:border-azul/80 dark:bg-black font-poppins">
+      <footer className="px-4 bg-azulC md:px-8 lg:px-10 border-t border-gray-200 dark:border-azul/80 dark:bg-black font-poppins">
         <div className="mx-auto max-w-screen-xl text-center font-bold">
           {/* Logo */}
           <a
@@ -23,11 +23,11 @@ const Footer = () => {
             />
           </a>
           {/* Descripción */}
-          <p className="mb-6 text-azulO dark:text-gray-400">
+          <p className="mb-6 text-white dark:text-gray-400">
             Tu sitio favorito de compras tecnológicas e información.
           </p>
           {/* Enlaces */}
-          <ul className="flex flex-wrap justify-center items-center mb-6 text-azulO dark:text-white space-x-4 md:space-x-6">
+          <ul className="flex flex-wrap justify-center items-center mb-6 text-white dark:text-white space-x-4 md:space-x-6">
             {/* Utilizar la clase space-x-6 */}
             <li>
               <Link to="/" className="hover:underline hover:text-azul">
@@ -72,7 +72,7 @@ const Footer = () => {
             )}
           </ul>
           {/* Derechos de autor */}
-          <span className="text-sm text-azulC sm:text-center dark:text-gray-400">
+          <span className="text-sm text-white sm:text-center dark:text-gray-400">
             Hotel Águila © 2023 All Rights Reserved
             <a href="#" className="hover:underline">
               {" "}
