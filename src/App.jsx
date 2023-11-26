@@ -12,6 +12,8 @@ import CartButton from "./components/cartButton";
 import HeroBlog from "./components/Blog/HeroBlog"
 import TablaArt from "./components/Admin/TablaArt"
 import Profile from "./components/Profile"
+import TablaOffers from "./components/Admin/Tablaoffers";
+
 
 
 function App() {
@@ -36,9 +38,10 @@ function App() {
                 <Route
                   path="/Admin"
                   element={
-                    <div>
-                      <TablaArt></TablaArt>
-                    </div>
+                    <>
+                      <TablaArt />
+                      <TablaOffers />
+                    </>
                   }
                 />
               </Route>
