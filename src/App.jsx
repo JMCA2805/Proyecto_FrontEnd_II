@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthProvider from "./contexts/AuthProvider";
 import DarkModeGlobal from "./contexts/DarkModeProvider";
-import Home from "./components/Home"
+import Landing from "./components/Landing/Landing"
 import Login from "./components/Login"
 import Registro from "./components/Registro"
 import Card from "./components/card";
@@ -17,14 +17,14 @@ function App() {
           <BrowserRouter>
             <Header />
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Landing />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Registro" element={<Registro />} />
               <Route path="/Card" element={<Card />} />
               <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
                 <Route
                   path="/Admin"
-                  element={<Home />}
+                  element={<></>}
                 />
               </Route>
             </Routes>
