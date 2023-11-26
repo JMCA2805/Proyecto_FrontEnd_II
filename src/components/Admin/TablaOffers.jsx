@@ -27,6 +27,8 @@ const TablaOffers = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const handleModalSet = () => setOpenModal(!openModal);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const handleEditModalSet = () => setOpenEditModal(!openEditModal);
 
   useEffect(() => {
     // Lógica para obtener los datos de los ofertas desde el backend
@@ -40,7 +42,7 @@ const TablaOffers = () => {
       });
   }, [up]);
 
-  const eliminarServicio = (ser) => {
+  const eliminarOferta = (off) => {
     // Mostrar confirmación con SweetAlert
     Swal.fire({
       title: "¿Estás seguro?",
@@ -56,16 +58,11 @@ const TablaOffers = () => {
         axios
           .delete(APIDELETE, {
             data: {
-              oferta: ser,
+              oferta: off,
             },
           })
           .then((response) => {
-            // Filtra los ofertas y excluye la oferta eliminada
-            const datosActualizados = ofertas.filter(
-              (oferta) => oferta.oferta !== ser
-            );
-            setOfertas(datosActualizados);
-
+            handleUp()
             // Mensaje de confirmación
             Swal.fire({
               icon: "success",
@@ -95,30 +92,40 @@ const TablaOffers = () => {
         handleModalSet={handleModalSet}
         handleUp={handleUp}
       />
-      <div className="w-full flex justify-end items-end  px-4 sm:px-28">
-        <button
-          className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
-          onClick={handleModalSet}
-        >
-          Agregar Oferta o Descuento
-        </button>
-      </div>
-      <div className="font-[Barlow] mb-8">
-        <div className="bg-azulC dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-8 border dark:border-azulC border-azulO">
-          <h2 className="text-white text-3xl font-bold text-center">
-            Lista de Ofertas y Descuentos
-          </h2>
-        </div>
-        {ofertas.length === 0 ? (
-          <div className="flex w-full justify-center items-center dark:text-white text-azulO font-bold">
-            <p>No hay ofertas disponibles.</p>
-          </div>
-        ) : (
-          <div className="w-full px-10 h-full">
-            <div className="overflow-x-auto p-8 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulW/50">
+      <EditOff
+        openEditModal={openEditModal}
+        handleEditModalSet={handleEditModalSet}
+        ofertasSeleccionado={ofertasSeleccionado}
+        setOfertaSeleccionado={setOfertaSeleccionado}
+        setDatosActualizados={setDatosActualizados}
+        handleInputChange={handleInputChange}
+        datosActualizados={datosActualizados}
+        handleUp={handleUp}
+      />
+      <div className="w-full px-10 h-full">
+        <div className="overflow-x-auto px-8 py-0 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
+          <div className="font-[Barlow] mb-8">
+            <div className="bg-azul dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-2 border dark:border-azulC border-azulO">
+              <h2 className="text-white text-3xl font-bold text-center">
+                Lista de Ofertas y Descuentos
+              </h2>
+            </div>
+            <div className="w-full flex justify-end items-end pb-2">
+              <button
+                className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
+                onClick={handleModalSet}
+              >
+                Agregar Oferta o Descuento
+              </button>
+            </div>
+            {ofertas.length === 0 ? (
+              <div className="flex w-full justify-center items-center dark:text-white text-azulO font-bold">
+                <p>No hay ofertas disponibles.</p>
+              </div>
+            ) : (
               <div className="inline-block min-w-full shadow rounded-xl overflow-hidden h-full dark:border-azulC border border-azulO">
                 <table className="min-w-full leading-normal text-xs md:text-sm text-left">
-                  <thead className="text-white bg-azulC dark:bg-azulO border-b dark:border-azulC border-azulO">
+                  <thead className="text-white bg-azul dark:bg-azulO border-b dark:border-azulC border-azulO">
                     <tr className="text-center">
                       <th
                         scope="col"
@@ -146,7 +153,7 @@ const TablaOffers = () => {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-azul/50 dark:bg-black/50 text-azulO dark:text-white">
+                  <tbody className="bg-azulW dark:bg-black/50 text-azulO dark:text-white">
                     {Array.isArray(ofertas) ? (
                       ofertas.map((oferta, index) => (
                         <tr key={index}>
@@ -169,7 +176,7 @@ const TablaOffers = () => {
                                 className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
                                 onClick={() => {
                                   editarOferta(oferta);
-                                  handleModalSet();
+                                  handleEditModalSet();
                                 }}
                               >
                                 Editar
@@ -177,7 +184,7 @@ const TablaOffers = () => {
                               <button
                                 className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
                                 onClick={() => {
-                                  eliminarServicio(oferta.oferta);
+                                  eliminarOferta(oferta.oferta);
                                 }}
                               >
                                 Borrar
@@ -200,9 +207,9 @@ const TablaOffers = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </>
   );

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import CrearArticulo from "./Modal/AddArt";
-
 const API = import.meta.env.VITE_USERS_URL;
 const APIEDIT = import.meta.env.VITE_EDIT_URL;
 const APIDELETE = import.meta.env.VITE_ELIMINARUSUARIO_URL;

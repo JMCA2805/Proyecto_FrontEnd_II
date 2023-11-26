@@ -16,6 +16,7 @@ import TablaOffers from "./components/Admin/Tablaoffers";
 import Carrito from "./components/carrito"
 import Card from "./components/card"
 import CrearProduct from "./components/CrearProduct"
+import UserTable from "./components/Admin/TablaUsers";
 
 
 function App() {
@@ -27,7 +28,9 @@ function App() {
             <Header />
             <Routes>
 
-              <Route path="/" element={<Landing />} />
+              <Route path="/" element={                    <div>
+                      <Landing></Landing>
+                    </div>} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Blog" element={ <HeroBlog />} />
              
@@ -45,6 +48,7 @@ function App() {
                     <>
                       <TablaArt />
                       <TablaOffers />
+                      <UserTable/>
                     </>
                   }
                 />

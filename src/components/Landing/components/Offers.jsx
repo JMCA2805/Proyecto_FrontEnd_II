@@ -18,8 +18,6 @@ export default function Offers() {
       .catch((error) => {
         console.log(error);
       });
-      
-      console.log(ofertas)
   };
   useEffect(() => {
     getoffers();

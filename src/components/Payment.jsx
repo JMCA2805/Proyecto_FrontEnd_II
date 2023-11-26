@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from "../contexts/AuthProvider";
 
 const API = import.meta.env.VITE_PAYMENT_URL;
+const API2 = import.meta.env.VITE_GETCARRITO_URL;
 
 const PaymentForm = () => {
 
@@ -18,11 +19,7 @@ const PaymentForm = () => {
         correo: ''
     });
 
-    const [productData, setProductData] = useState({
-        nombreProducto: '',
-        cantidad: '',
-        precio: ''
-    });
+    const [products, setProducts] = useState([]);
 
     const [paymentData, setPaymentData] = useState({
         numeroTarjeta: '',
@@ -30,17 +27,23 @@ const PaymentForm = () => {
         cvc: ''
     });
 
+    useEffect(() => {
+
+      console.log(products)
+
+      axios.get(`${API2}/${user.id}`)
+        .then(response => {
+          const products = response.data;
+          setProducts(products);
+        })
+        .catch(error => {
+          console.error('Error al obtener los productos del carrito:', error);
+        });
+    }, [API, user.id]);
+
     const handleClientDataChange = e => {
         const { name, value } = e.target;
         setClientData(prevData => ({
-        ...prevData,
-        [name]: value
-        }));
-    };
-
-    const handlePurchaseDataChange = e => {
-        const { name, value } = e.target;
-        setProductData(prevData => ({
         ...prevData,
         [name]: value
         }));
@@ -59,7 +62,7 @@ const PaymentForm = () => {
 
         const data = {
         clientData,
-        productData,
+        products,
         paymentData
         };
 
@@ -73,9 +76,10 @@ const PaymentForm = () => {
     };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white-smokeshadow">
-      <h2 className="text-xl font-bold mb-4">Datos cliente</h2>
-      <div className="mb-4">
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white-smokeshadow dark:text-white">
+    <h2 className="text-xl font-bold mb-4">Datos cliente</h2>
+    <div className="grid grid-cols-2 gap-4 mb-4">
+      <div>
         <label className="block font-bold mb-1">Nombre:</label>
         <input
           type="text"
@@ -85,7 +89,7 @@ const PaymentForm = () => {
           className="w-full p-2 border border-gray-300 rounded"
         />
       </div>
-      <div className="mb-4">
+      <div>
         <label className="block font-bold mb-1">Apellido:</label>
         <input
           type="text"
@@ -95,7 +99,9 @@ const PaymentForm = () => {
           className="w-full p-2 border border-gray-300 rounded"
         />
       </div>
-      <div className="mb-4">
+    </div>
+    <div className="grid grid-cols-2 gap-4 mb-4">
+      <div>
         <label className="block font-bold mb-1">Cedula:</label>
         <input
           type="text"
@@ -105,19 +111,7 @@ const PaymentForm = () => {
           className="w-full p-2 border border-gray-300 rounded"
         />
       </div>
-      
-      <div className="mb-4">
-        <label className="block font-bold mb-1">Correo:</label>
-        <input
-          type="email"
-          name="correo"
-          value={clientData.correo}
-          onChange={handleClientDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-      </div>
-
-      <div className="mb-4">
+      <div>
         <label className="block font-bold mb-1">Teléfono:</label>
         <input
           type="text"
@@ -127,47 +121,42 @@ const PaymentForm = () => {
           className="w-full p-2 border border-gray-300 rounded"
         />
       </div>
-      <div className="mb-4">
-        <label className="block font-bold mb-1">Dirección:</label>
-        <input
-          type="text"
-          name="direccion"
-          value={clientData.direccion}
-          onChange={handleClientDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-      </div>
+    </div>
+    <div className="mb-4">
+      <label className="block font-bold mb-1">Correo:</label>
+      <input
+        type="email"
+        name="correo"
+        value={clientData.correo}
+        onChange={handleClientDataChange}
+        className="w-full p-2 border border-gray-300 rounded"
+      />
+    </div>
+    <div className="mb-4">
+      <label className="block font-bold mb-1">Dirección:</label>
+      <input
+        type="text"
+        name="direccion"
+        value={clientData.direccion}
+        onChange={handleClientDataChange}
+        className="w-full p-2 border border-gray-300 rounded"
+      />
+    </div>
 
       <h2 className="text-xl font-bold mb-4">Datos compra</h2>
-      <div className="mb-4">
-        <label className="block font-bold mb-1">Nombre producto:</label>
-        <input
-          type="text"
-          name="nombreProducto"
-          value={productData.nombreProducto}
-          onChange={handlePurchaseDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block font-bold mb-1">Cantidad:</label>
-        <input
-          type="number"
-          name="cantidad"
-          value={productData.cantidad}
-          onChange={handlePurchaseDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block font-bold mb-1">Precio:</label>
-        <input
-          type="number"
-          name="precio"
-          value={productData.precio}
-          onChange={handlePurchaseDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
+
+      <div className="flex flex-wrap -mx-4">
+        {products.map((product, index) => (
+       <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 px-4 mb-4">
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <img alt={product.nombre} src={product.imagen} className="w-full h-48 object-contain mb-4" />
+              <h3 className="font-bold text-lg mb-2">{product.nombre}</h3>
+              <p className="text-sm text-gray-500 mb-2">{product.descripcion}</p>
+              <p className="text-lg font-bold mb-2">Precio: {product.precio}</p>
+              <p className="text-lg mb-2">Cantidad: {product.cantidad}</p>
+            </div>
+          </div>
+        ))}
       </div>
 
       <h2 className="text-xl font-bold mb-4">Datos de pago</h2>
