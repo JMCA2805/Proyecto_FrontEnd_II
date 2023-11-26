@@ -13,7 +13,7 @@ import HeroBlog from "./components/Blog/HeroBlog"
 import TablaArt from "./components/Admin/TablaArt"
 import Profile from "./components/Profile"
 import TablaOffers from "./components/Admin/Tablaoffers";
-
+import Carrito from "./components/carrito"
 
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
 
               <Route path="/Registro" element={<Registro />} />
               <Route path="/Profile" element={<Profile />} />
-
+              <Route path="/carrito" element={<Carrito />} />
               <Route path="/Payment" element={<Payment />} />
               <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
                 <Route
