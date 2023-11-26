@@ -8,6 +8,8 @@ import Card from "./components/card";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Payment from "./components/Payment";
+import CartButton from "./components/cartButton";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
               <Route path="/Login" element={<Login />} />
               <Route path="/Registro" element={<Registro />} />
               <Route path="/Card" element={<Card />} />
+              <Route path="/Payment" element={<Payment />} />
               <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
                 <Route
                   path="/Admin"
@@ -29,6 +32,7 @@ function App() {
               </Route>
             </Routes>
             <Footer />
+            <CartButton />
           </BrowserRouter>
         </DarkModeGlobal>
       </AuthProvider>
