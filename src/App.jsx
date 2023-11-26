@@ -8,7 +8,8 @@ import Card from "./components/card";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Payment from "./components/Payment"
+import Payment from "./components/Payment";
+import CartButton from "./components/cartButton";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               </Route>
             </Routes>
             <Footer />
+            <CartButton />
           </BrowserRouter>
         </DarkModeGlobal>
       </AuthProvider>
