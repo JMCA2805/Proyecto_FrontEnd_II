@@ -17,6 +17,7 @@ import Carrito from "./components/carrito";
 import Card from "./components/card";
 import CrearProduct from "./components/CrearProduct";
 import UserTable from "./components/Admin/TablaUsers";
+import TablaProductos from "./components/Admin/TablaProductos"
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
                       <TablaArt />
                       <TablaOffers />
                       <UserTable />
-                    </>
+                      <TablaProductos/>
+                                         </>
                   }
                 />
               </Route>

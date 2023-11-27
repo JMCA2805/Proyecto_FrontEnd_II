@@ -10,6 +10,11 @@ function Card() {
    const [items, setItems] = useState([]);
    const [currentPage, setCurrentPage] = useState(1);
    const [modalOpen, setModalOpen] = useState(false);
+   const [filtro, setFiltro] = useState('Nombre');
+   const [buscarText, setBuscar] = useState('');
+   const [buscarButton, setButton] = useState('Buscar');
+   const [categoria, setCategoria] = useState('Computadoras');
+
    const [selectedItem, setSelectedItem] = useState(null);
 
 
@@ -54,9 +59,82 @@ function Card() {
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  const buscarPost = async (e) => {
+    e.preventDefault();
+
+    const buscar = {
+      busqueda: buscarText,
+      nombreBoton: buscarButton,
+      filtro: filtro,
+      categoria: categoria
+    };
+
+
+    try {
+      const response = await axios.post(API, buscar);
+
+      setItems(response.data);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
  
    return (
      <>
+      <div className='pb-8'>
+            <form className='flex flex-col gap-2' method='POST' onSubmit={buscarPost}>
+
+            <label className='flex gap-2 items-center'>
+              Filtrar Por:
+              <select
+                value={filtro}
+                className="rounded-lg"
+                onChange={(e) => setFiltro(e.target.value)}
+              >
+                <option value="Nombre">Nombre</option>
+                <option value="Categoria">Categoria</option>
+              </select>
+            </label>
+            
+            <div className='flex gap-2'>
+
+            {filtro === 'Categoria' ? (
+              <select
+                value={categoria}
+                className=" w-full rounded-lg"
+                onChange={(e) => setCategoria(e.target.value)}
+              >
+                <option value="Computadoras">Computadoras</option>
+                <option value="Laptops">Laptops</option>
+                <option value="Perifericos">Periféricos</option>
+                <option value="Accesorios">Accesorios</option>
+                <option value="Telefonos">Teléfonos</option>
+              </select>
+            ) : (
+              <input
+                type="text"
+                value={buscarText}
+                className="w-full rounded-lg"
+                onChange={(e) => setBuscar(e.target.value)}
+              />
+            )}
+    
+              <button
+                  type="submit"
+                  value={buscarButton}
+                  className="group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-verdeo hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onChange={(e) => setButton(parseFloat(e.target.value))}
+                >
+                  Buscar
+                </button>
+
+            </div>
+
+
+            </form>
+        </div>
  
        {items.length === 0 ? (
          <div className="w-full h-96 flex justify-center items-center">
