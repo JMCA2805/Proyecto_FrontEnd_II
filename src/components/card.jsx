@@ -1,12 +1,18 @@
-import React,{useState, useEffect} from "react";
-import { FaHeart, FaShoppingCart, FaCreditCard } from 'react-icons/fa';
+import React,{useState, useEffect, useContext} from "react";
+import { FaHeart, FaShoppingCart, FaCheck  } from 'react-icons/fa';
 import axios from "axios";
 
 import ProductModal from './ModalProducts';
+import { AuthContext } from "../contexts/AuthProvider";
+import CartButton from "./cartButton";
+
+const API = import.meta.env.VITE_BACKEND_URL;
+
+const Card = () => {
+  const [addedToCart, setAddedToCart] = useState({});
 
 
-function Card() {
-   const API = import.meta.env.VITE_BACKEND_URL;
+   const { user } = useContext(AuthContext);
    const [items, setItems] = useState([]);
    const [currentPage, setCurrentPage] = useState(1);
    const [modalOpen, setModalOpen] = useState(false);
@@ -21,18 +27,22 @@ function Card() {
    const productsPerPage = 6;
  
    useEffect(() => {
-     axios
-       .get(API)
-       .then((response) => {
-         if (Array.isArray(response.data)) {
-           setItems(response.data);
-         } else {
-           setItems([]);
-         }
-       })
-       .catch((error) => {
-         console.error("Error:", error);
-       });
+
+      console.log(user)
+      axios
+      .get(`${API}/${user.id}`)
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setItems(response.data);
+        } else {
+          setItems([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    
+
    }, []);
  
    const indexOfLastProduct = currentPage * productsPerPage;
@@ -42,6 +52,40 @@ function Card() {
    const handleOpenCreate = () => {
      // Función para abrir el formulario de creación
    };
+
+   const handleAddToCart = async (serial, nombre, descripcion, precio) => {
+    try {
+      if (addedToCart[serial]) {
+        await axios.post(`${API}/${user.id}`, {
+          serial,
+          nombre,
+          descripcion,
+          precio,
+          accion: "eliminar"
+        });
+  
+        setAddedToCart((prevState) => ({
+          ...prevState,
+          [serial]: false
+        }));
+      } else {
+        await axios.post(`${API}/${user.id}`, {
+          serial,
+          nombre,
+          descripcion,
+          precio,
+          accion: "agregar"
+        });
+  
+        setAddedToCart((prevState) => ({
+          ...prevState,
+          [serial]: true
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
  
    const handlePreviousPage = () => {
      setCurrentPage(currentPage - 1);
@@ -154,9 +198,18 @@ function Card() {
                >
                   <div className="flex justify-end space-x-1">
                      <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white " >
-                        <button>
-                              <FaShoppingCart className="text-azulC dark:text-white" />
-                        </button>
+                     <button
+                        onClick={() =>
+                          handleAddToCart(item.serial, item.nombre, item.descripcion, item.precio)
+                        }
+                        className={addedToCart[item.serial] ? "btn-amarrillo" : "btn-blanco"}
+                      >
+                        {addedToCart[item.serial] ? (
+                          <FaShoppingCart className="text-green-500 dark:text-green-500" />
+                        ) : (
+                          <FaShoppingCart className="text-azulC dark:text-white" />
+                        )}
+                      </button>
                         </div>
                            <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white">
                               <button>
