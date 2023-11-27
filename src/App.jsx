@@ -1,23 +1,22 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthProvider from "./contexts/AuthProvider";
 import DarkModeGlobal from "./contexts/DarkModeProvider";
-import Landing from "./components/Landing/Landing"
-import Login from "./components/Login"
-import Registro from "./components/Registro"
+import Landing from "./components/Landing/Landing";
+import Login from "./components/Login";
+import Registro from "./components/Registro";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Payment from "./components/Payment";
 import CartButton from "./components/cartButton";
-import HeroBlog from "./components/Blog/HeroBlog"
-import TablaArt from "./components/Admin/TablaArt"
-import Profile from "./components/Profile"
+import HeroBlog from "./components/Blog/HeroBlog";
+import TablaArt from "./components/Admin/TablaArt";
+import Profile from "./components/Profile";
 import TablaOffers from "./components/Admin/Tablaoffers";
-import Carrito from "./components/carrito"
-import Card from "./components/card"
-import CrearProduct from "./components/CrearProduct"
+import Carrito from "./components/carrito";
+import Card from "./components/card";
+import CrearProduct from "./components/CrearProduct";
 import UserTable from "./components/Admin/TablaUsers";
-
 
 function App() {
   return (
@@ -27,13 +26,16 @@ function App() {
           <BrowserRouter>
             <Header />
             <Routes>
-
-              <Route path="/" element={                    <div>
-                      <Landing></Landing>
-                    </div>} />
+              <Route
+                path="/"
+                element={
+                  <div>
+                    <Landing />
+                  </div>
+                }
+              />
               <Route path="/Login" element={<Login />} />
-              <Route path="/Blog" element={ <HeroBlog />} />
-             
+              <Route path="/Blog" element={<HeroBlog />} />
 
               <Route path="/Registro" element={<Registro />} />
               <Route path="/Profile" element={<Profile />} />
@@ -48,7 +50,7 @@ function App() {
                     <>
                       <TablaArt />
                       <TablaOffers />
-                      <UserTable/>
+                      <UserTable />
                     </>
                   }
                 />

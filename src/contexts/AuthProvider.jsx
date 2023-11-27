@@ -8,6 +8,7 @@ const API = import.meta.env.VITE_DECODE_URL;
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("null");
   const [loggedIn, setLoggedIn] = useState(false); // Nuevo estado para controlar si el usuario está autenticado
+  const [loading, setLoading] = useState(true);
 
   const getDecodedData = async () => {
     const options = {
@@ -21,8 +22,10 @@ const AuthProvider = ({ children }) => {
       const data = response.data.data;
       setUser(data);
       setLoggedIn(true); // Establecer loggedIn a true cuando se obtengan los datos decodificados correctamente
+      setLoading(false)
     } catch (error) {
       console.error(error);
+      setLoading(false)
     }
   };
 
@@ -46,7 +49,7 @@ const AuthProvider = ({ children }) => {
   
 
   return (
-    <AuthContext.Provider value={{ user, loggedIn, getDecodedData, logout }}>
+    <AuthContext.Provider value={{ user, loggedIn, loading, getDecodedData, logout }}>
       {children}
     </AuthContext.Provider>
   );
