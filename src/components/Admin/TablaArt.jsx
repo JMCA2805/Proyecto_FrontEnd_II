@@ -111,7 +111,7 @@ const ArticuloTable = () => {
           <div className="font-[Barlow] mb-8 px-4">
             <div className="bg-azul dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-2 border dark:border-azulC border-azulO">
               <h2 className="text-white text-3xl font-bold text-center">
-                Lista de Productos
+                Lista de Artículos
               </h2>
             </div>
             <div className="w-full flex justify-center items-center md:justify-end md:items-end pb-2">

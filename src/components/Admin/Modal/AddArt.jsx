@@ -4,8 +4,17 @@ import axios from "axios";
 import Swal from "sweetalert2"; // Importar SweetAlert2
 import { Modal } from "flowbite-react";
 
+import * as Yup from 'yup';
+
+
 //Api de servidor backend
 const API = import.meta.env.VITE_ADDART_URL;
+
+const validationSchema = Yup.object().shape({
+  titulo: Yup.string().required('El título es requerido'),
+  texto: Yup.string().required('El texto del artículo es requerido'),
+  imagen: Yup.mixed().required('La imagen es requerida'),
+});
 
 function AddArt({ openModal, handleModalSet, handleUp }) {
   // Inicializacion de estados
@@ -25,9 +34,13 @@ function AddArt({ openModal, handleModalSet, handleUp }) {
     formData.append('imagen', imagen);
 
     // Verificar que los campos obligatorios no estén vacíos
-    if ( !titulo || !texto  || !imagen) {
-      setRespuesta('Por favor, completa todos los campos.');
-      setMostrarMensaje(true);
+    if (!imagen) {
+      console.log("Por favor, ingresa la imagen del articulo.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Por favor, ingresa la imagen del articulo.",
+      }).then({});
       return;
     }
 
@@ -37,6 +50,8 @@ function AddArt({ openModal, handleModalSet, handleUp }) {
     };
 
     try {
+      await validationSchema.validate({ titulo, texto, imagen }, { abortEarly: false });
+
       const response = await axios.post(`${API}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -76,6 +91,8 @@ function AddArt({ openModal, handleModalSet, handleUp }) {
         icon: 'error',
         title: 'Error',
         text: 'Ocurrió un error al agregar el producto.',
+        footer: error.errors.join('\n'), // Mostrar los mensajes de error en el cuerpo de la alerta
+
       }).then({
         
       });

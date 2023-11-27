@@ -1,17 +1,30 @@
-import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2"; // Importar SweetAlert2
 import { Modal } from "flowbite-react";
 
+import * as Yup from "yup";
+
+
+
 //Api de servidor backend
 const API = import.meta.env.VITE_ADDOFF_URL;
+
+const validationSchema = Yup.object().shape({
+  oferta: Yup.string().required("Por favor, ingresa una oferta o descuento."),
+  descripcion: Yup.string().required("Por favor, ingresa una descripción."),
+  icono: Yup.mixed().required("Por favor, selecciona un icono."),
+});
 
 function AddOff({ openModal, handleModalSet, handleUp }) {
   // Inicializacion de estados
   const [oferta, setOferta] = useState("");
   const [descripcion, setDesc] = useState("");
   const [icono, setIcono] = useState("");
+
+  const [respuesta, setRespuesta] = useState('');
+  const [mostrarMensaje, setMostrarMensaje] = useState(false);
+
 
   // Funcion para cargar un nuevo oferta
   const handleSubmit = async (e) => {
@@ -24,17 +37,19 @@ function AddOff({ openModal, handleModalSet, handleUp }) {
     formData.append("icono", icono);
 
     // Verificar que los campos obligatorios no estén vacíos
-    if (!oferta || !descripcion || !icono) {
-      console.log("Por favor, completa todos los campos.");
+    if (!icono) {
+      console.log("Por favor, ingresa la imagen del icono.");
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Por favor, completa todos los campos.",
+        text: "Por favor, ingresa la imagen del iconos.",
       }).then({});
       return;
     }
 
     try {
+      await validationSchema.validate({ oferta, descripcion, icono });
+
       const response = await axios.post(`${API}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -47,6 +62,10 @@ function AddOff({ openModal, handleModalSet, handleUp }) {
         title: "Servicio agregado",
         text: "La oferta o Descuento se ha registrado exitosamente.",
       });
+
+      setRespuesta(response.data);
+      setMostrarMensaje(true);
+
       setOferta("");
       setDesc("");
       setIcono("");
@@ -59,6 +78,8 @@ function AddOff({ openModal, handleModalSet, handleUp }) {
         icon: "error",
         title: "Error",
         text: "Ocurrió un error al agregar el oferta.",
+        footer: error.errors.join('\n'), // Mostrar los mensajes de error en el cuerpo de la alerta
+
       }).then({});
     }
   };

@@ -87,9 +87,7 @@ function AddProd({ openModal, handleModalSet, handleUp }) {
       setRespuesta(response.data);
       setMostrarMensaje(true);
 
-      setTimeout(() => {
-        setMostrarMensaje(false);
-      }, 3000);
+
 
       setSerial('');
       setNombre('');
