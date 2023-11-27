@@ -1,15 +1,18 @@
-import { useMatch, useNavigate } from "react-router-dom";
 import React,{useState, useEffect} from "react";
 import { FaHeart, FaShoppingCart, FaCreditCard } from 'react-icons/fa';
-import imagen1 from "/001.png";
-import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2";
+
+import ProductModal from './ModalProducts';
+
 
 function Card() {
    const API = import.meta.env.VITE_BACKEND_URL;
    const [items, setItems] = useState([]);
    const [currentPage, setCurrentPage] = useState(1);
+   const [modalOpen, setModalOpen] = useState(false);
+   const [selectedItem, setSelectedItem] = useState(null);
+
+
    const productsPerPage = 6;
  
    useEffect(() => {
@@ -42,18 +45,18 @@ function Card() {
    const handleNextPage = () => {
      setCurrentPage(currentPage + 1);
    };
+
+   const openModal = item => {
+    setSelectedItem(item);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
  
    return (
      <>
-       <div className="flex justify-end mt-2">
-         <button
-           type="button"
-           onClick={handleOpenCreate}
-           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-         >
-           Agregar Productos
-         </button>
-       </div>
  
        {items.length === 0 ? (
          <div className="w-full h-96 flex justify-center items-center">
@@ -135,14 +138,22 @@ function Card() {
                         ${item.precio}
                      </span></div>
                      <div>
-                        <button type="button" className="w-auto text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 dark:text-white">
-                           Ver Más
-                        </button>
+                     <button
+              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => openModal(item)}
+            >
+              Ver más
+            </button>
                      </div>
 
                      </div>
                </div>
              ))}
+             <ProductModal
+        item={selectedItem}
+        modalOpen={modalOpen}
+        closeModal={closeModal}
+      />
            </div>
  
            <div className="flex flex-col gap-2 items-center mt-5">
