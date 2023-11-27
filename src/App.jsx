@@ -51,7 +51,7 @@ function App() {
     element={
       <div>
         <div className="flex justify-center mb-4 mt-4">
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex block flex-col md:flex-row items-center gap-4">
             <button
               className={`block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 ${
                 showTablaArt ? 'border-azulO' : 'border-azul'
