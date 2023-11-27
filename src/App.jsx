@@ -36,12 +36,8 @@ function App() {
               />
               <Route path="/Login" element={<Login />} />
               <Route path="/Blog" element={<HeroBlog />} />
-
               <Route path="/Registro" element={<Registro />} />
-              <Route path="/Profile" element={<Profile />} />
-              <Route path="/carrito" element={<Carrito />} />
-              <Route path="/Card" element={<Card />} />
-              <Route path="/Payment" element={<Payment />} />
+
               <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
                 <Route
                   path="/Admin"
@@ -55,6 +51,36 @@ function App() {
                   }
                 />
               </Route>
+              
+              <Route
+                element={<ProtectedRoute allowedRoles={["admin", "usuario"]} />}
+              >
+                <Route
+                  path="/carrito"
+                  element={
+                    <Carrito/>
+                  }
+                />
+                <Route
+                  path="/Profile"
+                  element={
+      
+                      <Profile />
+
+                  }
+                />
+                <Route
+                  path="/Payment"
+                  element={
+      
+                      <Payment/>
+
+                  }
+                />
+              </Route>
+
+
+
             </Routes>
             <Footer />
             <CartButton />

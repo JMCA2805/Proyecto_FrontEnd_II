@@ -44,58 +44,7 @@ const ArticuloTable = () => {
     setDatosActualizados({ ...articulo });
   };
 
-  const actualizarArticulo = (event) => {
-    event.preventDefault(); // Evita que la página se reinicie por defecto
 
-    const formData = new FormData();
-    formData.append("titulo", datosActualizados.titulo);
-    formData.append("tituloviejo", articuloSeleccionado.titulo);
-    formData.append("texto", datosActualizados.texto);
-    formData.append("imagen", imagen);
-
-    axios
-      .put(APIEDIT, formData)
-      .then((response) => {
-        // Obtener la URL de la imagen actualizada del cuerpo de la respuesta
-
-        const imagenActualizada = response.data.imagen;
-
-        const articulosActualizados = articulos.map((articulo) => {
-          if (articulo.titulo === articuloSeleccionado.titulo) {
-            return {
-              ...articulo,
-              titulo: datosActualizados.titulo,
-              texto: datosActualizados.texto,
-              imagen: imagenActualizada,
-            };
-          }
-          return articulo;
-        });
-
-        setArticulos(articulosActualizados);
-
-        setArticuloSeleccionado(null);
-        setDatosActualizados({});
-
-        // Mensaje de confirmación
-        Swal.fire({
-          icon: "success",
-          title: "Articulo actualizado",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => {
-        console.error("Error al actualizar el articulo:", error);
-
-        // Mensaje de error
-        Swal.fire({
-          icon: "error",
-          title: "Error al actualizar el articulo",
-          text: "Ocurrió un error al actualizar los datos del articulo. Por favor, inténtalo nuevamente.",
-        });
-      });
-  };
 
   const eliminarArticulo = (titulo) => {
     // Mostrar confirmación con SweetAlert
@@ -157,20 +106,20 @@ const ArticuloTable = () => {
         datosActualizados={datosActualizados}
         handleUp={handleUp}
       />
-      <div className="w-full px-10 h-full">
-        <div className="overflow-x-auto px-8 py-0 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
-          <div className="font-[Barlow] mb-8">
+     <div className="w-full px-10 h-full">
+        <div className="md:px-8 px-4 py-4 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
+          <div className="font-[Barlow] mb-8 px-4">
             <div className="bg-azul dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-2 border dark:border-azulC border-azulO">
               <h2 className="text-white text-3xl font-bold text-center">
-                Lista de Artículos
+                Lista de Productos
               </h2>
             </div>
-            <div className="w-full flex justify-end items-end pb-2">
+            <div className="w-full flex justify-center items-center md:justify-end md:items-end pb-2">
               <button
                 className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
                 onClick={handleModalSet}
               >
-                Agregar un artículo
+                Agregar Articulo
               </button>
             </div>
             <div className="font-[Barlow] mb-8">
@@ -312,7 +261,6 @@ const ArticuloTable = () => {
                       <button
                         type="button"
                         className="bg-azulO hover:bg-azulW hover:text-black dark:bg-azulC text-white font-bold py-2 px-4 rounded mx-1"
-                        onClick={actualizarArticulo}
                       >
                         Actualizar
                       </button>
