@@ -1,11 +1,28 @@
-import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2"; // Importar SweetAlert2
 import { Modal } from "flowbite-react";
+import * as yup from "yup";
+
 
 //Api de servidor backend
 const API = import.meta.env.VITE_BACKEND_URL;
+
+const schema = yup.object().shape({
+    serial: yup.string().required("El serial es obligatorio."),
+    nombre: yup.string().required("El nombre del producto es obligatorio."),
+    descripcion: yup.string().required("La descripción es obligatoria."),
+    cantidad: yup
+      .number()
+      .positive("La cantidad debe ser mayor que cero.")
+      .required("La cantidad es obligatoria."),
+    precio: yup
+      .number()
+      .positive("El precio debe ser mayor que cero.")
+      .required("El precio es obligatorio."),
+    categoria: yup.string().required("La categoría es obligatoria."),
+
+  });
 
 function AddProd({ openModal, handleModalSet, handleUp }) {
   // Inicializacion de estados
@@ -19,6 +36,7 @@ function AddProd({ openModal, handleModalSet, handleUp }) {
   const [imagen, setImagen] = useState('');
   const [respuesta, setRespuesta] = useState('');
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
+  
   
 
   const handleSubmit = async (e) => {
@@ -34,11 +52,7 @@ function AddProd({ openModal, handleModalSet, handleUp }) {
     formData.append('imagen', imagen);
 
     // Verificar que los campos obligatorios no estén vacíos
-    if (!serial || !nombre || !descripcion || cantidad <= 0 || precio <= 0 || !categoria || !imagen) {
-      setRespuesta('Por favor, completa todos los campos y asegúrate de que los valores numéricos sean mayores que cero.');
-      setMostrarMensaje(true);
-      return;
-    }
+
 
     const producto = {
       serial,
@@ -49,7 +63,21 @@ function AddProd({ openModal, handleModalSet, handleUp }) {
       categoria
     };
 
+    console.log(imagen)
+
+
     try {
+        await schema.validate({
+            serial,
+            nombre,
+            descripcion,
+            cantidad,
+            precio,
+            categoria,
+            imagen,
+          });
+
+
       const response = await axios.post(`${API}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -88,6 +116,8 @@ function AddProd({ openModal, handleModalSet, handleUp }) {
         icon: 'error',
         title: 'Error',
         text: 'Ocurrió un error al agregar el producto.',
+        footer: error.errors.join('\n'), // Mostrar los mensajes de error en el cuerpo de la alerta
+
       }).then({
         
       });
@@ -260,9 +290,9 @@ function AddProd({ openModal, handleModalSet, handleUp }) {
               </button>
               <button
                 onClick={() => {
-                  setserial("");
-                  setDesc("");
-                  setIcono("");
+                  setSerial("");
+                  setDescripcion("");
+                  setImagen("");
                   handleModalSet();
                 }}
                 className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
@@ -272,6 +302,11 @@ function AddProd({ openModal, handleModalSet, handleUp }) {
             </div>
           </div>
         </div>
+        {mostrarMensaje && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mt-6 rounded">
+              <p className="text-sm font-bold">{respuesta}</p>
+            </div>
+          )}
       </Modal>
     </>
   );

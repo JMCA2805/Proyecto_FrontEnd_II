@@ -63,6 +63,49 @@ export default function TablaProductos() {
   }, [up]);
 
 
+
+  // Eliminar un producto
+  //Esta función se utiliza para eliminar un producto del backend. Realiza una solicitud DELETE a la API, pasando el serial del producto que se desea elimina
+  const eliminarProducto = (id) => {
+    // Mostrar confirmación con SweetAlert
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción eliminará el producto. ¿Deseas continuar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+        .delete(API, { data: { serial: id } })
+        .then((response) => {
+
+          setData(data.filter((producto) => producto.serial !== id));
+            handleUp()
+            // Mensaje de confirmación
+            Swal.fire({
+              icon: "success",
+              title: "Producto Eliminado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((error) => {
+            console.error("Error al eliminar el producto:", error);
+
+            // Mensaje de error
+            Swal.fire({
+              icon: "error",
+              title: "Error al eliminar el producto",
+              text: "Ocurrió un error al eliminar el producto. Por favor, inténtalo nuevamente.",
+            });
+          });
+      }
+    });
+  };
     
     return (
       <>
@@ -111,6 +154,11 @@ export default function TablaProductos() {
                 <th scope="col" className="sm:p-2 md:px-6 md:py-3 text-center">
                   Categoría
                 </th>
+                
+                <th scope="col" className="sm:p-2 md:px-6 md:py-3 text-center">
+                  Imagen
+                </th>
+                
                 <th scope="col" className="sm:p-2 md:px-6 md:py-3 text-center">
                   Acciones
                 </th>
@@ -137,6 +185,13 @@ export default function TablaProductos() {
                   <td className="sm:p-2 md:px-6 md:py-3 text-center">
                     {producto.categoria}
                   </td>
+                  <td className="sm:p-2 md:px-6 md:py-4 whitespace-nowrap">
+                                <img
+                                  src={producto.imagen}
+                                  alt={producto.titulo}
+                                  className="w-20 h-20 object-cover rounded-full mx-auto"
+                                />
+                              </td>
                   <td className="px-4 md:py-4 whitespace-nowrap">
                             <div className="flex items-center gap-4">
                       <button
