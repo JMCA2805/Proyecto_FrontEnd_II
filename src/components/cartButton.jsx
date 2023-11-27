@@ -35,11 +35,11 @@ const CartButton = () => {
     
       <Link
       to="/carrito"
-      className="fixed bottom-8 bg-azul text-white right-8 rounded-full p-3 shadow-lg z-10 p-7 hover:bg-azulC hover:shadow-xl transition-all duration-500 ease-in-out"
+      className="fixed bottom-8 bg-azul text-white right-8 rounded-full p-3 shadow-lg z-10 hover:bg-azulC hover:shadow-xl transition-all duration-500 ease-in-out"
     >
-      <FaShoppingCart className="text-4xl relative" />
+      <FaShoppingCart className="text-3xl relative" />
       {selectedProductsCount >= 0 && (
-        <span className="absolute top-2 right-3 bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
+        <span className="absolute -top-1 -right-1 bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
           {selectedProductsCount}
         </span>
       )}
