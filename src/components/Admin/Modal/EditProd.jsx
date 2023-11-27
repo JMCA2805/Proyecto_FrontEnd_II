@@ -3,9 +3,20 @@ import { Modal } from "flowbite-react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useState } from "react";
+import * as yup from "yup";
 
 // Api del backend para la solicitud
 const API = import.meta.env.VITE_BACKEND_URL;
+
+const schema = yup.object().shape({
+  cantidad: yup
+    .number()
+    .positive("La cantidad debe ser mayor que cero."),
+  precio: yup
+    .number()
+    .positive("El precio debe ser mayor que cero.")
+});
+
 
 //Props
 export default function EditProd({
@@ -24,6 +35,9 @@ export default function EditProd({
   const actualizarProducto = (event) => {
     event.preventDefault(); // Evita que la página se reinicie por defecto
 
+    // Check if the cantidad field is empty, and convert it to 0 if it is
+ 
+
     const formData = new FormData();
     formData.append("serialviejo", productoSeleccionado.serial)
     formData.append("serial", datosActualizados.serial);
@@ -38,38 +52,59 @@ export default function EditProd({
     console.log(productoSeleccionado.serial)
 
 
-    axios
-      .put(API, formData)
-      .then((response) => {
-        // Obtener la URL de la imagen actualizada del cuerpo de la respuesta
+    schema
+    .validate({
+      cantidad: datosActualizados.cantidad,
+      precio: datosActualizados.precio,
+    })
+    .then(() => {
+      axios
+        .put(API, formData)
+        .then((response) => {
+          // Obtener la URL de la imagen actualizada del cuerpo de la respuesta
 
-        const imagenActualizada = response.data.imagen;
+          const imagenActualizada = response.data.imagen;
 
-        setProductoSeleccionado(null);
-        setDatosActualizados({});
-        handleUp();
+          setProductoSeleccionado(null);
+          setDatosActualizados({});
+          handleUp();
 
-        // Mensaje de confirmación
-        Swal.fire({
-          icon: "success",
-          title: "Producto actualizado",
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => {
-          handleEditModalSet();
+          // Mensaje de confirmación
+          Swal.fire({
+            icon: "success",
+            title: "Producto actualizado",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            handleEditModalSet();
+          });
+        })
+        .catch((error) => {
+          console.error("Error al actualizar el articulo:", error);
+
+          // Mensaje de error
+          Swal.fire({
+            icon: "error",
+            title: "Error al actualizar el articulo",
+            text:
+              "Ocurrió un error al actualizar los datos del articulo. Por favor, inténtalo nuevamente.",
+          });
         });
-      })
-      .catch((error) => {
-        console.error("Error al actualizar el articulo:", error);
+    })
+    .catch((error) => {
+      // Handle validation errors
+      console.error("Error de validación:", error);
 
-        // Mensaje de error
-        Swal.fire({
-          icon: "error",
-          title: "Error al actualizar el articulo",
-          text: "Ocurrió un error al actualizar los datos del articulo. Por favor, inténtalo nuevamente.",
-        });
+      // Mostrar mensaje de error con SweetAlert2
+      Swal.fire({
+        icon: "error",
+        title: "Error de validación",
+        text: "Ocurrió un error de validación. Por favor, verifica los campos.",
+        footer: Object.values(error.errors).join("\n"), // Mostrar los mensajes de error en el cuerpo de la alerta
       });
-  };
+    });
+};
+
 
   return (
     <>
