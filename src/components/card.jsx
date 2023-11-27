@@ -10,37 +10,19 @@ function Card() {
    const [items, setItems] = useState([]);
 
   useEffect(() => {
-    axios.get(API)
-      .then(response => {
-        setItems(response.data);
-      })
-      .catch(error => {
-        console.error('Hubo un error!', error);
-      });
-  }, []);
-   const items1 = [
-      {
-         "_id": "1",
-         "serial": "25485140005",
-         "nombre": "Laptop Go",
-         "descripcion": "Microsoft 12.4",
-         "cantidad": 5,
-         "precio": 200,
-         "categoria": "Laptops",
-         "imagen": imagen1
-      },
-      {
-         "_id": "2",
-         "serial": "25485140005",
-         "nombre": "Laptop Go",
-         "descripcion": "Modelo 2",
-         "cantidad": 5,
-         "precio": 200,
-         "categoria": "Laptops",
-         "imagen": imagen1
-      }
-   ];
-
+   axios.get(API)
+     .then(response => {
+       if (Array.isArray(response.data)) {
+         setItems(response.data);
+       } else {
+         setItems([]);
+       }
+     })
+     .catch(error => {
+       console.error('Error:', error);
+     });
+ }, []);
+   
 
    const location = useLocation();
    const navigate = useNavigate();
@@ -95,7 +77,7 @@ function Card() {
                         >
                            {/* Centra la imagen */}
                            <img
-                              className="h-full p-2"
+                              className="p-8 rounded-t-lg h-96"
                               src={`${item.imagen}`}
                               alt={`Imagen de ${item.nombre}`}
                            />
@@ -112,9 +94,9 @@ function Card() {
                            {/* Agrega el título del ítem centrado debajo de la imagen */}
                            <div className="flex flex-col justify-center py-1">
                               <div className="flex text-xs">
-                                 <span className="text-xs font-bold">Serial: </span>
+                                 <span className="text-xs font-bold">Descripción: </span>
                                  <span className="font-normal text-center ml-1 ">
-                                    {item.serial}
+                                    {item.descripcion}
                                  </span>
                               </div>
                               <div className="flex text-xs">
