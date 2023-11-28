@@ -18,6 +18,7 @@ import Carrito from "./components/carrito";
 import Card from "./components/card";
 import UserTable from "./components/Admin/TablaUsers";
 import TablaProductos from "./components/Admin/TablaProductos"
+import { CartProvider } from "./contexts/CartContext";
 
 function App() {
 
@@ -29,7 +30,9 @@ function App() {
   
   return (
     <>
+
       <AuthProvider>
+      <CartProvider>
         <DarkModeGlobal>
           <BrowserRouter>
             <Header />
@@ -158,6 +161,7 @@ function App() {
             <CartButton />
           </BrowserRouter>
         </DarkModeGlobal>
+        </CartProvider>
       </AuthProvider>
     </>
   );

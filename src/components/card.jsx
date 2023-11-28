@@ -1,7 +1,7 @@
 import React,{useState, useEffect, useContext} from "react";
 import { FaHeart, FaShoppingCart} from 'react-icons/fa';
 import axios from "axios";
-
+import { CartContext } from '../contexts/CartContext';
 import ProductModal from './ModalProducts';
 import { AuthContext } from "../contexts/AuthProvider";
 import CartButton from "./cartButton";
@@ -10,7 +10,7 @@ const API = import.meta.env.VITE_PRODUCTS_URL;
 
 const Card = () => {
   const [addedToCart, setAddedToCart] = useState({});
-
+  const { updateCartCount } = useContext(CartContext);
 
 
    const { user } = useContext(AuthContext);
@@ -49,6 +49,12 @@ const Card = () => {
           ...prevState,
           [serial]: false
         }));
+        updateCartCount(prevCount => {
+          const newCount = prevCount - 1;
+          // Almacena el nuevo conteo del carrito en localStorage
+          localStorage.setItem('cartCount', newCount);
+          return newCount;
+        });
       } else {
         await axios.post(`${API}/${user.id}`, {
           serial,
@@ -62,6 +68,12 @@ const Card = () => {
           ...prevState,
           [serial]: true
         }));
+        updateCartCount(prevCount => {
+          const newCount = prevCount + 1;
+          // Almacena el nuevo conteo del carrito en localStorage
+          localStorage.setItem('cartCount', newCount);
+          return newCount;
+        });
       }
     } catch (error) {
       console.error(error);
