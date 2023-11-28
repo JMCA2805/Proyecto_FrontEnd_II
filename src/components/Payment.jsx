@@ -29,7 +29,6 @@ const PaymentForm = () => {
 
     useEffect(() => {
 
-      console.log(products)
 
       axios.get(`${API2}/${user.id}`)
         .then(response => {
@@ -59,10 +58,12 @@ const PaymentForm = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        console.log(products)
 
+        const productsToSend = products.map(({ imagen, ...rest }) => rest);
         const data = {
         clientData,
-        products,
+        products: productsToSend,
         paymentData
         };
 
@@ -74,7 +75,6 @@ const PaymentForm = () => {
             console.error(error);
         });
     };
-
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white-smokeshadow dark:text-white">
     <h2 className="text-xl font-bold mb-4">Datos cliente</h2>
