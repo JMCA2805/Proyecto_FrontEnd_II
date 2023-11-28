@@ -1,12 +1,12 @@
 import React,{useState, useEffect, useContext} from "react";
-import { FaHeart, FaShoppingCart, FaCheck  } from 'react-icons/fa';
+import { FaHeart, FaShoppingCart} from 'react-icons/fa';
 import axios from "axios";
 
 import ProductModal from './ModalProducts';
 import { AuthContext } from "../contexts/AuthProvider";
 import CartButton from "./cartButton";
 
-const API = import.meta.env.VITE_BACKEND_URL;
+const API = import.meta.env.VITE_PRODUCTS_URL;
 
 const Card = () => {
   const [addedToCart, setAddedToCart] = useState({});
@@ -25,26 +25,6 @@ const Card = () => {
 
 
    const productsPerPage = 6;
- 
-   useEffect(() => {
-
-      console.log(user)
-      axios
-      .get(`${API}/${user.id}`)
-      .then((response) => {
-        if (Array.isArray(response.data)) {
-          setItems(response.data);
-        } else {
-          setItems([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    
-
-   }, []);
- 
    const indexOfLastProduct = currentPage * productsPerPage;
    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
    const currentProducts = items.slice(indexOfFirstProduct, indexOfLastProduct);
@@ -124,6 +104,27 @@ const Card = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+
+    console.log(user)
+    axios
+    .get(`${API}/${user.id}`,{
+      withCredentials: true
+    })
+    .then((response) => {
+      if (Array.isArray(response.data)) {
+        setItems(response.data);
+      } else {
+        setItems([]);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  
+
+ }, []);
  
    return (
      <>
