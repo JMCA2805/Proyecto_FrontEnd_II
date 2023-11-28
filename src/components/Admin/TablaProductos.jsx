@@ -22,7 +22,9 @@ export default function TablaProductos() {
   useEffect(() => {
     // Lógica para obtener los datos de los ofertas desde el backend
     axios
-      .get(API)
+      .get(API, {
+        withCredentials: true
+      })
       .then((response) => {
         setData(response.data);
       })
