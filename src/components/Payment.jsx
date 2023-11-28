@@ -147,7 +147,7 @@ const PaymentForm = () => {
 
       <div className="flex flex-wrap -mx-4">
         {products.map((product, index) => (
-       <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 px-4 mb-4">
+       <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 px-4 mb-4 dark:text-black">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <img alt={product.nombre} src={product.imagen} className="w-full h-48 object-contain mb-4" />
               <h3 className="font-bold text-lg mb-2">{product.nombre}</h3>
