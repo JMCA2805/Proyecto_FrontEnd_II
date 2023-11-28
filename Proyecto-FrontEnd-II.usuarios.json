@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "6555c9c0c7fe790c40cfbc54"
+  },
+  "nombre": "123",
+  "apellido": "123",
+  "correo": "123@gmail.com",
+  "contraseña": "$2b$10$rHeLSCS9boDmB8axIAEDu.jKWQApomxAX1CdpI4dU2T3gW3rFeMaO",
+  "rol": "usuario",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6555c9e8c7fe790c40cfbc57"
+  },
+  "nombre": "Admin",
+  "apellido": "Admin",
+  "correo": "admin@gmail.com",
+  "contraseña": "$2b$10$q8YSHwKldQikhavnvxQfPO0rfIkt6Lze79HBX9mzXnbqECvh7pKWy",
+  "rol": "admin",
+  "__v": 0
+}]
