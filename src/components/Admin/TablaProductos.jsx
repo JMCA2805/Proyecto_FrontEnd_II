@@ -5,7 +5,7 @@ import AddProd from "./Modal/AddProd";
 import EditProd from "./Modal/EditProd";
 
 
-const API = import.meta.env.VITE_BACKEND_URL;
+const API = import.meta.env.VITE_PRODUCTS_URL;
 
 export default function TablaProductos() {
   const [data, setData] = useState([]);

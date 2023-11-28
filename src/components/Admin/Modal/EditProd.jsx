@@ -6,7 +6,7 @@ import { useState } from "react";
 import * as yup from "yup";
 
 // Api del backend para la solicitud
-const API = import.meta.env.VITE_BACKEND_URL;
+const API = import.meta.env.VITE_PRODUCTS_URL;
 
 const schema = yup.object().shape({
   cantidad: yup

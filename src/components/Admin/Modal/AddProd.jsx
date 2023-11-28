@@ -6,7 +6,7 @@ import * as yup from "yup";
 
 
 //Api de servidor backend
-const API = import.meta.env.VITE_BACKEND_URL;
+const API = import.meta.env.VITE_PRODUCTS_URL;
 
 const schema = yup.object().shape({
     serial: yup.string().required("El serial es obligatorio."),
