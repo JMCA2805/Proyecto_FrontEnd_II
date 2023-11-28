@@ -12,6 +12,7 @@ const Card = () => {
   const [addedToCart, setAddedToCart] = useState({});
 
 
+
    const { user } = useContext(AuthContext);
    const [items, setItems] = useState([]);
    const [currentPage, setCurrentPage] = useState(1);
@@ -106,25 +107,35 @@ const Card = () => {
   };
 
   useEffect(() => {
-
-    console.log(user)
-    axios
-    .get(`${API}/${user.id}`,{
-      withCredentials: true
-    })
-    .then((response) => {
-      if (Array.isArray(response.data)) {
-        setItems(response.data);
-      } else {
-        setItems([]);
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    console.log(user);
   
-
- }, []);
+    const fetchCartStatus = async () => {
+      try {
+        const response = await axios.get(API, {
+          withCredentials: true
+        });
+  
+        if (Array.isArray(response.data)) {
+          setItems(response.data);
+        } else {
+          setItems([]);
+        }
+  
+        // Mapear los datos de la respuesta para obtener el estado de cada producto
+        const cartStatus = response.data;
+        const initialAddedToCart = cartStatus.reduce((acc, item) => {
+          acc[item.serial] = item.carrito;
+          return acc;
+        }, {});
+  
+        setAddedToCart(initialAddedToCart);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+  
+    fetchCartStatus();
+  }, [user.id]);
  
    return (
      <>
