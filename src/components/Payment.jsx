@@ -86,7 +86,7 @@ const PaymentForm = () => {
           name="nombre"
           value={clientData.nombre}
           onChange={handleClientDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
         />
       </div>
       <div>
@@ -96,7 +96,7 @@ const PaymentForm = () => {
           name="apellido"
           value={clientData.apellido}
           onChange={handleClientDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
         />
       </div>
     </div>
@@ -108,7 +108,7 @@ const PaymentForm = () => {
           name="cedula"
           value={clientData.cedula}
           onChange={handleClientDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded text-black dark:text-black "
         />
       </div>
       <div>
@@ -118,7 +118,7 @@ const PaymentForm = () => {
           name="telefono"
           value={clientData.telefono}
           onChange={handleClientDataChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
         />
       </div>
     </div>
@@ -129,7 +129,7 @@ const PaymentForm = () => {
         name="correo"
         value={clientData.correo}
         onChange={handleClientDataChange}
-        className="w-full p-2 border border-gray-300 rounded"
+        className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
       />
     </div>
     <div className="mb-4">
@@ -139,7 +139,7 @@ const PaymentForm = () => {
         name="direccion"
         value={clientData.direccion}
         onChange={handleClientDataChange}
-        className="w-full p-2 border border-gray-300 rounded"
+        className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
       />
     </div>
 
@@ -168,7 +168,7 @@ const PaymentForm = () => {
             name="numeroTarjeta"
             value={paymentData.numeroTarjeta}
             onChange={handlePaymentDataChange}
-            className="w-full p-2 bg-white-smoke rounded"
+            className="w-full p-2 bg-white-smoke rounded text-black dark:text-black "
             placeholder="1234 5678 9012 3456"
             />
         </div>
@@ -180,7 +180,7 @@ const PaymentForm = () => {
                 name="fechaVencimiento"
                 value={paymentData.fechaVencimiento}
                 onChange={handlePaymentDataChange}
-                className="w-full p-2 bg-white-smoke rounded"
+                className="w-full p-2 bg-white-smoke rounded text-black dark:text-black"
                 placeholder="MM/AA"
             />
             </div>
@@ -191,7 +191,7 @@ const PaymentForm = () => {
                 name="cvc"
                 value={paymentData.cvc}
                 onChange={handlePaymentDataChange}
-                className="w-full p-2 bg-white-smoke rounded"
+                className="w-full p-2 bg-white-smoke rounded text-black dark:text-black"
                 placeholder="CVC"
             />
             </div>
