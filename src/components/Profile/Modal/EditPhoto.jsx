@@ -9,7 +9,7 @@ export default function EditPhoto({
   openModalPhoto,
   handleModalPhotoSet,
   handleUp,
-  user
+  user,
 }) {
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [imagen, setImagen] = useState("");
@@ -18,15 +18,15 @@ export default function EditPhoto({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("imagen", imagen);
-
     // Verificar que los campos obligatorios no estén vacíos
     if (!imagen) {
       setRespuesta("Por favor, completa todos los campos.");
       setMostrarMensaje(true);
       return;
     }
+
+    const formData = new FormData();
+    formData.append("imagen", imagen);
 
     try {
       const response = await axios.post(`${API2}/${user.id}`, formData, {
@@ -35,12 +35,12 @@ export default function EditPhoto({
         },
       });
       setMostrarMensaje(true);
-      handleUp()
-      handleModalPhotoSet()
+      handleUp();
+      handleModalPhotoSet();
       setTimeout(() => {
         setMostrarMensaje(false);
       }, 3000);
-
+      setImagen("");
       // Mostrar mensaje de confirmación con SweetAlert2
       Swal.fire({
         icon: "success",
@@ -109,6 +109,7 @@ export default function EditPhoto({
               </button>
               <button
                 onClick={() => {
+                  setImagen("");
                   handleModalPhotoSet();
                 }}
                 className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
