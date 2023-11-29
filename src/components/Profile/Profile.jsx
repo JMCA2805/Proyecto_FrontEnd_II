@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../contexts/AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2"; // Importar SweetAlert2
 
 const API = import.meta.env.VITE_USER_URL;
 const API2 = import.meta.env.VITE_USERS_URL;
 const APIEDIT = import.meta.env.VITE_EDIT_URL;
-
 
 const UserProfile = () => {
   const { user } = useContext(AuthContext);
@@ -88,16 +87,15 @@ const UserProfile = () => {
   const editarUsuario = (usuario) => {
     setDatosActualizados({ ...usuario });
   };
-  
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setDatosActualizados({ ...datosActualizados, [name]: value });
   };
   const actualizarUsuario = (e) => {
     e.preventDefault(); // Evita que la página se reinicie por defecto
-    console.log(datosActualizados)
+    console.log(datosActualizados);
 
-  
     axios
       .post(`${APIEDIT}/${user.id}`, {
         id: user.id,
@@ -105,9 +103,9 @@ const UserProfile = () => {
       })
       .then((response) => {
         setUserData({ ...userData, ...datosActualizados });
-  
+
         setDatosActualizados({});
-  
+
         // Mensaje de confirmación
         Swal.fire({
           icon: "success",
@@ -118,7 +116,7 @@ const UserProfile = () => {
       })
       .catch((error) => {
         console.error("Error al actualizar el usuario:", error);
-  
+
         // Mensaje de error
         Swal.fire({
           icon: "error",
@@ -247,52 +245,46 @@ const UserProfile = () => {
             </div>
 
             {mostrarFormulario && (
-    <div className="mx-4 md:mx-24 font-[Barlow] bg-MoradoC dark:bg-MoradoO rounded-lg p-4 text-white mt-8 border dark:border-VerdeC border-MoradoO">
-      <div className="mx-4 md:mx-24  font-[Barlow] bg-MoradoC dark:bg-MoradoO rounded-lg p-4 text-white mt-8 border dark:border-VerdeC border-MoradoO">
-  <h2 className="text-lg font-semibold">Editar usuario</h2>
-  <form>
-    {/* Campos existentes */}
-    <div className="flex flex-col mt-2">
-      <label htmlFor="descripcion">Descripción:</label>
-      <input
-        type="text"
-        id="descripcion"
-        name="descripcion"
-        value={datosActualizados.descripcion || ""}
-        onChange={handleInputChange}
-        className="w-full p-2 border border-verdeo rounded-md bg-MoradoO/30 border-MoradoO text-black placeholder:text-white/50 focus:border-2 focus:border-MoradoO focus:ring-0 dark:border-VerdeC/50 dark:focus:border-VerdeC"
-      />
-    </div>
-    <div className="flex flex-col mt-2">
-      <label htmlFor="telefono">Teléfono:</label>
-      <input
-        type="text"
-        id="telefono"
-        name="telefono"
-        value={datosActualizados.telefono || ""}
-        onChange={handleInputChange}
-        className="w-full p-2 border border-verdeo rounded-md bg-MoradoO/30 border-MoradoO text-black placeholder:text-white/50 focus:border-2 focus:border-MoradoO focus:ring-0 dark:border-VerdeC/50 dark:focus:border-VerdeC"
-      />
-    </div>
-    {/* Otros campos del formulario */}
-    <div className="flex mt-4">
-
-      <button
-        className="text-white px-4 py-2 rounded-lg mr-2 bg-Moradote focus:outline-none focus:text-white border-b-4 dark:border-VerdeC border-MoradoO hover:bg-Moradote/50 dark:hover:bg-MoradoC/70 focus-within:bg-MoradoO"
-        onClick={actualizarUsuario}
-      >
-        Guardar
-      </button>
-    </div>
-  </form>
-</div>
-    </div>
-  )}
-
-            
-
-
-
+              <div className="mx-4 md:mx-24 font-[Barlow] bg-MoradoC dark:bg-MoradoO rounded-lg p-4 text-white mt-8 border dark:border-VerdeC border-MoradoO">
+                <div className="">
+                  <h2 className="text-lg font-semibold">Editar usuario</h2>
+                  <form>
+                    {/* Campos existentes */}
+                    <div className="flex flex-col mt-2">
+                      <label htmlFor="descripcion">Descripción:</label>
+                      <input
+                        type="text"
+                        id="descripcion"
+                        name="descripcion"
+                        value={datosActualizados.descripcion || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border border-verdeo rounded-md bg-MoradoO/30 border-MoradoO text-black placeholder:text-white/50 focus:border-2 focus:border-MoradoO focus:ring-0 dark:border-VerdeC/50 dark:focus:border-VerdeC"
+                      />
+                    </div>
+                    <div className="flex flex-col mt-2">
+                      <label htmlFor="telefono">Teléfono:</label>
+                      <input
+                        type="text"
+                        id="telefono"
+                        name="telefono"
+                        value={datosActualizados.telefono || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border border-verdeo rounded-md bg-MoradoO/30 border-MoradoO text-black placeholder:text-white/50 focus:border-2 focus:border-MoradoO focus:ring-0 dark:border-VerdeC/50 dark:focus:border-VerdeC"
+                      />
+                    </div>
+                    {/* Otros campos del formulario */}
+                    <div className="flex mt-4">
+                      <button
+                        className="text-white px-4 py-2 rounded-lg mr-2 bg-Moradote focus:outline-none focus:text-white border-b-4 dark:border-VerdeC border-MoradoO hover:bg-Moradote/50 dark:hover:bg-MoradoC/70 focus-within:bg-MoradoO"
+                        onClick={actualizarUsuario}
+                      >
+                        Guardar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
