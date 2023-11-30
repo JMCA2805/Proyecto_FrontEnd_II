@@ -3,13 +3,20 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import axios from "axios";
 import EditProfile from "./Modal/EditProfile";
 import EditPhoto from "./Modal/EditPhoto";
+import Swal from "sweetalert2";
 
 const API = import.meta.env.VITE_USER_URL;
+const API2 = import.meta.env.VITE_EDITPASSWORD_URL;
 
 const UserProfile = () => {
   const { user } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
   const [datosActualizados, setDatosActualizados] = useState({});
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [mostrarMensaje, setMostrarMensaje] = useState(false);
+  const [respuesta, setRespuesta] = useState("");
 
   const [openModal, setOpenModal] = useState(false);
   const handleModalSet = () => setOpenModal(!openModal);
@@ -38,6 +45,46 @@ const UserProfile = () => {
     }
   }, [up]);
 
+  const ChangePassword = async (e) => {
+    e.preventDefault();
+
+    if (!password || !newPassword || !oldPassword) {
+      setRespuesta("Por favor, completa todos los campos.");
+      setMostrarMensaje(true);
+      return;
+    }
+    if (password !== newPassword) {
+      setRespuesta("Las contraseñas no coinciden");
+      setMostrarMensaje(true);
+      return;
+    }
+    try {
+      const response = await axios.post(API2, {
+        id: user.id,
+        oldPassword,
+        newPassword,
+      });
+      Swal.fire({
+        icon: "success",
+        title: "Cambio de contraseña exitoso",
+        text: "Se ha actualizado la contraseña",
+      }).then(() => {});
+      setMostrarMensaje(false);
+      const form = document.getElementById("change_password");
+      form.reset();
+      setPassword("")
+      setNewPassword("")
+      setOldPassword("")
+    } catch (error) {
+      setMostrarMensaje(false);
+      console.error("Error update password", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al intentar cambiar contraseña",
+        text: "Por favor, intente mas tarde.",
+      });
+    }
+  };
   return (
     <>
       <EditProfile
@@ -149,6 +196,80 @@ const UserProfile = () => {
                 <span className="ml-2 text-white">{userData?.descripcion}</span>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      {/* Cambio de contraseña  */}
+      <div className="pb-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="dark:bg-azulO/80 bg-azulC shadow overflow-hidden sm:rounded-lg border border-azulO dark:border-azulC">
+            {/* Banner */}
+            <div className="bg-azulC dark:bg-azulO border-b border-azulO dark:border-azulC px-4 py-5 sm:px-6">
+              <h1 className="text-2xl font-semibold text-white ml-4">
+                Cambiar contraseña
+              </h1>
+            </div>
+
+            {/* User Info */}
+            <form id="change_password" className="px-4 py-5 sm:p-6">
+              <div className="mb-8">
+                <div>
+                  <label className="text-white font-bold">
+                    Contraseña Actual
+                  </label>
+                  <input
+                    type="password"
+                    id="contraseña"
+                    name="contraseña"
+                    onChange={(e) => {
+                      setOldPassword(e.target.value);
+                    }}
+                    className="dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
+                  />
+                </div>
+                <div>
+                  <label className="text-white font-bold">
+                    Nueva Contraseña
+                  </label>
+                  <input
+                    type="password"
+                    id="nuevacontraseña"
+                    name="nuevacontraseña"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    className="dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
+                  />
+                </div>
+                <div>
+                  <label className="text-white font-bold">
+                    Confirmar Contraseña
+                  </label>
+                  <input
+                    type="password"
+                    id="confirm"
+                    name="confirm"
+                    onChange={(e) => {
+                      setNewPassword(e.target.value);
+                    }}
+                    className="dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
+                  />
+                </div>
+              </div>
+              {mostrarMensaje && (
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-8 rounded">
+                  <p className="text-sm font-bold">{respuesta}</p>
+                </div>
+              )}
+              <div className="flex gap-4">
+                <button
+                  className="px-2 py-2 block md:inline-block rounded-md text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
+                  onClick={ChangePassword}
+                >
+                  Cambiar Contraseña
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
