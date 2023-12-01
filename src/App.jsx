@@ -15,6 +15,7 @@ import Carrito from "./components/carrito";
 import Card from "./components/card";
 import { CartProvider } from "./contexts/CartContext";
 import MenuAdmin from "./components/Admin/MenuAdmin";
+import PWA from "./components/PWA/PWA";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <CartProvider>
           <DarkModeGlobal>
             <BrowserRouter>
+              <PWA />
               <Header />
               <Routes>
                 <Route
