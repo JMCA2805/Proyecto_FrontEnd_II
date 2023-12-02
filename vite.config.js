@@ -9,9 +9,11 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       workbox: {
-        globPatterns: ["**/*.{js,jsx,css,html,ico,png,svg}"],
+        globPatterns: ["**/*.{js,jsx,css,html,ico,png,jpg,svg}"],
       },
+      includeAssets: ['**/*.{js,jsx,css,html,ico,png,jpg,svg}'],
       manifest: {
+        id: "/",
         name: "WebStore Wonderland App",
         short_name: "WebStore Wonderland",
         background_color: "#f5f5f5",
@@ -46,7 +48,8 @@ export default defineConfig({
         theme_color: "#213ae1",
       },
       devOptions: {
-        enabled: true
+        enabled: true,
+        type: 'module',
       }
     }),
   ],
