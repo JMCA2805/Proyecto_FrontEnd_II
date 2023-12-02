@@ -2,10 +2,40 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from "../contexts/AuthProvider";
 import { CartContext } from '../contexts/CartContext';
+import * as Yup from 'yup';
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
+
 const API = import.meta.env.VITE_PAYMENT_URL;
 const API2 = import.meta.env.VITE_GETCARRITO_URL;
 
+
+const validationSchema = Yup.object().shape({
+  nombre: Yup.string()
+  .matches(/^[a-zA-Z\s]+$/, 'El nombre solo puede contener letras y espacios en blanco')
+  .required('El nombre es obligatorio'),  
+  apellido: Yup.string()
+  .matches(/^[a-zA-Z\s]+$/, 'El apellido solo puede contener letras y espacios en blanco')
+  .required('El apellido es obligatorio'),  
+  cedula: Yup.string().required('La cédula es obligatoria'),
+  telefono: Yup.string()
+  .matches(/^[0-9]+$/, 'El teléfono solo puede contener números')
+  .required('El teléfono es obligatorio'),
+  direccion: Yup.string().required('La dirección es obligatoria'),
+  correo: Yup.string().email('El correo electrónico no es válido').required('El correo electrónico es obligatorio'),
+});
+
+
+
+const paymentSchema = Yup.object().shape({
+  numeroTarjeta: Yup.string().required('El número de tarjeta es obligatorio'),
+  fechaVencimiento: Yup.string().required('La fecha de vencimiento es obligatoria'),
+  cvc: Yup.string().required('El código de seguridad es obligatorio')
+})
+
 const PaymentForm = () => {
+  const navigate = useNavigate();
+
 
     const { user } = useContext(AuthContext)
     const { updateCartCount } = useContext(CartContext);
@@ -57,28 +87,70 @@ const PaymentForm = () => {
     };
 
     const handleSubmit = e => {
-        e.preventDefault();
-        console.log(products)
+      e.preventDefault();
+    
+      validationSchema.validate(clientData)
+        .then(() => {
+          // Los datos del cliente son válidos
+          paymentSchema.validate(paymentData)
+            .then(() => {
+              // Los datos de pago son válidos
+              const productsToSend = products.map(({ imagen, ...rest }) => rest);
+              const data = {
+                clientData,
+                products: productsToSend,
+                paymentData
+              };
+    
+              axios.post(API, data)
+                .then(response => {
+                  updateCartCount(prevCount => {
+                    const newCount = 0;
+                    // Almacena el nuevo conteo del carrito en localStorage
+                    localStorage.setItem('cartCount', newCount);
+                    return newCount;
+                  });
+    
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Pago realizado',
+                    text: 'El pago se ha realizado correctamente',
+                  });
+                  navigate('/');
 
-        const productsToSend = products.map(({ imagen, ...rest }) => rest);
-        const data = {
-        clientData,
-        products: productsToSend,
-        paymentData
-        };
+                })
+                .catch(error => {
+                  console.error(error);
+    
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error al realizar el pago',
+                    text: 'Ha ocurrido un error al procesar el pago, por favor inténtalo de nuevo más tarde'
+                  });
+                });
+            })
+            .catch(error => {
+              console.error(error);
+    
+              Swal.fire({
+                icon: 'error',
+                title: 'Datos de pago inválidos',
+                text: 'Por favor verifica que los datos de pago sean correctos',
+                footer: error.errors.join('\n'), // Mostrar los mensajes de error en el cuerpo de la alerta
 
-        axios.post(API, data)
-        .then(response => {
-          updateCartCount(prevCount => {
-            const newCount = 0;
-            // Almacena el nuevo conteo del carrito en localStorage
-            localStorage.setItem('cartCount', newCount);
-            return newCount;
-          });
-            console.log(response.data);
+              });
+            });
         })
         .catch(error => {
-            console.error(error);
+          console.error(error);
+    
+          Swal.fire({
+            icon: 'error',
+            title: 'Datos del cliente inválidos',
+            text: 'Por favor verifica que los datos del cliente sean correctos',
+            footer: error.errors.join('\n'), // Mostrar los mensajes de error en el cuerpo de la alerta
+
+          });
         });
     };
   return (
