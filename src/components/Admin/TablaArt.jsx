@@ -104,8 +104,8 @@ const ArticuloTable = () => {
         handleUp={handleUp}
       />
       <div className="w-full px-10 h-full">
-        <div className="md:px-8 px py-4 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
-          <div className="font-[Barlow] mb-8">
+        <div className="md:px-8 px-4 py-4 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
+          <div className="font-[Barlow] mb-8 px-4">
             <div className="bg-azul dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-2 border dark:border-azulC border-azulO">
               <h2 className="text-white text-3xl font-bold text-center">
                 Lista de Artículos
@@ -119,94 +119,78 @@ const ArticuloTable = () => {
                 Agregar Articulo
               </button>
             </div>
-            <div className="font-[Barlow] mb-8">
-              {articulos.length === 0 ? (
-                <div className="flex w-full justify-center items-center text-white">
-                  <p>No hay artículos disponibles.</p>
-                </div>
-              ) : (
-                <div className="w-full px-4 h-full">
-                  <div className="overflow-x-auto p-8 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulW/50">
-                    <div className="inline-block min-w-full shadow rounded-xl overflow-hidden h-full dark:border-azulC border border-azulO">
-                      <table className="min-w-full leading-normal text-xs md:text-sm text-left">
-                        <thead className="text-white bg-azul dark:bg-azulO border-b dark:border-azulC border-azulO">
-                          <tr className="text-center">
-                            <th
-                              scope="col"
-                              className="sm:p-2 md:px-6 md:py-3 text-center"
+            {articulos.length === 0 ? (
+              <div className="flex w-full justify-center items-center dark:text-white text-azulO font-bold">
+                <p>No hay artículos disponibles.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto  shadow rounded-xl overflow-hidden h-full dark:border-azulC border border-azulO">
+                <table className=" w-full leading-normal text-xs md:text-sm text-left">
+                  <thead className="text-white bg-azul dark:bg-azulO border-b dark:border-azulC border-azulO">
+                    <tr className="text-center">
+                      <th scope="col" className="px-4 md:py-3 text-center">
+                        Título
+                      </th>
+                      <th scope="col" className="sm:p-2 md:px-6 md:py-4">
+                        Texto
+                      </th>
+                      <th
+                        scope="col"
+                        className="sm:p-2 md:px-6 md:py-3 text-center"
+                      >
+                        Imagen
+                      </th>
+                      <th
+                        scope="col"
+                        className="sm:p-2 md:px-6 md:py-3 text-center"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-azulW dark:bg-black/50 text-azulO dark:text-white">
+                    {articulos.map((articulo, index) => (
+                      <tr key={index}>
+                        <td className="px-4 py-4 w-48">{articulo.titulo}</td>
+                        <td className="sm:p-2 md:px-6 py-4">
+                          <div className="pr-2 flex overflow-x-auto max-h-40 text-justify">
+                            {articulo.texto}
+                          </div>
+                        </td>
+                        <td className="sm:p-2 md:px-6 py-4">
+                          <div className="w-20 h-20">
+                            <img
+                              src={articulo.imagen}
+                              alt={articulo.titulo}
+                              className="w-full h-full object-cover rounded-full"
+                            />
+                          </div>
+                        </td>
+                        <td className="sm:p-2 md:px-6 py-4">
+                          <div className="flex w-full justify-center items-center">
+                            <button
+                              className="text-white px-4 py-2 rounded-lg mr-2 bg-azul focus:outline-none focus:text-white border-b-4 dark:border-azulC border-azulO hover:bg-azulO dark:hover:bg-azulC/70 focus-within:bg-azulO"
+                              onClick={() => {
+                                editarArticulo(articulo);
+                                handleEditModalSet();
+                              }}
                             >
-                              Título
-                            </th>
-                            <th scope="col" className="sm:p-2 md:px-6 md:py-4">
-                              Texto
-                            </th>
-                            <th
-                              scope="col"
-                              className="sm:p-2 md:px-6 md:py-3 text-center"
+                              Editar
+                            </button>
+                            <button
+                              className="text-white px-4 py-2 rounded-lg mr-2 bg-azul focus:outline-none focus:text-white border-b-4 dark:border-azulC border-azulO hover:bg-azulO dark:hover:bg-azulC/70 focus-within:bg-azulO"
+                              onClick={() => eliminarArticulo(articulo.titulo)}
                             >
-                              Imagen
-                            </th>
-                            <th
-                              scope="col"
-                              className="sm:p-2 md:px-6 md:py-3 text-center"
-                            >
-                              Acciones
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody className="bg-azulW dark:bg-black/50 text-azulO dark:text-white">
-                          {articulos.map((articulo, index) => (
-                            <tr
-                              key={index}
-                              className="text-center text-black dark:text-white border-b dark:border-azulC border-azulO"
-                            >
-                              <td className="sm:p-2 md:px-6 md:py-4 w-48">
-                                {articulo.titulo}
-                              </td>
-                              <td className="sm:p-2 md:px-6 md:py-4">
-                                <div className="pr-2 flex overflow-x-auto md:w-96 w-80 max-h-40 text-justify">
-                                  {articulo.texto}
-                                </div>
-                              </td>
-                              <td className="sm:p-2 md:px-6 md:py-4">
-                                <div className="w-20 h-20">
-                                <img
-                                  src={articulo.imagen}
-                                  alt={articulo.titulo}
-                                  className="w-full h-full object-cover rounded-full"
-                                />
-                                </div>
-                              </td>
-                              <td className="sm:p-2 md:px-6 md:py-4">
-                                <div className="flex w-full justify-center items-center">
-                                  <button
-                                    className="text-white px-4 py-2 rounded-lg mr-2 bg-azul focus:outline-none focus:text-white border-b-4 dark:border-azulC border-azulO hover:bg-azulO dark:hover:bg-azulC/70 focus-within:bg-azulO"
-                                    onClick={() => {
-                                      editarArticulo(articulo);
-                                      handleEditModalSet();
-                                    }}
-                                  >
-                                    Editar
-                                  </button>
-                                  <button
-                                    className="text-white px-4 py-2 rounded-lg mr-2 bg-azul focus:outline-none focus:text-white border-b-4 dark:border-azulC border-azulO hover:bg-azulO dark:hover:bg-azulC/70 focus-within:bg-azulO"
-                                    onClick={() =>
-                                      eliminarArticulo(articulo.titulo)
-                                    }
-                                  >
-                                    Eliminar
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+                              Eliminar
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       </div>
