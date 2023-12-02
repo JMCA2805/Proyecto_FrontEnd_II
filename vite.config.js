@@ -11,7 +11,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ["**/*.{js,jsx,css,html,ico,png,jpg,svg}"],
       },
-      includeAssets: ['**/*.{js,jsx,css,html,ico,png,jpg,svg}'],
+      includeAssets: ["**/*.{js,jsx,css,html,ico,png,jpg,svg}"],
       manifest: {
         id: "/",
         name: "WebStore Wonderland App",
@@ -49,8 +49,8 @@ export default defineConfig({
       },
       devOptions: {
         enabled: true,
-        type: 'module',
-      }
+        type: "module",
+      },
     }),
   ],
   server: {
