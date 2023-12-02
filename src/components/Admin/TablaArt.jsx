@@ -11,7 +11,6 @@ const ArticuloTable = () => {
   const [articulos, setArticulos] = useState([]);
   const [articuloSeleccionado, setArticuloSeleccionado] = useState(null);
   const [datosActualizados, setDatosActualizados] = useState({});
-  const [imagen, setImagen] = useState("");
 
   const [up, setUp] = useState(true);
   const handleUp = () => setUp(!up);
@@ -43,8 +42,6 @@ const ArticuloTable = () => {
     setArticuloSeleccionado(articulo);
     setDatosActualizados({ ...articulo });
   };
-
-
 
   const eliminarArticulo = (titulo) => {
     // Mostrar confirmación con SweetAlert
@@ -106,9 +103,9 @@ const ArticuloTable = () => {
         datosActualizados={datosActualizados}
         handleUp={handleUp}
       />
-     <div className="w-full px-10 h-full">
-        <div className="md:px-8 px-4 py-4 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
-          <div className="font-[Barlow] mb-8 px-4">
+      <div className="w-full px-10 h-full">
+        <div className="md:px-8 px py-4 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
+          <div className="font-[Barlow] mb-8">
             <div className="bg-azul dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-2 border dark:border-azulC border-azulO">
               <h2 className="text-white text-3xl font-bold text-center">
                 Lista de Artículos
@@ -128,7 +125,7 @@ const ArticuloTable = () => {
                   <p>No hay artículos disponibles.</p>
                 </div>
               ) : (
-                <div className="w-full px-10 h-full">
+                <div className="w-full px-4 h-full">
                   <div className="overflow-x-auto p-8 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulW/50">
                     <div className="inline-block min-w-full shadow rounded-xl overflow-hidden h-full dark:border-azulC border border-azulO">
                       <table className="min-w-full leading-normal text-xs md:text-sm text-left">
@@ -140,10 +137,7 @@ const ArticuloTable = () => {
                             >
                               Título
                             </th>
-                            <th
-                              scope="col"
-                              className="sm:p-2 md:px-6 md:py-4 whitespace-nowrap overflow-y-auto max-h-40"
-                            >
+                            <th scope="col" className="sm:p-2 md:px-6 md:py-4">
                               Texto
                             </th>
                             <th
@@ -161,41 +155,48 @@ const ArticuloTable = () => {
                           </tr>
                         </thead>
                         <tbody className="bg-azulW dark:bg-black/50 text-azulO dark:text-white">
-                          {articulos.map((articulo) => (
+                          {articulos.map((articulo, index) => (
                             <tr
-                              key={articulo.id}
-                              className="text-center text-black dark:text-white"
+                              key={index}
+                              className="text-center text-black dark:text-white border-b dark:border-azulC border-azulO"
                             >
-                              <td className="sm:p-2 md:px-6 md:py-4 whitespace-nowrap">
+                              <td className="sm:p-2 md:px-6 md:py-4 w-48">
                                 {articulo.titulo}
                               </td>
-                              <td className="sm:p-2 md:px-6 md:py-4 whitespace-nowrap overflow-y-auto max-h-40">
-                                {articulo.texto}
+                              <td className="sm:p-2 md:px-6 md:py-4">
+                                <div className="pr-2 flex overflow-x-auto md:w-96 w-80 max-h-40 text-justify">
+                                  {articulo.texto}
+                                </div>
                               </td>
-                              <td className="sm:p-2 md:px-6 md:py-4 whitespace-nowrap">
+                              <td className="sm:p-2 md:px-6 md:py-4">
+                                <div className="w-20 h-20">
                                 <img
                                   src={articulo.imagen}
                                   alt={articulo.titulo}
-                                  className="w-20 h-20 object-cover rounded-full mx-auto"
+                                  className="w-full h-full object-cover rounded-full"
                                 />
+                                </div>
                               </td>
-                              <td className="sm:p-2 md:px-6 md:py-4 whitespace-nowrap">
-                                <button
-                                  className="text-white px-4 py-2 rounded-lg mr-2 bg-azul focus:outline-none focus:text-white border-b-4 dark:border-azulC border-azulO hover:bg-azulO dark:hover:bg-azulC/70 focus-within:bg-azulO"
-                                  onClick={() => {
-                                    editarArticulo(articulo);
-                                    handleEditModalSet();
-                                  }}                                >
-                                  Editar
-                                </button>
-                                <button
-                                  className="text-white px-4 py-2 rounded-lg mr-2 bg-azul focus:outline-none focus:text-white border-b-4 dark:border-azulC border-azulO hover:bg-azulO dark:hover:bg-azulC/70 focus-within:bg-azulO"
-                                  onClick={() =>
-                                    eliminarArticulo(articulo.titulo)
-                                  }
-                                >
-                                  Eliminar
-                                </button>
+                              <td className="sm:p-2 md:px-6 md:py-4">
+                                <div className="flex w-full justify-center items-center">
+                                  <button
+                                    className="text-white px-4 py-2 rounded-lg mr-2 bg-azul focus:outline-none focus:text-white border-b-4 dark:border-azulC border-azulO hover:bg-azulO dark:hover:bg-azulC/70 focus-within:bg-azulO"
+                                    onClick={() => {
+                                      editarArticulo(articulo);
+                                      handleEditModalSet();
+                                    }}
+                                  >
+                                    Editar
+                                  </button>
+                                  <button
+                                    className="text-white px-4 py-2 rounded-lg mr-2 bg-azul focus:outline-none focus:text-white border-b-4 dark:border-azulC border-azulO hover:bg-azulO dark:hover:bg-azulC/70 focus-within:bg-azulO"
+                                    onClick={() =>
+                                      eliminarArticulo(articulo.titulo)
+                                    }
+                                  >
+                                    Eliminar
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                           ))}
@@ -203,76 +204,6 @@ const ArticuloTable = () => {
                       </table>
                     </div>
                   </div>
-                </div>
-              )}
-              {articuloSeleccionado && (
-                <div className="bg-azulC dark:bg-azulO rounded-lg p-4 mx-4 sm:mx-28 mb-8 border dark:border-VerdeC border-azulO">
-                  <h2 className="text-white text-3xl font-bold text-center">
-                    Editar Artículo
-                  </h2>
-                  <form className="mt-4 text-white">
-                    <div className="mb-4">
-                      <label
-                        htmlFor="titulo"
-                        className="block text-xl font-bold mb-2"
-                      >
-                        Título:
-                      </label>
-                      <input
-                        type="text"
-                        id="titulo"
-                        name="titulo"
-                        value={datosActualizados.titulo || ""}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 rounded-lg bg-azulO dark:bg-azulC border border-azulO dark:border-VerdeC focus:outline-none focus:border-VerdeC"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="Texto"
-                        className="block text-xl font-bold mb-2"
-                      >
-                        Texto:
-                      </label>
-                      <input
-                        type="text"
-                        id="texto"
-                        name="texto"
-                        value={datosActualizados.texto || ""}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 rounded-lg bg-azulO dark:bg-azulC border border-azulO dark:border-VerdeC focus:outline-none focus:border-VerdeC"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label>
-                        Foto del Articulo:
-                        <input
-                          className="block w-full text-sm text-black  border  border-gray-300 rounded-lg cursor-pointer bg-azulO dark:text-white focus:outline-none dark:bg-azulO dark:border-gray-azulO dark:placeholder-azulO"
-                          id="file_input"
-                          type="file"
-                          onChange={(e) => {
-                            setImagen(e.target.files[0]);
-                          }}
-                          name="imagen"
-                        />
-                      </label>
-                    </div>
-                    <div className="flex justify-center">
-                      <button
-                        type="button"
-                        className="bg-azulO hover:bg-azulW hover:text-black dark:bg-azulC text-white font-bold py-2 px-4 rounded mx-1"
-                      >
-                        Actualizar
-                      </button>
-                      <button
-                        type="button"
-                        className="bg-azulO hover:bg-azulW hover:text-black dark:bg-azulC text-white font-bold py-2 px-4 rounded mx-1"
-                        onClick={() => setArticuloSeleccionado(null)}
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-                  </form>
                 </div>
               )}
             </div>
