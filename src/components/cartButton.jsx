@@ -19,19 +19,21 @@ export const fetchCartProductsCount = async (userId, setSelectedProductsCount) =
 };
 
 const CartButton = () => {
-  const [selectedProductsCount, setSelectedProductsCount] = useState(0);
   const { user, loggedIn } = useContext(AuthContext);
-  const { cartCount } = useContext(CartContext);
+  const { cartCount, updateCartCount } = useContext(CartContext);
+
+  // Inicializa el estado del carrito con el valor almacenado en localStorage para el usuario actual
   useEffect(() => {
     if (user.id) {
-      fetchCartProductsCount(user.id, setSelectedProductsCount);
+      const initialCartCount = Number(localStorage.getItem(`cartCount-${user.id}`)) || 0;
+      updateCartCount(initialCartCount);
+      fetchCartProductsCount(user.id, updateCartCount);
     }
   }, [user.id]);
 
   return (
     <>
-      
-      {loggedIn && (
+       {loggedIn && (
         <Link
           to="/carrito"
           className="fixed bottom-8 bg-azul text-white right-8 rounded-full p-3 shadow-lg z-10 hover:bg-azulC hover:shadow-xl transition-all duration-500 ease-in-out"
@@ -44,7 +46,6 @@ const CartButton = () => {
           )}
         </Link>
       )}
-    
     </>
   );
 };

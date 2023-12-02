@@ -52,7 +52,7 @@ const Card = () => {
         updateCartCount(prevCount => {
           const newCount = prevCount - 1;
           // Almacena el nuevo conteo del carrito en localStorage
-          localStorage.setItem('cartCount', newCount);
+          localStorage.setItem(`cartCount-${user.id}`, newCount);
           return newCount;
         });
       } else {
@@ -71,7 +71,7 @@ const Card = () => {
         updateCartCount(prevCount => {
           const newCount = prevCount + 1;
           // Almacena el nuevo conteo del carrito en localStorage
-          localStorage.setItem('cartCount', newCount);
+          localStorage.setItem(`cartCount-${user.id}`, newCount);
           return newCount;
         });
       }

@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from "../contexts/AuthProvider";
-
+import { CartContext } from '../contexts/CartContext';
 const API = import.meta.env.VITE_PAYMENT_URL;
 const API2 = import.meta.env.VITE_GETCARRITO_URL;
 
 const PaymentForm = () => {
 
     const { user } = useContext(AuthContext)
-
+    const { updateCartCount } = useContext(CartContext);
     const [clientData, setClientData] = useState({
         id: user.id,
         nombre: '',
@@ -69,6 +69,12 @@ const PaymentForm = () => {
 
         axios.post(API, data)
         .then(response => {
+          updateCartCount(prevCount => {
+            const newCount = 0;
+            // Almacena el nuevo conteo del carrito en localStorage
+            localStorage.setItem('cartCount', newCount);
+            return newCount;
+          });
             console.log(response.data);
         })
         .catch(error => {
