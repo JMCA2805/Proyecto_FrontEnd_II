@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import AddProd from "./Modal/AddProd";
 import EditProd from "./Modal/EditProd";
 
-
 const API = import.meta.env.VITE_PRODUCTS_URL;
 
 export default function TablaProductos() {
@@ -23,7 +22,7 @@ export default function TablaProductos() {
     // Lógica para obtener los datos de los ofertas desde el backend
     axios
       .get(API, {
-        withCredentials: true
+        withCredentials: true,
       })
       .then((response) => {
         setData(response.data);
@@ -93,7 +92,7 @@ export default function TablaProductos() {
         handleUp={handleUp}
       />
 
-<EditProd
+      <EditProd
         openEditModal={openEditModal}
         handleEditModalSet={handleEditModalSet}
         productoSeleccionado={productoSeleccionado}
@@ -108,7 +107,7 @@ export default function TablaProductos() {
           <div className="font-[Barlow] mb-8 px-4">
             <div className="bg-azul dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-2 border dark:border-azulC border-azulO">
               <h2 className="text-white text-3xl font-bold text-center">
-                Inventario/Crear
+                Inventario
               </h2>
             </div>
             <div className="w-full flex justify-center items-center md:justify-end md:items-end pb-2">
@@ -181,26 +180,32 @@ export default function TablaProductos() {
                       (
                         producto //Guardar en estado de componente
                       ) => (
-                        <tr key={producto.serial} id={producto.serial}>
-                          <td className="sm:p-2 md:px-6 md:py-3 text-center">
+                        <tr
+                          key={producto.serial}
+                          id={producto.serial}
+                          className="border-b dark:border-azulC border-azulO"
+                        >
+                          <td className="p-2 md:px-6 md:py-3 text-center">
                             {producto.serial}
                           </td>
-                          <td className="sm:p-2 md:px-6 md:py-3 text-center">
+                          <td className="p-2 md:px-6 md:py-3 text-center">
                             {producto.nombre}
                           </td>
-                          <td className="sm:p-2 md:px-6 md:py-3 text-center">
-                            {producto.descripcion}
+                          <td className="p-2 md:px-6 md:py-3">
+                            <div className="pr-2 flex overflow-x-auto max-h-40 text-justify">
+                              {producto.descripcion}
+                            </div>
                           </td>
-                          <td className="sm:p-2 md:px-6 md:py-3 text-center">
+                          <td className="p-2 md:px-6 md:py-3 text-center">
                             {producto.precio}
                           </td>
-                          <td className="sm:p-2 md:px-6 md:py-3 text-center">
+                          <td className="p-2 md:px-6 md:py-3 text-center">
                             {producto.cantidad}
                           </td>
-                          <td className="sm:p-2 md:px-6 md:py-3 text-center">
+                          <td className="p-2 md:px-6 md:py-3 text-center">
                             {producto.categoria}
                           </td>
-                          <td className="sm:p-2 md:px-6 md:py-4 whitespace-nowrap">
+                          <td className="p-2 md:px-6 md:py-4 whitespace-nowrap">
                             <img
                               src={producto.imagen}
                               alt={producto.titulo}
@@ -214,7 +219,8 @@ export default function TablaProductos() {
                                 onClick={() => {
                                   editarProducto(producto);
                                   handleEditModalSet();
-                                }}                                 >
+                                }}
+                              >
                                 Editar
                               </button>
                               <button

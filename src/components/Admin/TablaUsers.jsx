@@ -11,7 +11,6 @@ const UserTable = () => {
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
   const [datosActualizados, setDatosActualizados] = useState({});
 
-  
   const [up, setUp] = useState(true);
   const handleUp = () => setUp(!up);
 
@@ -27,9 +26,6 @@ const UserTable = () => {
       });
   }, [up]);
 
-
-
-
   const [openModal, setOpenModal] = useState(false);
   const handleModalSet = () => setOpenModal(!openModal);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -44,7 +40,6 @@ const UserTable = () => {
     setDatosActualizados({ ...datosActualizados, [name]: value });
   };
 
- 
   const eliminarUsuario = (correo) => {
     // Mostrar confirmación con SweetAlert
     Swal.fire({
@@ -90,8 +85,8 @@ const UserTable = () => {
   };
 
   return (
-    <>  
-    <EditUser
+    <>
+      <EditUser
         openEditModal={openEditModal}
         handleEditModalSet={handleEditModalSet}
         usuarioSeleccionado={usuarioSeleccionado}
@@ -101,128 +96,121 @@ const UserTable = () => {
         datosActualizados={datosActualizados}
         handleUp={handleUp}
       />
-     <div className="w-full px-10 h-full">
-      <div className="overflow-x-auto px-8 py-0 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
-        <div className="font-poppins mb-8">
-        <div className="bg-azul dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-2 border dark:border-azulC border-azulO">
+      <div className="w-full px-10 h-full">
+        <div className="md:px-8 px-4 py-4 w-full h-full rounded-xl dark:bg-azulO/50 bg-azulC/80 mb-4">
+          <div className="font-[Barlow] mb-8 px-4">
+            <div className="bg-azul dark:bg-azulO rounded-lg p-4 mx-4 mt-4 sm:mx-28 mb-2 border dark:border-azulC border-azulO">
               <h2 className="text-white text-3xl font-bold text-center">
                 Lista de Usuarios
               </h2>
             </div>
-          {users.length === 0 ? (
+            {users.length === 0 ? (
               <div className="flex w-full justify-center items-center dark:text-white text-azulO font-bold">
-              <p>No hay usuarios disponibles.</p>
-            </div>
-          ) : (
-            <div className="w-full px-10 h-full">
-              <div className="overflow-x-auto p-8 w-full h-full rounded-xl dark:bg-MoradoO/50 bg-Moradote/50">
-              <div className="inline-block min-w-full shadow rounded-xl overflow-hidden h-full dark:border-azulC border border-azulO">
-                <table className="min-w-full leading-normal text-xs md:text-sm text-left">
+                <p>No hay usuarios disponibles.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto  shadow rounded-xl overflow-hidden h-full dark:border-azulC border border-azulO">
+                <table className=" w-full leading-normal text-xs md:text-sm text-left">
                   <thead className="text-white bg-azul dark:bg-azulO border-b dark:border-azulC border-azulO">
-                      <tr className="text-center">
-                        <th
-                          scope="col"
-                          className="sm:p-2 md:px-6 md:py-3 text-center"
-                        >
-                          Nombre
-                        </th>
-                        <th
-                          scope="col"
-                          className="sm:p-2 md:px-6 md:py-3 text-center"
-                        >
-                          Apellido
-                        </th>
-                        <th
-                          scope="col"
-                          className="sm:p-2 md:px-6 md:py-3 text-center"
-                        >
-                          Correo
-                        </th>
-                        <th
-                          scope="col"
-                          className="sm:p-2 md:px-6 md:py-3 text-center"
-                        >
-                          Descripción
-                        </th>
-                        <th
-                          scope="col"
-                          className="sm:p-2 md:px-6 md:py-3 text-center"
-                        >
-                          Teléfono
-                        </th>
-                        <th
-                          scope="col"
-                          className="sm:p-2 md:px-6 md:py-3 text-center"
-                        >
-                          Acciones
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-azulW dark:bg-black/50 text-azulO dark:text-white">
-                      {Array.isArray(users) ? (
-                        users.map((usuario) => (
-                          <tr key={usuario._id}>
-                            <td className="sm:p-2 md:px-6 md:py-3 text-center">
-                              {usuario.nombre}
-                            </td>
-                            <td className="sm:p-2 md:px-6 md:py-3 text-center">
-                              {usuario.apellido}
-                            </td>
-                            <td className="sm:p-2 md:px-6 md:py-3 text-center">
-                              {usuario.correo}
-                            </td>
-                            <td className="sm:p-2 md:px-6 md:py-3 text-center">
-                              {usuario.descripcion}
-                            </td>
-                            <td className="sm:p-2 md:px-6 md:py-3 text-center">
-                              {usuario.telefono}
-                            </td>
-                            <td className="sm:p-2 md:px-6 md:py-3 text-center">
-                            <div className="flex items-center gap-4">
-                                <button
+                    <tr className="text-center">
+                      <th
+                        scope="col"
+                        className="sm:p-2 md:px-6 md:py-3 text-center"
+                      >
+                        Nombre
+                      </th>
+                      <th
+                        scope="col"
+                        className="sm:p-2 md:px-6 md:py-3 text-center"
+                      >
+                        Apellido
+                      </th>
+                      <th
+                        scope="col"
+                        className="sm:p-2 md:px-6 md:py-3 text-center"
+                      >
+                        Correo
+                      </th>
+                      <th
+                        scope="col"
+                        className="sm:p-2 md:px-6 md:py-3 text-center"
+                      >
+                        Descripción
+                      </th>
+                      <th
+                        scope="col"
+                        className="sm:p-2 md:px-6 md:py-3 text-center"
+                      >
+                        Teléfono
+                      </th>
+                      <th
+                        scope="col"
+                        className="sm:p-2 md:px-6 md:py-3 text-center"
+                      >
+                        Acciones
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-azulW dark:bg-black/50 text-azulO dark:text-white">
+                    {Array.isArray(users) ? (
+                      users.map((usuario, index) => (
+                        <tr key={index}>
+                          <td className="p-4 md:px-6 md:py-3 text-center">
+                            {usuario.nombre}
+                          </td>
+                          <td className="p-4 md:px-6 md:py-3 text-center">
+                            {usuario.apellido}
+                          </td>
+                          <td className="p-4 md:px-6 md:py-3 text-center">
+                            {usuario.correo}
+                          </td>
+                          <td className="p-4 md:px-6 md:py-3 text-center">
+                            {usuario.descripcion}
+                          </td>
+                          <td className="p-4 md:px-6 md:py-3 text-center">
+                            {usuario.telefono}
+                          </td>
+                          <td className="p-4 md:px-6 md:py-3 text-center">
+                            <div className="flex items-center justify-center w-full gap-4">
+                              <button
                                 className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
                                 onClick={() => {
-                                  editarUsuario(usuario)
+                                  editarUsuario(usuario);
                                   handleEditModalSet();
-
                                 }}
-                                >
-                                  Editar
-                                </button>
+                              >
+                                Editar
+                              </button>
 
-                                <button
+                              <button
                                 className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
-                                onClick={() =>
-                                    eliminarUsuario(usuario.correo)
-                                  }
-                                >
-                                  Borrar
-                                </button>
-                                {/* Otros botones de acción */}
-                              </div>
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan="7">Cargando usuarios...</td>
+                                onClick={() => eliminarUsuario(usuario.correo)}
+                              >
+                                Borrar
+                              </button>
+                              {/* Otros botones de acción */}
+                            </div>
+                          </td>
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan="7"
+                          className="dark:text-white text-azulO font-bold"
+                        >
+                          Cargando usuarios...
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
-            </div>
-          )}
-
-      
+            )}
+          </div>
         </div>
       </div>
-    </div>  
     </>
-
-
-   
   );
 };
 

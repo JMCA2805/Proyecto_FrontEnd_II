@@ -150,7 +150,7 @@ const ArticuloTable = () => {
                   </thead>
                   <tbody className="bg-azulW dark:bg-black/50 text-azulO dark:text-white">
                     {articulos.map((articulo, index) => (
-                      <tr key={index}>
+                      <tr key={index} className="border-b dark:border-azulC border-azulO">
                         <td className="px-4 py-4 w-48">{articulo.titulo}</td>
                         <td className="sm:p-2 md:px-6 py-4">
                           <div className="pr-2 flex overflow-x-auto max-h-40 text-justify">
