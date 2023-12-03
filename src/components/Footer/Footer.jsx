@@ -73,7 +73,7 @@ const Footer = () => {
           </ul>
           {/* Derechos de autor */}
           <span className="text-sm text-white sm:text-center dark:text-gray-400">
-            Hotel Águila © 2023 All Rights Reserved
+            WebStore Wonderland © 2023 All Rights Reserved
             <a href="#" className="hover:underline">
               {" "}
               - JMLJY™
