@@ -7,11 +7,14 @@ import { AuthContext } from "../contexts/AuthProvider";
 import CartButton from "./cartButton";
 import Swal from "sweetalert2";
 
-const API = import.meta.env.VITE_PRODUCTS_URL;
-const API_FAV = import.meta.env.VITE_URL_ADD_FAV;
 const Card = () => {
+   
+   const API = import.meta.env.VITE_PRODUCTS_URL;
+   const API_FAV = import.meta.env.VITE_URL_ADD_FAV;
+   
    const [addedToCart, setAddedToCart] = useState({});
    const { loggedIn } = useContext(AuthContext);
+   
    const [addedToFav, setAddedToFav] = useState(() => {
       const saved = localStorage.getItem('addedToFav');
       if (saved) {
@@ -19,6 +22,7 @@ const Card = () => {
       }
       return {};
    });
+   
    const { updateCartCount } = useContext(CartContext);
 
 
@@ -33,7 +37,6 @@ const Card = () => {
 
    const [selectedItem, setSelectedItem] = useState(null);
 
-
    const productsPerPage = 6;
    const indexOfLastProduct = currentPage * productsPerPage;
    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -43,6 +46,7 @@ const Card = () => {
       // Función para abrir el formulario de creación
    };
 
+   //Funcion para agregar o eliminar un producto del carrito
    const handleAddToCart = async (serial, nombre, descripcion, precio) => {
       try {
          if (addedToCart[serial]) {
@@ -53,7 +57,6 @@ const Card = () => {
                precio,
                accion: "eliminar"
             });
-
             setAddedToCart((prevState) => ({
                ...prevState,
                [serial]: false
@@ -70,7 +73,7 @@ const Card = () => {
                   confirmButtonText: "Aceptar",
                }).then((result) => {
                   if (result.isConfirmed) {
-                     // Aquí puedes poner el código que quieras ejecutar cuando el usuario presione "Aceptar"
+                     //cuando el usuario presione "Aceptar"
                   }
                });
                return newCount;
@@ -99,7 +102,7 @@ const Card = () => {
                   confirmButtonText: "Aceptar",
                }).then((result) => {
                   if (result.isConfirmed) {
-                     // Aquí puedes poner el código que quieras ejecutar cuando el usuario presione "Aceptar"
+                     //cuando el usuario presione "Aceptar"
                   }
                });
                return newCount;
@@ -131,37 +134,35 @@ const Card = () => {
    }
 
    // Función para eliminar un producto de los favoritos
-  // Al eliminar de favoritos
-const handleRemoveFromFav = async (serial) => {
-   const response = await fetch(
-      `http://localhost:4000/favorito?id_prod=${serial}`,
-      {
-        method: "DELETE",
-      }
-    );
-    const data = await response.json();
-
-   // Actualiza el estado addedToFav para este artículo
-   setAddedToFav(prevState => {
-      const updatedState = { ...prevState, [serial]: false };
-      // Asocia los favoritos con el ID del usuario en el almacenamiento local
-      localStorage.setItem(`addedToFav_${user.id}`, JSON.stringify(updatedState));
-
-      // Muestra una alerta con Swal.fire
-      Swal.fire({
-         icon: "success",
-         title: "Producto eliminado de favoritos",
-         text: `El producto con serial ${serial} ha sido eliminado de favoritos.`,
-         confirmButtonText: "Aceptar",
-      }).then((result) => {
-         if (result.isConfirmed) {
-            // Aquí puedes poner el código que quieras ejecutar cuando el usuario presione "Aceptar"
+   const handleRemoveFromFav = async (serial) => {
+      const response = await fetch(
+         `${API_FAV}?id_prod=${serial}`,
+         {
+            method: "DELETE",
          }
-      });
+      );
+      const data = await response.json();
 
-      return updatedState;
-   });
-};
+      // Actualiza el estado addedToFav para este artículo
+      setAddedToFav(prevState => {
+         const updatedState = { ...prevState, [serial]: false };
+         // Asocia los favoritos con el ID del usuario en el almacenamiento local
+         localStorage.setItem(`addedToFav_${user.id}`, JSON.stringify(updatedState));
+
+         // Muestra una alerta con Swal.fire
+         Swal.fire({
+            icon: "success",
+            title: "Producto eliminado de favoritos",
+            text: `El producto con serial ${serial} ha sido eliminado de favoritos.`,
+            confirmButtonText: "Aceptar",
+         }).then((result) => {
+            if (result.isConfirmed) {
+               // cuando el usuario presione "Aceptar"
+            }
+         });
+         return updatedState;
+      });
+   };
 
 
    const handleAddToFav = async (serial, nombre, descripcion, precio) => {
@@ -194,7 +195,7 @@ const handleRemoveFromFav = async (serial) => {
                confirmButtonText: "Aceptar",
             }).then((result) => {
                if (result.isConfirmed) {
-                  // Aquí puedes poner el código que quieras ejecutar cuando el usuario presione "Aceptar"
+                  //cuando el usuario presione "Aceptar"
                }
             });
             return updatedState;
@@ -205,12 +206,6 @@ const handleRemoveFromFav = async (serial) => {
          console.log('There was a problem with the fetch operation: ' + error.message);
       }
    };
-
-
- 
-
-
-
 
    const handlePreviousPage = () => {
       setCurrentPage(currentPage - 1);
@@ -348,48 +343,38 @@ const handleRemoveFromFav = async (serial) => {
                            key={item.serial}
                            id={item.serial}
                            className="border-2 border-azulC xl:hover:-translate-y-1 xl:hover:ease-in xl:hover:duration-300 xl:hover:dark:bg-black relative z-0 dark:text-white dark:bg-black/30 bg-white rounded-lg shadow-lg overflow-hidden w-full border border-pizazz/40 p-4 ssm:h-80 hover:shadow-xl hover:border-dark-tangerine hover:border-2"
-                        >
-
-                           
-
-
-
+                        >                  
 
                            {loggedIn && (
-              <>
-               <div className="flex justify-end space-x-1">
-                              <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white " >
-                                 <button
-                                    onClick={() => handleAddToCart(item.serial, item.nombre, item.descripcion, item.precio)}
-                                    className={addedToCart[item.serial] ? "btn-amarrillo" : "btn-blanco"}
-                                 >
-                                    {addedToCart[item.serial] ? (
-                                       <FaShoppingCart className="text-green-500 dark:text-green-500" />
-                                    ) : (
-                                       <FaShoppingCart className="text-azulC dark:text-white" />
-                                    )}
-                                 </button>
-                              </div>
-                              <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white">
-                                 <button
-                                    onClick={() => handleFavClick(item.serial, item.nombre, item.descripcion, item.precio)}
-                                    className={addedToFav[item.serial] ? "btn-amarrillo" : "btn-blanco"}
-                                 >
-                                    {addedToFav[item.serial] ? (
-                                       <FaHeart className="text-green-500 dark:text-green-500" />
-                                    ) : (
-                                       <FaHeart className="text-azulC dark:text-white" />
-                                    )}
-                                 </button>
-                              </div>
-
-                           </div>
-              </>
-            )}
-
-
-
-
+                              <>
+                              <div className="flex justify-end space-x-1">
+                                 <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white " >
+                                    <button
+                                       onClick={() => handleAddToCart(item.serial, item.nombre, item.descripcion, item.precio)}
+                                       className={addedToCart[item.serial] ? "btn-amarrillo" : "btn-blanco"}
+                                    >
+                                       {addedToCart[item.serial] ? (
+                                          <FaShoppingCart className="text-green-500 dark:text-green-500" />
+                                       ) : (
+                                          <FaShoppingCart className="text-azulC dark:text-white" />
+                                       )}
+                                    </button>
+                                 </div>
+                                 <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white">
+                                    <button
+                                       onClick={() => handleFavClick(item.serial, item.nombre, item.descripcion, item.precio)}
+                                       className={addedToFav[item.serial] ? "btn-amarrillo" : "btn-blanco"}
+                                    >
+                                       {addedToFav[item.serial] ? (
+                                          <FaHeart className="text-green-500 dark:text-green-500" />
+                                       ) : (
+                                          <FaHeart className="text-azulC dark:text-white" />
+                                       )}
+                                    </button>
+                                 </div>
+                             </div>
+                             </>
+                           )}
                            <div
                               className={
                                  " flex items-center justify-center w-full border-b border-pizazz/30 bg-white-smoke rounded-t-lg dark:bg-woodsmoke"
