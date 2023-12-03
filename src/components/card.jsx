@@ -5,11 +5,13 @@ import { CartContext } from '../contexts/CartContext';
 import ProductModal from './ModalProducts';
 import { AuthContext } from "../contexts/AuthProvider";
 import CartButton from "./cartButton";
+import Swal from "sweetalert2";
 
 const API = import.meta.env.VITE_PRODUCTS_URL;
 const API_FAV = import.meta.env.VITE_URL_ADD_FAV;
 const Card = () => {
    const [addedToCart, setAddedToCart] = useState({});
+   const { loggedIn } = useContext(AuthContext);
    const [addedToFav, setAddedToFav] = useState(() => {
       const saved = localStorage.getItem('addedToFav');
       if (saved) {
@@ -60,6 +62,17 @@ const Card = () => {
                const newCount = prevCount - 1;
                // Almacena el nuevo conteo del carrito en localStorage
                localStorage.setItem(`cartCount-${user.id}`, newCount);
+
+               Swal.fire({
+                  icon: "success",
+                  title: "Producto eliminado deL Carrito",
+                  text: `El producto ${nombre} ha sido eliminado del carrito.`,
+                  confirmButtonText: "Aceptar",
+               }).then((result) => {
+                  if (result.isConfirmed) {
+                     // Aquí puedes poner el código que quieras ejecutar cuando el usuario presione "Aceptar"
+                  }
+               });
                return newCount;
             });
          } else {
@@ -79,6 +92,16 @@ const Card = () => {
                const newCount = prevCount + 1;
                // Almacena el nuevo conteo del carrito en localStorage
                localStorage.setItem(`cartCount-${user.id}`, newCount);
+               Swal.fire({
+                  icon: "success",
+                  title: "Producto ha sido añadido al carrito",
+                  text: `El producto ${nombre} ha sido añadido al carrito.`,
+                  confirmButtonText: "Aceptar",
+               }).then((result) => {
+                  if (result.isConfirmed) {
+                     // Aquí puedes poner el código que quieras ejecutar cuando el usuario presione "Aceptar"
+                  }
+               });
                return newCount;
             });
          }
@@ -108,25 +131,38 @@ const Card = () => {
    }
 
    // Función para eliminar un producto de los favoritos
-   const handleRemoveFromFav = async (serial) => {
-      const response = await fetch(
-         `http://localhost:4000/favorito?id_prod=${serial}`,
-         {
-           method: "DELETE",
+  // Al eliminar de favoritos
+const handleRemoveFromFav = async (serial) => {
+   const response = await fetch(
+      `http://localhost:4000/favorito?id_prod=${serial}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const data = await response.json();
+
+   // Actualiza el estado addedToFav para este artículo
+   setAddedToFav(prevState => {
+      const updatedState = { ...prevState, [serial]: false };
+      // Asocia los favoritos con el ID del usuario en el almacenamiento local
+      localStorage.setItem(`addedToFav_${user.id}`, JSON.stringify(updatedState));
+
+      // Muestra una alerta con Swal.fire
+      Swal.fire({
+         icon: "success",
+         title: "Producto eliminado de favoritos",
+         text: `El producto con serial ${serial} ha sido eliminado de favoritos.`,
+         confirmButtonText: "Aceptar",
+      }).then((result) => {
+         if (result.isConfirmed) {
+            // Aquí puedes poner el código que quieras ejecutar cuando el usuario presione "Aceptar"
          }
-       );
-       const data = await response.json();
-         console.log(data.message);
-
-
-      // Actualiza el estado addedToFav para este artículo
-      setAddedToFav(prevState => {
-         const updatedState = { ...prevState, [serial]: false };
-         // Asocia los favoritos con el ID del usuario en el almacenamiento local
-         localStorage.setItem(`addedToFav_${user.id}`, JSON.stringify(updatedState));
-         return updatedState;
       });
-   };
+
+      return updatedState;
+   });
+};
+
 
    const handleAddToFav = async (serial, nombre, descripcion, precio) => {
       try {
@@ -151,7 +187,18 @@ const Card = () => {
             const updatedState = { ...prevState, [serial]: true };
             // Asocia los favoritos con el ID del usuario en el almacenamiento local
             localStorage.setItem(`addedToFav_${user.id}`, JSON.stringify(updatedState));
+            Swal.fire({
+               icon: "success",
+               title: "Producto añadido a favoritos",
+               text: `El producto ${nombre} ha sido añadido a favoritos.`,
+               confirmButtonText: "Aceptar",
+            }).then((result) => {
+               if (result.isConfirmed) {
+                  // Aquí puedes poner el código que quieras ejecutar cuando el usuario presione "Aceptar"
+               }
+            });
             return updatedState;
+
          });
 
       } catch (error) {
@@ -303,7 +350,14 @@ const Card = () => {
                            className="border-2 border-azulC xl:hover:-translate-y-1 xl:hover:ease-in xl:hover:duration-300 xl:hover:dark:bg-black relative z-0 dark:text-white dark:bg-black/30 bg-white rounded-lg shadow-lg overflow-hidden w-full border border-pizazz/40 p-4 ssm:h-80 hover:shadow-xl hover:border-dark-tangerine hover:border-2"
                         >
 
-                           <div className="flex justify-end space-x-1">
+                           
+
+
+
+
+                           {loggedIn && (
+              <>
+               <div className="flex justify-end space-x-1">
                               <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white " >
                                  <button
                                     onClick={() => handleAddToCart(item.serial, item.nombre, item.descripcion, item.precio)}
@@ -330,6 +384,11 @@ const Card = () => {
                               </div>
 
                            </div>
+              </>
+            )}
+
+
+
 
                            <div
                               className={
