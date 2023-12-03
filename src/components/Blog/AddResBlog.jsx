@@ -6,29 +6,30 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 // Api del backend para la solicitud
-const API = import.meta.env.VITE_PRODREVIEWSADD_URL;
+const API = import.meta.env.VITE_ARTREVIEWSADD_URL;
 
 //Props
-export default function AgregarResProd({ openModal2, handleModalSet2, tipo, productonombre, serial }) {
+export default function AgregarResArt({ openModal2, handleModalSet2, tipo, articulo }) {
   // Inicializacion de estados
   const [comentario, setComentario] = useState("");
   const { user } = useContext(AuthContext);
+  
 
   // Funcion para añadir reseñas
   const Añadir = async (e) => {
     e.preventDefault();
   
     const data = {
-      tipo: "producto",
-      producto: productonombre,
+      tipo: "articulo",
+      articulonombre: articulo.titulo,
       nombre: user.nombre,
       comentario: comentario,
-      serial: serial,
       userid : user.id
     };
   
     try {
       const response = await axios.post(API, data);
+      console.log(data)
   
       Swal.fire({
         icon: "success",
@@ -74,7 +75,7 @@ export default function AgregarResProd({ openModal2, handleModalSet2, tipo, prod
           {/* Contenido */}
           <div className="w-full h-full flex flex-col p-8">
             <div className="w-full flex p-4 text-center justify-center font-bold text-black dark:text-white">
-              <span>¿Que te pareció este producto?</span>
+              <span>¿Que te pareció este Artículo?</span>
             </div>
             <textarea
               name="Comentarios"
