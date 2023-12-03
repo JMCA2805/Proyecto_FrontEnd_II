@@ -18,16 +18,21 @@ const AuthProvider = ({ children }) => {
     };
 
     try {
-      console.log(options);
       const response = await axios(options);
       const data = response.data.data;
       setUser(data);
-
       setLoggedIn(true); // Establecer loggedIn a true cuando se obtengan los datos decodificados correctamente
       setLoading(false)
+      await axios(options).then((response) => {
+        const data = response.data.data;
+        setUser(data);
+        setLoggedIn(true); // Establecer loggedIn a true cuando se obtengan los datos decodificados correctamente
+        setLoading(false);
+      });
+
     } catch (error) {
       console.error(error);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -48,10 +53,11 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     getDecodedData();
   }, []);
-  
 
   return (
-    <AuthContext.Provider value={{ user, loggedIn, loading, getDecodedData, logout }}>
+    <AuthContext.Provider
+      value={{ user, loggedIn, loading, getDecodedData, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

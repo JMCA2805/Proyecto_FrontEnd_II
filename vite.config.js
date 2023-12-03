@@ -9,9 +9,31 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       workbox: {
-        globPatterns: ["**/*.{js,jsx,css,html,ico,png,jpg,svg}"],
+        runtimeCaching: [
+          {
+            urlPattern: /^http:\/\/localhost:4000\/.*/i,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "api",
+              cacheableResponse: {
+                statuses: [0, 200, 304],
+              },
+              rangeRequests: true,
+            },
+          },
+          {
+            urlPattern: /^http:\/\/localhost:3000\/.*/i,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "page",
+              cacheableResponse: {
+                statuses: [0, 200, 304],
+              },
+              rangeRequests: true,
+            },
+          },
+        ],
       },
-      includeAssets: ["**/*.{js,jsx,css,html,ico,png,jpg,svg}"],
       manifest: {
         id: "/",
         name: "WebStore Wonderland App",
@@ -50,6 +72,7 @@ export default defineConfig({
       devOptions: {
         enabled: true,
         type: "module",
+        navigateFallback: "index.html",
       },
     }),
   ],

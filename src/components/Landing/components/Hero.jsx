@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import AddReviews from "../../Reviews/AddReviews";
 
 export default function Hero() {
   const { loggedIn } = useContext(AuthContext);
@@ -10,6 +11,7 @@ export default function Hero() {
 
   return (
     <>
+      <AddReviews openModal={openModal} handleModalSet={handleModalSet} />
       <section className="bg-[url('/Hero.jpg')] bg-cover bg-center dark:bg-gray-900 font-poppins bg-fixed sm:bg-center">
         <div className="px-8 py-8 mx-auto lg:py-16">
           {/* Contenido principal */}
@@ -29,6 +31,15 @@ export default function Hero() {
             {loggedIn && (
               <>
                 <div className="gap-8 flex">
+                  <Link
+                    to={"/"}
+                    className="inline-block rounded-md text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
+                    onClick={handleModalSet}
+                  >
+                    <div className="flex rounded-md w-full h-full px-3 py-2 text-white font-bold">
+                      Reseñar
+                    </div>
+                  </Link>
                   <Link
                     to={"/"}
                     className="inline-block rounded-md text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"

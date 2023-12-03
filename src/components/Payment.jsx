@@ -2,10 +2,40 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from "../contexts/AuthProvider";
 import { CartContext } from '../contexts/CartContext';
+import * as Yup from 'yup';
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
+
 const API = import.meta.env.VITE_PAYMENT_URL;
 const API2 = import.meta.env.VITE_GETCARRITO_URL;
 
+
+const validationSchema = Yup.object().shape({
+  nombre: Yup.string()
+  .matches(/^[a-zA-Z\s]+$/, 'El nombre solo puede contener letras y espacios en blanco')
+  .required('El nombre es obligatorio'),  
+  apellido: Yup.string()
+  .matches(/^[a-zA-Z\s]+$/, 'El apellido solo puede contener letras y espacios en blanco')
+  .required('El apellido es obligatorio'),  
+  cedula: Yup.string().required('La cédula es obligatoria'),
+  telefono: Yup.string()
+  .matches(/^[0-9]+$/, 'El teléfono solo puede contener números')
+  .required('El teléfono es obligatorio'),
+  direccion: Yup.string().required('La dirección es obligatoria'),
+  correo: Yup.string().email('El correo electrónico no es válido').required('El correo electrónico es obligatorio'),
+});
+
+
+
+const paymentSchema = Yup.object().shape({
+  numeroTarjeta: Yup.string().required('El número de tarjeta es obligatorio'),
+  fechaVencimiento: Yup.string().required('La fecha de vencimiento es obligatoria'),
+  cvc: Yup.string().required('El código de seguridad es obligatorio')
+})
+
 const PaymentForm = () => {
+  const navigate = useNavigate();
+
 
     const { user } = useContext(AuthContext)
     const { updateCartCount } = useContext(CartContext);
@@ -20,6 +50,7 @@ const PaymentForm = () => {
     });
 
     const [products, setProducts] = useState([]);
+    const [totalpagar, setTotalPagar] = useState(0);
 
     const [paymentData, setPaymentData] = useState({
         numeroTarjeta: '',
@@ -32,8 +63,10 @@ const PaymentForm = () => {
 
       axios.get(`${API2}/${user.id}`)
         .then(response => {
-          const products = response.data;
+          const products = response.data.carrito;
+          const total = response.data.preciototal
           setProducts(products);
+          setTotalPagar(total);
         })
         .catch(error => {
           console.error('Error al obtener los productos del carrito:', error);
@@ -57,32 +90,74 @@ const PaymentForm = () => {
     };
 
     const handleSubmit = e => {
-        e.preventDefault();
-        console.log(products)
+      e.preventDefault();
+    
+      validationSchema.validate(clientData)
+        .then(() => {
+          // Los datos del cliente son válidos
+          paymentSchema.validate(paymentData)
+            .then(() => {
+              // Los datos de pago son válidos
+              const productsToSend = products.map(({ imagen, ...rest }) => rest);
+              const data = {
+                clientData,
+                products: productsToSend,
+                paymentData
+              };
+    
+              axios.post(API, data)
+                .then(response => {
+                  updateCartCount(prevCount => {
+                    const newCount = 0;
+                    // Almacena el nuevo conteo del carrito en localStorage
+                    localStorage.setItem('cartCount', newCount);
+                    return newCount;
+                  });
+    
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Pago realizado',
+                    text: 'El pago se ha realizado correctamente',
+                  });
+                  navigate('/');
 
-        const productsToSend = products.map(({ imagen, ...rest }) => rest);
-        const data = {
-        clientData,
-        products: productsToSend,
-        paymentData
-        };
+                })
+                .catch(error => {
+                  console.error(error);
+    
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error al realizar el pago',
+                    text: 'Ha ocurrido un error al procesar el pago, por favor inténtalo de nuevo más tarde'
+                  });
+                });
+            })
+            .catch(error => {
+              console.error(error);
+    
+              Swal.fire({
+                icon: 'error',
+                title: 'Datos de pago inválidos',
+                text: 'Por favor verifica que los datos de pago sean correctos',
+                footer: error.errors.join('\n'), // Mostrar los mensajes de error en el cuerpo de la alerta
 
-        axios.post(API, data)
-        .then(response => {
-          updateCartCount(prevCount => {
-            const newCount = 0;
-            // Almacena el nuevo conteo del carrito en localStorage
-            localStorage.setItem('cartCount', newCount);
-            return newCount;
-          });
-            console.log(response.data);
+              });
+            });
         })
         .catch(error => {
-            console.error(error);
+          console.error(error);
+    
+          Swal.fire({
+            icon: 'error',
+            title: 'Datos del cliente inválidos',
+            text: 'Por favor verifica que los datos del cliente sean correctos',
+            footer: error.errors.join('\n'), // Mostrar los mensajes de error en el cuerpo de la alerta
+
+          });
         });
     };
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white-smokeshadow dark:text-white">
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4 bg-white-smokeshadow dark:text-white">
     <h2 className="text-xl font-bold mb-4">Datos cliente</h2>
     <div className="grid grid-cols-2 gap-4 mb-4">
       <div>
@@ -153,17 +228,19 @@ const PaymentForm = () => {
 
       <div className="flex flex-wrap -mx-4">
         {products.map((product, index) => (
-       <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 px-4 mb-4 dark:text-black">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <img alt={product.nombre} src={product.imagen} className="w-full h-48 object-contain mb-4" />
+       <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 px-4 mb-4 dark:text-white ">
+            <div className="rounded-lg shadow-lg p-6 h-full dark:border-azulC border-azul border-2 dark:border-4">
+              <img alt={product.nombre} src={product.imagen} className="w-full h-48 object-contain mb-4 bg-white" />
               <h3 className="font-bold text-lg mb-2">{product.nombre}</h3>
-              <p className="text-sm text-gray-500 mb-2">{product.descripcion}</p>
+              <p className="text-sm mb-2">{product.descripcion}</p>
               <p className="text-lg font-bold mb-2">Precio: {product.precio}</p>
               <p className="text-lg mb-2">Cantidad: {product.cantidad}</p>
             </div>
           </div>
         ))}
       </div>
+
+      <h2 className="text-xl font-bold mb-4">Total a pagar: ${totalpagar}</h2>
 
       <h2 className="text-xl font-bold mb-4">Datos de pago</h2>
       <div className="bg-gradient-to-br from-blue-900 to-blue-500 rounded-xl p-6 mb-4">
@@ -202,7 +279,7 @@ const PaymentForm = () => {
             />
             </div>
         </div>
-        </div>
+      </div>
 
       <button
         type="submit"
