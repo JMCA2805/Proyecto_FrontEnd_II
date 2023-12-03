@@ -151,57 +151,51 @@ const Card = () => {
  
    return (
      <>
-      <div className='pb-8'>
+      <div className='pb-8 mx-20'>
             <form className='flex flex-col gap-2' method='POST' onSubmit={buscarPost}>
 
-            <label className='flex gap-2 items-center'>
-              Filtrar Por:
-              <select
-                value={filtro}
-                className="rounded-lg"
-                onChange={(e) => setFiltro(e.target.value)}
-              >
-                <option value="Nombre">Nombre</option>
-                <option value="Categoria">Categoria</option>
-              </select>
-            </label>
-            
-            <div className='flex gap-2'>
+            <label className="flex gap-2 items-center">
+        <span className="text-azulC font-bold mr-3">Filtrar Por:</span>
+        <select
+          value={filtro}
+          className="rounded-lg"
+          onChange={(e) => setFiltro(e.target.value)}
+        >
+          <option value="Nombre">Nombre</option>
+          <option value="Categoria">Categoria</option>
+        </select>
+      </label>
 
-            {filtro === 'Categoria' ? (
-              <select
-                value={categoria}
-                className=" w-full rounded-lg"
-                onChange={(e) => setCategoria(e.target.value)}
-              >
-                <option value="Computadoras">Computadoras</option>
-                <option value="Laptops">Laptops</option>
-                <option value="Perifericos">Periféricos</option>
-                <option value="Accesorios">Accesorios</option>
-                <option value="Telefonos">Teléfonos</option>
-              </select>
-            ) : (
-              <input
-                type="text"
-                value={buscarText}
-                className="w-full rounded-lg"
-                onChange={(e) => setBuscar(e.target.value)}
-              />
-            )}
-    
-              <button
-                  type="submit"
-                  value={buscarButton}
-                  className="group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-verdeo hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  onChange={(e) => setButton(parseFloat(e.target.value))}
-                >
-                  Buscar
-                </button>
+      {filtro === "Categoria" ? (
+        <select
+          value={categoria}
+          className="w-full rounded-lg"
+          onChange={(e) => setCategoria(e.target.value)}
+        >
+          <option value="Computadoras">Computadoras</option>
+          <option value="Laptops">Laptops</option>
+          <option value="Perifericos">Periféricos</option>
+          <option value="Accesorios">Accesorios</option>
+          <option value="Telefonos">Teléfonos</option>
+        </select>
+      ) : (
+        <input
+          type="text"
+          value={buscarText}
+          className="w-full rounded-lg"
+          onChange={(e) => setBuscar(e.target.value)}
+        />
+      )}
 
-            </div>
-
-
-            </form>
+      <button
+        type="submit"
+        value={buscarButton}
+        className="group relative flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-azulC hover:bg-azulW focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-azulC"
+        onChange={(e) => setButton(parseFloat(e.target.value))}
+      >
+        Buscar
+      </button>
+    </form>
         </div>
  
        {items.length === 0 ? (
