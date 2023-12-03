@@ -16,7 +16,7 @@ const Carrito = () => {
     if (user.id) {
       axios.get(`${API}/${user.id}`)
         .then(response => {
-          setCartItems(response.data);
+          setCartItems(response.data.carrito);
         })
         .catch(error => {
           console.error('Error al obtener los productos del carrito:', error);

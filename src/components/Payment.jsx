@@ -50,6 +50,7 @@ const PaymentForm = () => {
     });
 
     const [products, setProducts] = useState([]);
+    const [totalpagar, setTotalPagar] = useState(0);
 
     const [paymentData, setPaymentData] = useState({
         numeroTarjeta: '',
@@ -62,8 +63,10 @@ const PaymentForm = () => {
 
       axios.get(`${API2}/${user.id}`)
         .then(response => {
-          const products = response.data;
+          const products = response.data.carrito;
+          const total = response.data.preciototal
           setProducts(products);
+          setTotalPagar(total);
         })
         .catch(error => {
           console.error('Error al obtener los productos del carrito:', error);
@@ -154,7 +157,7 @@ const PaymentForm = () => {
         });
     };
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white-smokeshadow dark:text-white">
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4 bg-white-smokeshadow dark:text-white">
     <h2 className="text-xl font-bold mb-4">Datos cliente</h2>
     <div className="grid grid-cols-2 gap-4 mb-4">
       <div>
@@ -225,17 +228,19 @@ const PaymentForm = () => {
 
       <div className="flex flex-wrap -mx-4">
         {products.map((product, index) => (
-       <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 px-4 mb-4 dark:text-black">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <img alt={product.nombre} src={product.imagen} className="w-full h-48 object-contain mb-4" />
+       <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 px-4 mb-4 dark:text-white ">
+            <div className="rounded-lg shadow-lg p-6 h-full dark:border-azulC border-azul border-2 dark:border-4">
+              <img alt={product.nombre} src={product.imagen} className="w-full h-48 object-contain mb-4 bg-white" />
               <h3 className="font-bold text-lg mb-2">{product.nombre}</h3>
-              <p className="text-sm text-gray-500 mb-2">{product.descripcion}</p>
+              <p className="text-sm mb-2">{product.descripcion}</p>
               <p className="text-lg font-bold mb-2">Precio: {product.precio}</p>
               <p className="text-lg mb-2">Cantidad: {product.cantidad}</p>
             </div>
           </div>
         ))}
       </div>
+
+      <h2 className="text-xl font-bold mb-4">Total a pagar: ${totalpagar}</h2>
 
       <h2 className="text-xl font-bold mb-4">Datos de pago</h2>
       <div className="bg-gradient-to-br from-blue-900 to-blue-500 rounded-xl p-6 mb-4">
@@ -274,7 +279,7 @@ const PaymentForm = () => {
             />
             </div>
         </div>
-        </div>
+      </div>
 
       <button
         type="submit"
