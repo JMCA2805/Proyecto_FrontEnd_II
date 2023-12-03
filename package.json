@@ -25,6 +25,7 @@
     "react-router-dom": "^6.20.0",
     "sweetalert2": "^11.6.13",
     "swiper": "^11.0.5",
+    "workbox-build": "^7.0.0",
     "workbox-core": "^7.0.0",
     "workbox-expiration": "^7.0.0",
     "workbox-precaching": "^7.0.0",

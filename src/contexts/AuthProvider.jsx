@@ -18,9 +18,11 @@ const AuthProvider = ({ children }) => {
     };
 
     try {
+      console.log(options);
       const response = await axios(options);
       const data = response.data.data;
       setUser(data);
+
       setLoggedIn(true); // Establecer loggedIn a true cuando se obtengan los datos decodificados correctamente
       setLoading(false)
     } catch (error) {
