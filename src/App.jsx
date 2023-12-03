@@ -16,6 +16,7 @@ import Card from "./components/card";
 import { CartProvider } from "./contexts/CartContext";
 import MenuAdmin from "./components/Admin/MenuAdmin";
 import PWA from "./components/PWA/PWA";
+import AnimatedPage from "./components/AnimatedPage";
 
 function App() {
   return (
@@ -31,20 +32,20 @@ function App() {
                   path="/"
                   element={
                     <div>
-                      <Landing />
+                      <AnimatedPage><Landing /></AnimatedPage>
                     </div>
                   }
                 />
-                <Route path="/Login" element={<Login />} />
-                <Route path="/Blog" element={<HeroBlog />} />
-                <Route path="/Registro" element={<Registro />} />
+                <Route path="/Login" element={<AnimatedPage><Login /></AnimatedPage>} />
+                <Route path="/Blog" element={<AnimatedPage><HeroBlog /></AnimatedPage>} />
+                <Route path="/Registro" element={<AnimatedPage><Registro /></AnimatedPage>} />
 
                 <Route
                   element={<ProtectedRoute allowedRoles={["admin"]} />}
                 ></Route>
 
                 <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-                  <Route path="/Admin" element={<MenuAdmin />} />
+                <Route element={<AnimatedPage><MenuAdmin /></AnimatedPage>} />
                 </Route>
 
                 <Route
@@ -52,9 +53,9 @@ function App() {
                     <ProtectedRoute allowedRoles={["admin", "usuario"]} />
                   }
                 >
-                  <Route path="/carrito" element={<Carrito />} />
-                  <Route path="/Profile" element={<Profile />} />
-                  <Route path="/Payment" element={<Payment />} />
+                 <Route path="/carrito" element={<AnimatedPage><Carrito /></AnimatedPage>} />
+                 <Route path="/Profile" element={<AnimatedPage><Profile /></AnimatedPage>} />
+                 <Route path="/Payment" element={<AnimatedPage><Payment /></AnimatedPage>} />
                 </Route>
               </Routes>
               <Footer />
