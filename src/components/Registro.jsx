@@ -81,9 +81,9 @@ const RegisterForm = () => {
     className="bg-azulW p-8 rounded-lg shadow-lg w-96 dark:bg-azulO dark:border-azulC dark:border text-white"
     onSubmit={handleSubmit}
   >
-    <h2 className="text-2xl text-black font-semibold mb-6">Registro</h2>
+    <h2 className="text-2xl text-white font-semibold mb-6">Registro</h2>
     <div className="mb-4">
-      <label className="block font-medium mb-2 text-black" htmlFor="nombre">
+      <label className="block font-medium mb-2 text-white" htmlFor="nombre">
         Nombre
       </label>
       <input
@@ -96,7 +96,7 @@ const RegisterForm = () => {
       />
     </div>
     <div className="mb-4">
-      <label className="block font-medium mb-2 text-black" htmlFor="apellido">
+      <label className="block font-medium mb-2 text-white" htmlFor="apellido">
         Apellido
       </label>
       <input
@@ -109,7 +109,7 @@ const RegisterForm = () => {
       />
     </div>
     <div className="mb-4">
-      <label className="block text-black font-medium mb-2" htmlFor="correo">
+      <label className="block text-white font-medium mb-2" htmlFor="correo">
         Correo electrónico
       </label>
       <input
@@ -122,7 +122,7 @@ const RegisterForm = () => {
       />
     </div>
     <div className="mb-4">
-      <label className="block text-black font-medium mb-2" htmlFor="contraseña">
+      <label className="block text-white font-medium mb-2" htmlFor="contraseña">
         Contraseña
       </label>
       <input
@@ -136,7 +136,7 @@ const RegisterForm = () => {
     </div>
     <div className="mb-6">
       <label
-        className="block font-medium text-black mb-2"
+        className="block font-medium text-white mb-2"
         htmlFor="confirmContraseña"
       >
         Confirmar Contraseña
