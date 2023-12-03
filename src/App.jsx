@@ -45,7 +45,7 @@ function App() {
                 ></Route>
 
                 <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-                <Route element={<AnimatedPage><MenuAdmin /></AnimatedPage>} />
+                <Route path="/Admin" element={<AnimatedPage><MenuAdmin /></AnimatedPage>} />
                 </Route>
 
                 <Route
