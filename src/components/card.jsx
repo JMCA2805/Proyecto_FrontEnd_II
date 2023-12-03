@@ -87,7 +87,15 @@ const Card = () => {
       }
    };
 
-
+   useEffect(() => {
+      // Carga los favoritos del usuario actual del almacenamiento local
+      const loadedFavs = JSON.parse(localStorage.getItem(`addedToFav_${user.id}`));
+      if (loadedFavs) {
+         setAddedToFav(loadedFavs);
+      } else {
+         setAddedToFav({});
+      }
+   }, [user.id]);
 
    const handleFavClick = async (serial, nombre, descripcion, precio) => {
       if (addedToFav[serial]) {
@@ -114,7 +122,8 @@ const Card = () => {
       // Actualiza el estado addedToFav para este artículo
       setAddedToFav(prevState => {
          const updatedState = { ...prevState, [serial]: false };
-         localStorage.setItem('addedToFav', JSON.stringify(updatedState));
+         // Asocia los favoritos con el ID del usuario en el almacenamiento local
+         localStorage.setItem(`addedToFav_${user.id}`, JSON.stringify(updatedState));
          return updatedState;
       });
    };
@@ -140,7 +149,8 @@ const Card = () => {
          // Actualiza el estado addedToFav para este artículo
          setAddedToFav(prevState => {
             const updatedState = { ...prevState, [serial]: true };
-            localStorage.setItem('addedToFav', JSON.stringify(updatedState));
+            // Asocia los favoritos con el ID del usuario en el almacenamiento local
+            localStorage.setItem(`addedToFav_${user.id}`, JSON.stringify(updatedState));
             return updatedState;
          });
 
@@ -150,13 +160,7 @@ const Card = () => {
    };
 
 
-   useEffect(() => {
-      localStorage.setItem('addedToFav', JSON.stringify(addedToFav));
-   }, [addedToFav]);
-
-
-
-
+ 
 
 
 
