@@ -81,13 +81,13 @@ const RegisterForm = () => {
     className="bg-azulW p-8 rounded-lg shadow-lg w-96 dark:bg-azulO dark:border-azulC dark:border text-white"
     onSubmit={handleSubmit}
   >
-    <h2 className="text-2xl text-white font-semibold mb-6">Registro</h2>
+    <h2 className="text-2xl text-black dark:text-white font-semibold mb-6">Registro</h2>
     <div className="mb-4">
-      <label className="block font-medium mb-2 text-white" htmlFor="nombre">
+      <label className="block font-medium mb-2 text-black dark:text-white" htmlFor="nombre">
         Nombre
       </label>
       <input
-        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
+        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
         type="text"
         id="nombre"
         value={nombre}
@@ -96,11 +96,11 @@ const RegisterForm = () => {
       />
     </div>
     <div className="mb-4">
-      <label className="block font-medium mb-2 text-white" htmlFor="apellido">
+      <label className="block font-medium mb-2 text-black dark:text-white" htmlFor="apellido">
         Apellido
       </label>
       <input
-        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
+        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
         type="text"
         id="apellido"
         value={apellido}
@@ -109,11 +109,11 @@ const RegisterForm = () => {
       />
     </div>
     <div className="mb-4">
-      <label className="block text-white font-medium mb-2" htmlFor="correo">
+      <label className="block text-black dark:text-white font-medium mb-2" htmlFor="correo">
         Correo electrónico
       </label>
       <input
-        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
+        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
         type="email"
         id="correo"
         value={correo}
@@ -122,11 +122,11 @@ const RegisterForm = () => {
       />
     </div>
     <div className="mb-4">
-      <label className="block text-white font-medium mb-2" htmlFor="contraseña">
+      <label className="block text-black dark:text-white font-medium mb-2" htmlFor="contraseña">
         Contraseña
       </label>
       <input
-        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
+        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
         type="password"
         id="contraseña"
         value={contraseña}
@@ -136,13 +136,13 @@ const RegisterForm = () => {
     </div>
     <div className="mb-6">
       <label
-        className="block font-medium text-white mb-2"
+        className="block font-medium text-black dark:text-white mb-2"
         htmlFor="confirmContraseña"
       >
         Confirmar Contraseña
       </label>
       <input
-        className={`w-full p-2 border rounded-md bg-azulO/30 text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:ring-0 ${
+        className={`w-full p-2 border rounded-md bg-azulO/30 text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:ring-0 ${
           contraseñasMatch
             ? "border-azulO dark:border-azulC/50 dark:focus:border-azulC focus:border-azulO"
             : "border-red-500/50 focus:border-red-500"
@@ -164,7 +164,7 @@ const RegisterForm = () => {
     </div>
     {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
     <button
-      className="py-2 px-4 rounded-md w-full border-b-4 dark:border-azulC border-azulO hover:bg-azulO/50 dark:hover:bg-azulC/70 focus-within:bg-azulO text-white bg-azulO/30 dark:bg-azulC"
+      className="py-2 px-4 rounded-md w-full border-b-4 dark:border-azulC border-azulO hover:bg-azulO/50 dark:hover:bg-azulC/70 focus-within:bg-azulO text-black dark:text-white bg-azulO/30 dark:bg-azulC"
       type="submit"
     >
       Registrarse
