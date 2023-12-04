@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import ResArtComm from "./ResArtComm"
 import AgregarResArt from './AddResBlog';
 import {AuthContext} from "../../contexts/AuthProvider"
+import { Link } from "react-router-dom";
 
 
 
@@ -33,14 +34,30 @@ function ArticleModal({ articulo, modalOpen, closeModal }) {
           <p className="text-base leading-relaxed text-black dark:text-black">
             {articulo.texto}
           </p>
-          {loggedIn && (
-              <button
-                onClick={handleModalSetRes}
-                className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
+          {loggedIn ? (
+            <button
+              onClick={handleModalSetRes}
+              className="block md:inline-block rounded-md p-2 text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
+            >
+              Agregar Reseña
+            </button>
+          ) : (
+            <div className="flex flex-col items-center">
+              <p className="text-lg font-bold text-center text-red-500">
+                Si deseas reseñar el producto,{" "}
+                <span className="bg-yellow-200">inicia sesión</span>, y deja tu
+                reseña.
+              </p>
+              <Link
+                to={"/Login"}
+                className="inline-block rounded-md text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulOmr-4 mt-4"
               >
-                Agregar Reseña
-              </button>
-            )}
+                <div className="rounded-md  px-3 py-2 text-white font-bold items-center justify-center">
+                  Inicio de Sesión
+                </div>
+              </Link>
+            </div>
+          )}
             <ResArtComm titulo={articulo.titulo}></ResArtComm>
 
         </div>
