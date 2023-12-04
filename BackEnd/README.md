@@ -54,59 +54,6 @@ La aplicación es una SPA (Single Page Application), esta nos permite hacer un C
 
 # **Estructura del Proyecto:**
 
-<<<<<<< HEAD
-**Carpeta Base:**
-
-- **node_modules/**: Esta carpeta es generada automáticamente cuando se instalan las dependencias del proyecto utilizando el comando `npm install`. Aquí se almacenan todas las bibliotecas y módulos de terceros necesarios para el funcionamiento del proyecto.
-
-- **public/**: Esta carpeta suele contener los archivos estáticos que se servirán públicamente en el proyecto, como imágenes, archivos CSS o cualquier otro recurso estático.
-- 
-- **vite.config.js**: Este archivo es la configuración del entorno de desarrollo basado en Vite. Vite es un entorno de compilación rápida para aplicaciones web modernas. 
-
-- **tailwind.config.js**: Este archivo es la configuración de Tailwind CSS, un framework de utilidades CSS altamente personalizable.
-- 
-- **postcss.config.js**: Este archivo es la configuración de PostCSS, una herramienta de transformación de CSS. Aquí puedes especificar los plugins de PostCSS que deseas utilizar y configurar sus opciones.
-
-- **package.json**: Este archivo es un archivo de configuración para administrar las dependencias y scripts de tu proyecto. Aquí se enumeran todas las dependencias del proyecto, así como los scripts definidos que se pueden ejecutar con el comando npm run.
-
-- **package-lock.json**: Este archivo se genera automáticamente cuando se instalan las dependencias del proyecto y se utiliza para bloquear versiones específicas de las dependencias.
-
-- **.gitignore**: Este archivo se utiliza para especificar qué archivos y carpetas deben ser ignorados por Git, el sistema de control de versiones.
-
-- **eslintrc.cjs**: Este archivo es la configuración de ESLint, una herramienta de análisis de código estático para identificar y reportar patrones problemáticos en el código JavaScript.
-
-**Carpeta SRC**
-
-- **main.jsx**: Este archivo es el punto de entrada principal de la aplicación. Es comúnmente utilizado para importar y renderizar el componente principal de la aplicación, como el componente App. Aquí se configuran las rutas, se establece el tema o se realizan otras configuraciones globales de la aplicación.
-
-- **index.css**: Este archivo contiene estilos CSS que se aplicarán a toda la aplicación.
-
-- **app.jsx**: Este archivo es el componente principal de la aplicación. Es donde se define y se estructura la interfaz de usuario de la aplicación.
-
-**La carpeta Components/ contiene:** 
-
-- **Una carpeta Header/:** Esta carpeta contiene los componentes de encabezado de tu aplicación, así como un loader y el menú para navegar por la página.
-
-- **Una carpeta Admin/:** Esta carpeta contiene los componentes que usa el Admin dentro de su sección.
-
-- **Una carpeta Blog/:** Esta carpeta contiene los componentes que usa la pagina de Blog y Articulos.
-
-- AnimatedPage: Este componente se aplica de forma general en el app.jsx en conjunto al Framer-Motion para establecer una animación apenas se cambie de pagina o entres a la pagina
-
-- Footer: El footer del sitio
-
-- Profile: Es el componente que tendrá los datos del usuario y se podrán editar, aun se encuentra en construcción pero puede ser accesible como Usuario y Admin, aunque tendrá mensajes de proximamente en el sistema
-
-- ProtectedRoute: El componente que envuelve a las rutas, para verificar si estas rutas cumplen con las condicionales propuestas en si
-
-- Registro: El registro de usuario
-
-La carpeta assets/ generalmente se utiliza para almacenar recursos estáticos, como imágenes, archivos de video, fuentes, iconos, etc. Puedes colocar cualquier archivo multimedia o recurso estático que necesites en el proyecto.
-
-La carpeta de context: Posee los context de la aplicación, como por ejemplo el AuthProvider que sirve para la autenticación de permisos, extrayendo y decodificando la cookie(token)
-que se encuentre activa, asi como el contexto global para el uso del modo oscuro
-
-=======
 **Carpeta Base**
 
 Posee una gran mayoria de archivos de configuración, que van desde el archivo de la variable de entorno, el git ignore para ignorar ciertas partes del codigo a la hora de subirse al repositorio, los package-json con la información de nuestras dependencias y demas, entre otros
@@ -116,57 +63,11 @@ Posee una gran mayoria de archivos de configuración, que van desde el archivo d
 Usamos el estilo Model-Controller-Route para la realización del Back-End, en el Model poseemos la gestión de los datos, en donde hacemos la interacción con la base de datos. El controller, funciona para ser como un intermediario entre modelo y route, es el que procesara las solicitudes, validara las peticiones y hara que los datos lleguen de mejor forma al Model. En cuanto a los Routes, Las rutas son responsables de definir los puntos finales (endpoints) de la aplicación web. Son encargadas de mapear las URL recibidas a funciones de controlador apropiada
 
 En la carpeta, poseemos los archivos database y server para lograr la conexión con la DataBase de forma apropiada(ademas, de que el server posee las configuraciones del servidor, entre otros.), en conjunto con el index
->>>>>>> repo-a/dev-v2
 
 # **Dependencias y DevDependencias**
 
 **Dependencias:**
 
-<<<<<<< HEAD
-Axios: Una biblioteca para realizar solicitudes HTTP en aplicaciones web.
-
-Dotenv: Una biblioteca para cargar variables de entorno desde archivos .env.
-
-Flowbite: Una biblioteca de componentes de interfaz de usuario (UI) para React.
-
-Framer Motion: Una biblioteca para agregar animaciones y transiciones a componentes en React.
-
-Leaflet: Una biblioteca de mapas interactivos de código abierto para la web.
-
-React: Una biblioteca de JavaScript para construir interfaces de usuario.
-
-React-DOM: Un paquete de React para interactuar con el DOM.
-
-React Icons: Una biblioteca de iconos para React.
-
-React Router DOM: Una biblioteca de enrutamiento para aplicaciones web construidas con React.
-
-SweetAlert2: Una biblioteca para mostrar ventanas modales y mensajes de alerta personalizados.
-
-**DevDependencies:**
-
-"@types/react": "^18.2.15": Definiciones de tipos TypeScript para React.
-
-"@types/react-dom": "^18.2.7": Definiciones de tipos TypeScript para ReactDOM.
-
-"@vitejs/plugin-react": "^4.0.3": Plugin de Vite para admitir la sintaxis de React.
-
-"autoprefixer": "^10.4.16": Plugin de PostCSS para agregar prefijos de proveedores en los estilos CSS.
-
-"eslint": "^8.45.0": Herramienta de análisis de código estático para JavaScript.
-
-"eslint-plugin-react": "^7.32.2": Plugin de ESLint para reglas específicas de React.
-
-"eslint-plugin-react-hooks": "^4.6.0": Plugin de ESLint para reglas específicas de los Hooks de React.
-
-"eslint-plugin-react-refresh": "^0.4.3": Plugin de ESLint para reglas específicas de React Refresh.
-
-"postcss": "^8.4.31": Herramienta de transformación de CSS.
-
-"tailwindcss": "^3.3.3": Framework de utilidades CSS altamente personalizable.
-
-"vite": "^4.4.5": Entorno de compilación rápida para aplicaciones web modernas.
-=======
 bcrypt (^5.1.1): Una biblioteca para el hashing de contraseñas. Se utiliza para almacenar contraseñas de forma segura en la base de datos.
 
 cookie-parser (~1.4.4): Un middleware de Express para analizar las cookies de las solicitudes entrantes. Facilita el manejo de cookies en una aplicación Express.
@@ -210,7 +111,6 @@ sharp (^0.32.6): Una biblioteca de procesamiento de imágenes para Node.js. Se u
 **DevDependencies:**
 
 nodemon: Una herramienta que ayuda a desarrollar aplicaciones Node.js reiniciando automáticamente la aplicación cuando se detectan cambios en los archivos.
->>>>>>> repo-a/dev-v2
 
 # **Autores:**
 
@@ -227,7 +127,3 @@ nodemon: Una herramienta que ayuda a desarrollar aplicaciones Node.js reiniciand
 - Figma: [https://www.figma.com/file/YMWbQcDfx51qsN8FE08QiS/Proyecto-Front-II?type=design&node-id=0%3A1&mode=design&t=9lseE5qu4bFVKZXq-1]
 
 # **Muchas gracias por su atención**
-<<<<<<< HEAD
-=======
-
->>>>>>> repo-a/dev-v2
