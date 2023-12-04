@@ -29,7 +29,7 @@ const Favoritos = () => {
         setAddedToFav(prevState => ({ ...prevState, [serial]: false }));
         Swal.fire({
            icon: "success",
-           title: "Producto eliminado devfavoritos",
+           title: "Producto eliminado de favoritos",
            text: `El producto ${serial} ha sido eliminado de favoritos.`,
            confirmButtonText: "Aceptar",
         }).then((result) => {

@@ -27,7 +27,7 @@ const ResProdComm = ({ titulo }) => {
   
     return (
       <div className="bg-white dark:bg-woodsmoke rounded-md shadow-md p-4 ">
-        <h2 className="text-azulC dark:text-white text-2xl font-bold mb-4">Reseñas del Producto</h2>
+        <h2 className="text-azulC dark:text-white text-2xl font-bold mb-4">Reseñas del Artículo</h2>
   
         {reviews.length > 0 ? (
           <>
