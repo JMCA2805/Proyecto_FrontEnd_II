@@ -3,6 +3,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import axios from "axios";
 import EditProfile from "./Modal/EditProfile";
 import EditPhoto from "./Modal/EditPhoto";
+import Favoritos from "../favoritos";
 import Swal from "sweetalert2";
 
 const API = import.meta.env.VITE_USER_URL;
@@ -241,6 +242,7 @@ const UserProfile = () => {
                     className="dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
                   />
                 </div>
+             
                 <div>
                   <label className="text-white font-bold">
                     Confirmar Contraseña
@@ -269,8 +271,12 @@ const UserProfile = () => {
                   Cambiar Contraseña
                 </button>
               </div>
+             
             </form>
           </div>
+          <Favoritos />
+                
+         
         </div>
       </div>
     </>

@@ -6,6 +6,7 @@ export const CartProvider = ({ children }) => {
   // Inicializa el estado del carrito con el valor almacenado en localStorage
   const initialCartCount = Number(localStorage.getItem('cartCount')) || 0;
   const [cartCount, setCartCount] = useState(initialCartCount);
+  const [addedToFav, setAddedToFav] = useState({});
 
   const updateCartCount = useCallback((newCount) => {
     // Almacena el nuevo conteo del carrito en localStorage
@@ -14,7 +15,7 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   return (
-    <CartContext.Provider value={{ cartCount, updateCartCount }}>
+    <CartContext.Provider value={{ cartCount, updateCartCount, addedToFav, setAddedToFav }}>
       {children}
     </CartContext.Provider>
   );

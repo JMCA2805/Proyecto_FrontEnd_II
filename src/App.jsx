@@ -17,7 +17,7 @@ import { CartProvider } from "./contexts/CartContext";
 import MenuAdmin from "./components/Admin/MenuAdmin";
 import PWA from "./components/PWA/PWA";
 import AnimatedPage from "./components/AnimatedPage";
-
+import Favoritos from "./components/favoritos";
 function App() {
   return (
     <>
@@ -39,7 +39,7 @@ function App() {
                 <Route path="/Login" element={<AnimatedPage><Login /></AnimatedPage>} />
                 <Route path="/Blog" element={<AnimatedPage><HeroBlog /></AnimatedPage>} />
                 <Route path="/Registro" element={<AnimatedPage><Registro /></AnimatedPage>} />
-
+                
                 <Route
                   element={<ProtectedRoute allowedRoles={["admin"]} />}
                 ></Route>
@@ -55,7 +55,9 @@ function App() {
                 >
                  <Route path="/carrito" element={<AnimatedPage><Carrito /></AnimatedPage>} />
                  <Route path="/Profile" element={<AnimatedPage><Profile /></AnimatedPage>} />
+                 <Route path="/Favoritos" element={<AnimatedPage><Favoritos /></AnimatedPage>} />
                  <Route path="/Payment" element={<AnimatedPage><Payment /></AnimatedPage>} />
+                
                 </Route>
               </Routes>
               <Footer />

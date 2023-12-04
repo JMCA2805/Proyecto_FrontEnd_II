@@ -15,14 +15,15 @@ const Card = () => {
    const [addedToCart, setAddedToCart] = useState({});
    const { loggedIn } = useContext(AuthContext);
    
-   const [addedToFav, setAddedToFav] = useState(() => {
+  /* const [addedToFav, setAddedToFav] = useState(() => {
       const saved = localStorage.getItem('addedToFav');
       if (saved) {
          return JSON.parse(saved);
       }
       return {};
-   });
-   
+   });*/
+   const { addedToFav, setAddedToFav } = useContext(CartContext);
+
    const { updateCartCount } = useContext(CartContext);
 
 
