@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const API = import.meta.env.VITE_PAYMENT_URL;
 const API2 = import.meta.env.VITE_GETCARRITO_URL;
+const APIUSER = import.meta.env.VITE_USER_URL;
+
 
 
 const validationSchema = Yup.object().shape({
@@ -48,9 +50,10 @@ const PaymentForm = () => {
         direccion: '',
         correo: ''
     });
-
     const [products, setProducts] = useState([]);
     const [totalpagar, setTotalPagar] = useState(0);
+    const [userData, setUserData] = useState("");
+    
 
     const [paymentData, setPaymentData] = useState({
         numeroTarjeta: '',
@@ -59,8 +62,21 @@ const PaymentForm = () => {
     });
 
     useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${APIUSER}/${user.id}`);
+          const userData = response.data;
+          setUserData(userData);
+        } catch (error) {
+          console.error('Error al obtener los datos del usuario:', error);
+        }
+      };
+    
+      fetchData();
+    }, []);
 
 
+    useEffect(() => {
       axios.get(`${API2}/${user.id}`)
         .then(response => {
           const products = response.data.carrito;
@@ -158,14 +174,14 @@ const PaymentForm = () => {
     };
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4 bg-white-smokeshadow dark:text-white">
-    <h2 className="text-xl font-bold mb-4">Datos cliente</h2>
+    <h2 className="text-xl font-bold mb-4">Datos de Pago del Cliente</h2>
     <div className="grid grid-cols-2 gap-4 mb-4">
       <div>
         <label className="block font-bold mb-1">Nombre:</label>
         <input
           type="text"
           name="nombre"
-          value={clientData.nombre}
+          defaultValue={userData.nombre}
           onChange={handleClientDataChange}
           className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
         />
@@ -175,7 +191,7 @@ const PaymentForm = () => {
         <input
           type="text"
           name="apellido"
-          value={clientData.apellido}
+          defaultValue={userData.apellido}
           onChange={handleClientDataChange}
           className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
         />
@@ -187,7 +203,7 @@ const PaymentForm = () => {
         <input
           type="text"
           name="cedula"
-          value={clientData.cedula}
+          defaultValue={userData.cedula}
           onChange={handleClientDataChange}
           className="w-full p-2 border border-gray-300 rounded text-black dark:text-black "
         />
@@ -197,7 +213,7 @@ const PaymentForm = () => {
         <input
           type="text"
           name="telefono"
-          value={clientData.telefono}
+          defaultValue={userData.telefono}
           onChange={handleClientDataChange}
           className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
         />
@@ -208,7 +224,7 @@ const PaymentForm = () => {
       <input
         type="email"
         name="correo"
-        value={clientData.correo}
+        defaultValue={userData.correo}
         onChange={handleClientDataChange}
         className="w-full p-2 border border-gray-300 rounded text-black dark:text-black"
       />
