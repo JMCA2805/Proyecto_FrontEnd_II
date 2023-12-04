@@ -279,7 +279,9 @@ const Card = () => {
         >
           <div className="block sm:flex gap-4">
             <label className="flex gap-2 items-center">
-              <span className="text-azulC font-bold min-w-max">Filtrar Por:</span>
+              <span className="text-azulC font-bold min-w-max">
+                Filtrar Por:
+              </span>
               <select
                 value={filtro}
                 className="rounded-lg"
@@ -290,38 +292,37 @@ const Card = () => {
               </select>
             </label>
 
-           <div className="flex gap-4 mt-4 md:mt-0 w-full">
-           {filtro === "Categoria" ? (
-              <select
-                value={categoria}
-                className="w-full rounded-lg"
-                onChange={(e) => setCategoria(e.target.value)}
+            <div className="flex gap-4 mt-4 md:mt-0 w-full">
+              {filtro === "Categoria" ? (
+                <select
+                  value={categoria}
+                  className="w-full rounded-lg"
+                  onChange={(e) => setCategoria(e.target.value)}
+                >
+                  <option value="Computadoras">Computadoras</option>
+                  <option value="Laptops">Laptops</option>
+                  <option value="Perifericos">Periféricos</option>
+                  <option value="Accesorios">Accesorios</option>
+                  <option value="Telefonos">Teléfonos</option>
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  value={buscarText}
+                  className="w-full rounded-lg"
+                  onChange={(e) => setBuscar(e.target.value)}
+                />
+              )}
+
+              <button
+                type="submit"
+                value={buscarButton}
+                className="p-2 block md:inline-block rounded-md text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO  "
+                onChange={(e) => setButton(parseFloat(e.target.value))}
               >
-                <option value="Computadoras">Computadoras</option>
-                <option value="Laptops">Laptops</option>
-                <option value="Perifericos">Periféricos</option>
-                <option value="Accesorios">Accesorios</option>
-                <option value="Telefonos">Teléfonos</option>
-              </select>
-            ) : (
-              <input
-                type="text"
-                value={buscarText}
-                className="w-full rounded-lg"
-                onChange={(e) => setBuscar(e.target.value)}
-              />
-            )}
-
-            <button
-              type="submit"
-              value={buscarButton}
-              className="p-2 block md:inline-block rounded-md text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO  "
-              onChange={(e) => setButton(parseFloat(e.target.value))}
-            >
-              Buscar
-            </button>
-
-           </div>
+                Buscar
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -465,24 +466,27 @@ const Card = () => {
             </div>
 
             <div className="flex flex-col gap-2 items-center mt-5">
-              <div className="flex gap-2">
-                <button
-                  onClick={handlePreviousPage}
-                  disabled={currentPage === 1}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                >
-                  Anterior
-                </button>
-                <button
-                  onClick={handleNextPage}
-                  disabled={
-                    currentPage === Math.ceil(items.length / productsPerPage)
-                  }
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                >
-                  Siguiente
-                </button>
-              </div>
+              {Math.ceil(items.length / productsPerPage) <= 1 &&
+              currentPage === 1 ? null : (
+                <div className="flex gap-2">
+                  <button
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 1}
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  >
+                    Anterior
+                  </button>
+                  <button
+                    onClick={handleNextPage}
+                    disabled={
+                      currentPage === Math.ceil(items.length / productsPerPage)
+                    }
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              )}
 
               <p className="text-gray-600 text-sm dark:text-white">
                 Página {currentPage} de{" "}
