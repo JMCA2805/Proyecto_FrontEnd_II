@@ -4,7 +4,6 @@ import Menu from "./Menu";
 import Loader from "./Loader";
 import { IconContext } from "react-icons";
 import { FaMoon, FaSun } from "react-icons/fa6";
-import { useDark } from "../../contexts/DarkModeProvider";
 import { Link } from "react-router-dom";
 
 function Header() {
@@ -19,21 +18,6 @@ function Header() {
     setTimeout(() => {
       setLoading(false);
     }, 3000);
-  };
-
-  //Modo Oscuro y Claro
-  const { theme, setTheme } = useDark();
-  useEffect(() => {
-    if (theme === "dark") {
-      document.querySelector("html").classList.add("dark");
-    } else {
-      document.querySelector("html").classList.remove("dark");
-    }
-  }, [theme]);
-
-  // Funcion de cambio de tema
-  const handleChangeTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
   return (
@@ -62,24 +46,6 @@ function Header() {
           {/* Menu */}
           <div className="hidden md:block">
             <Menu toggleLVisibility={toggleLVisibility} />
-          </div>
-
-          {/* Botón de DarkMode */}
-          <div className="rounded-full text-azulW bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO h-10 w-10 ">
-            <IconContext.Provider
-              value={{
-                color: "white",
-                size: "20px",
-                className: "w-auto h-auto p-0 m-0",
-              }}
-            >
-              <button
-                onClick={handleChangeTheme}
-                className="flex justify-center items-center w-full h-full rounded-full"
-              >
-                {theme === "dark" ? <FaSun /> : <FaMoon />}
-              </button>
-            </IconContext.Provider>
           </div>
         </div>
 

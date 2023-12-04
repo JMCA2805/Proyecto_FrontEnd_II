@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthProvider from "./contexts/AuthProvider";
-import DarkModeGlobal from "./contexts/DarkModeProvider";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login";
 import Registro from "./components/Registro";
@@ -12,7 +11,6 @@ import CartButton from "./components/cartButton";
 import HeroBlog from "./components/Blog/HeroBlog";
 import Profile from "./components/Profile/Profile";
 import Carrito from "./components/carrito";
-import Card from "./components/card";
 import { CartProvider } from "./contexts/CartContext";
 import MenuAdmin from "./components/Admin/MenuAdmin";
 import PWA from "./components/PWA/PWA";
@@ -23,7 +21,6 @@ function App() {
     <>
       <AuthProvider>
         <CartProvider>
-          <DarkModeGlobal>
             <BrowserRouter>
               <PWA />
               <Header />
@@ -63,7 +60,6 @@ function App() {
               <Footer />
               <CartButton />
             </BrowserRouter>
-          </DarkModeGlobal>
         </CartProvider>
       </AuthProvider>
     </>
