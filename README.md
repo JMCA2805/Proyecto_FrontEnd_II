@@ -5,39 +5,26 @@ Es una aplicación web creada utilizando ReactJS con Vite como bundler, Tailwind
 
 # **Requisitos e instalación:**
 
-1. Se necesitan los siguientes componentes: Node.JS, MongoDB y NPM
+1. Requisitos: Node.JS y MongoDB
 
-2. Se dirigen hacia la dirección de ambos Proyectos en Github: 
+2. Descarga del Proyecto: El proyecto se descarga desde nuestro repositorio, desde la rama Main, luego se extrae el contenido a partir de Git Clone o GitHub Desktop
 
-- Proyecto Backend en GitHub: [https://github.com/JMCA2805/Proyecto_FrontEnd_II_BackEnd]
-- Proyecto FrontEnd en GitHub: [https://github.com/JMCA2805/Proyecto_FrontEnd_II]
+3. Variables: Deben agregar 2 archivos en especifico que poseerán las variables de entorno de nuestro sistema: "env" para la carpeta del Back-End y ".env.local" para la carpeta del Front-End, con la opción de copiar las variables de entorno que proporcionaremos desde el Figma
 
-3. Seleccionan a Code y Local, luego los descargamos en Download ZIP
+4- Inicio: Deberán acceder a las carpetas de nuestros proyectos con la terminal de su preferencia, ejecutan la carpeta del Back-End desde un terminal o editor de tu preferencia, mientras que la del Front-End en otro Terminal, ejecutan los comandos "npm install" para las instalación de dependencias desde ambas terminales, luego ejecutan ambos terminales con "npm run start"(Back-End), "npm run dev“(Front-End) se dirigen hacía el localhost:3000 y ahi encontraran la pagina web iniciada.
 
-4. A partir de esto, nos quedaria en ZIP cada uno y los extraemos, meteremos ambos en una misma carpeta
+Además, si lo deseas, puedes importar los datos JSON que dejamos en Documentos, a la Base de Datos del Sistema con MongoDB u Compass
 
-5. Luego, abrimos Visual Studio Code y pasamos/abrimos la carpeta dentro del programa, desde Archivo/Abrir Carpeta, y hacemos lo mismo en otra ventana, una para el back y otra para el front
+# **Equipo Desarrollador y Motivo del Desarrollo:** 
 
-5.5. Pasamos las variables de entornos, la de .env a el Backend y la de .env.local al Front-End
+- TSU. Camacho José
+- TM. Escalona José
+- TSU. Mendoza Yetzenia
+- BR. Monsalve Luis
+- BR. Villegas Maikel
 
-6. Ahora que tenemos nuestro proyecto colocado, tan solo tenemos que abrir consola con CTRL + Ñ o Desde Terminal/Abrir Terminal en cada una de las ventanas
-
-7. Al iniciar la terminal, vamos a instalar los paquetes que tiene el proyecto, utilizando `npm i` o `npm install` esto debe hacerse en ambas ventanas
-
-8. Luego usamos el comando `npm run dev` y el programa se ejecutara, esto debe hacerse en ambas ventanas
-
-9. Vamos hacia [http://localhost:3000] y ahí tendremos la página ejecutándose.
-
-9.5- Recuerden usar MongoDB Compass u otra interfaz como un Plugin de VS para usar los archivos CSV, de users y reservas que dejamos
-
-10. El admin es admin@gmail.com , su contraseña es 123, para que puedan probar el modo Admin.
-
-
-- José Escalona / C.I: 28.206.133
-- Maikel Villegas Rojas / C.I: 30.302.836
-- Luis Monsalve / C.I: 30.380.310
-- José Camacho / C.I: 29.739.132
-- Yetzenia Mendoa / C.I: 27.268.361
+Aplicación diseñada por motivos educativos para ser evaluada como una práctica.
+En donde se evaluara el Proyecto Correspondiente con: Primera(E-Actividad 4.1) y Segunda Entrega(E-Actividad 4.2)
 
 # **Enlaces:**
 
