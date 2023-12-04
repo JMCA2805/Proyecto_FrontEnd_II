@@ -40,14 +40,6 @@ export default function Hero() {
                       Reseñar
                     </div>
                   </Link>
-                  <Link
-                    to={"/"}
-                    className="inline-block rounded-md text-white font-bold bg-azul focus:outline-none focus:text-white border-b-4 border-azulO dark:border-azulO/70 hover:bg-azulC focus-within:bg-azulO"
-                  >
-                    <div className="flex rounded-md w-full h-full px-3 py-2 text-white font-bold">
-                      Comprar
-                    </div>
-                  </Link>
                 </div>
               </>
             )}
