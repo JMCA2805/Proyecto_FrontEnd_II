@@ -3,8 +3,20 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
+import * as Yup from 'yup';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 const API = import.meta.env.VITE_REGISTER_URL;
+
+const validationSchema = Yup.object().shape({
+  contraseña: Yup.string()
+    .min(8, 'La contraseña debe tener al menos 8 caracteres')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/,
+      'La contraseña debe incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial'
+    )
+});
 
 const RegisterForm = () => {
   const [nombre, setNombre] = useState("");
@@ -14,6 +26,11 @@ const RegisterForm = () => {
   const [confirmContraseña, setConfirmContraseña] = useState("");
   const [contraseñasMatch, setContraseñasMatch] = useState(true);
   const [error, setError] = useState("");
+  const [contraseñaError, setContraseñaError] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+
   const { loggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -30,6 +47,23 @@ const RegisterForm = () => {
     }
   }, [loggedIn]);
 
+  const handleInputChange = (e) => {
+    setContraseña(e.target.value);
+    setContraseñaError("");
+  };
+
+  const handleConfirmInputChange = (e) => {
+    setConfirmContraseña(e.target.value);
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -52,18 +86,23 @@ const RegisterForm = () => {
     };
 
     try {
+      await validationSchema.validate({
+        contraseña,
+      });
+
       const response = await axios.post(API, usuario);
 
       // Mostrar mensaje de confirmación con SweetAlert2
       Swal.fire({
         icon: "success",
         title: "Usuario registrado",
-        text: "El usuario se ha registrado exitosamente.",
+        text: "Has sido registrado, ¡Inicia Sesión!",
       }).then(() => {
-        navigate("/");
+        navigate("/Login");
       });
     } catch (error) {
-      setError("Ocurrió un error al registrar el usuario");
+      setContraseñaError(error.message);
+
       console.error(error);
 
       // Mostrar mensaje de error con SweetAlert2
@@ -121,41 +160,60 @@ const RegisterForm = () => {
         required
       />
     </div>
-    <div className="mb-4">
+    <div className="mb-4 relative">
       <label className="block text-black dark:text-white font-medium mb-2" htmlFor="contraseña">
         Contraseña
       </label>
-      <input
-        className="w-full p-2 border rounded-md bg-azulO/30 border-azulO text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:border-azulO focus:ring-0 dark:border-azulC/50 dark:focus:border-azulC"
-        type="password"
-        id="contraseña"
-        value={contraseña}
-        onChange={(e) => setContraseña(e.target.value)}
-        required
-      />
+      <div className="relative">
+        <input
+          className={`w-full p-2 border rounded-md bg-azulO/30 text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:ring-0 ${
+            contraseñaError ? "border-red-500/50" : ""
+          }`}
+          type={showPassword ? "text" : "password"}
+          id="contraseña"
+          value={contraseña}
+          onChange={handleInputChange}
+          required
+        />
+        <button
+          type="button"
+          onClick={handleShowPassword}
+          className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
+        >
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </button>
+      </div>
+      {contraseñaError && (
+        <p className="text-red-500 text-sm mt-1">{contraseñaError}</p>
+      )}
     </div>
+
     <div className="mb-6">
       <label
-        className="block font-medium text-black dark:text-white mb-2"
-        htmlFor="confirmContraseña"
-      >
+      className="block text-black dark:text-white font-medium mb-2" htmlFor="confirmContraseña">
         Confirmar Contraseña
       </label>
-      <input
-        className={`w-full p-2 border rounded-md bg-azulO/30 text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:ring-0 ${
-          contraseñasMatch
-            ? "border-azulO dark:border-azulC/50 dark:focus:border-azulC focus:border-azulO"
-            : "border-red-500/50 focus:border-red-500"
-        }`}
-        type="password"
-        id="confirmContraseña"
-        value={confirmContraseña}
-        onChange={(e) => {
-          setConfirmContraseña(e.target.value);
-          setContraseñasMatch(true);
-        }}
-        required
-      />
+      <div className="relative">
+        <input
+          className={`w-full p-2 border rounded-md bg-azulO/30 text-black dark:text-white placeholder-text-white/50 sm:text-sm focus:border-2 focus:ring-0 ${
+            contraseñasMatch
+              ? "border-azulO dark:border-azulC/50 dark:focus:border-azulC focus:border-azulO"
+              : "border-red-500/50 focus:border-red-500"
+          }`}
+          type={showConfirmPassword ? "text" : "password"}
+          id="confirmContraseña"
+          value={confirmContraseña}
+          onChange={handleConfirmInputChange}
+          required
+        />
+        <button
+          type="button"
+          onClick={handleShowConfirmPassword}
+          className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
+        >
+          {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+        </button>
+      </div>
       {!contraseñasMatch && (
         <p className="text-red-500 text-sm mt-1">
           Las contraseñas no coinciden.
