@@ -231,7 +231,7 @@ const Card = () => {
 
     try {
       const response = await axios.post(API, buscar);
-
+      setCurrentPage(1)
       setItems(response.data);
     } catch (error) {
       console.error(error);
