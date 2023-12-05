@@ -16,55 +16,55 @@ Es una aplicación web creada utilizando ReactJS con Vite como bundler, Tailwind
 Además, si lo deseas, puedes importar los datos JSON que dejamos en Documentos, a la Base de Datos del Sistema con MongoDB u Compass
 
 # Instrucciones Detalladas
-  Paso 1 
+Paso 1 
 
 - Descarga el repositorio o clonalo (https://github.com/JMCA2805/Proyecto_FrontEnd_II)
 
       git clone https://github.com/JMCA2805/Proyecto_FrontEnd_II.git
 
-  Paso 2 
+Paso 2 
 
 - Ubicate en la rama main
 
       git checkout main
 
-  Paso 3
+Paso 3
 
 - Abre la carpeta con tu editor de código de preferencia
 - Abre 2 consolas del editor, una para el FrontEnd y otra para el BackEnd
 
-  Paso 4
+Paso 4
 - En una de las consolas ubicate en la ruta del FrontEnd
 - Ejecuta el comando npm i (Instala todas las dependencias necesarias)
 
       cd FrontEnd
       npm i
   
- Paso 5
+Paso 5
 - Crea el archivo .env.local para las rutas del FrontEnd ubicalo en la carpeta FrontEnd
 
-  Paso 6
+Paso 6
 
 - Ejecuta el comando npm run dev (Inicia el servidor de front-end)
 
       npm run dev
 
-  Paso 7
+Paso 7
 - En una de las consolas ubicate en la ruta del BackEnd
 - Ejecuta el comando npm i (Instala todas las dependencias necesarias)
 
       cd BackEnd
       npm i
 
-  Paso 8
+Paso 8
 - Crea el archivo .env para las configuraciones del backend ubicalo en la carpeta BackEnd
   
-  Paso 9
+Paso 9
 - Ejecuta el comando npm run start (Inicia el servidor del back-end)
 
       npm run start
 
-  Paso 10
+Paso 10
 
 - Abre tu Navegador y coloca http://localhost:3000
 
