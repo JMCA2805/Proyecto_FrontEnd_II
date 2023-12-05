@@ -24,8 +24,10 @@ Paso 1
 
 Paso 2 
 
-- Ubicate en la rama main
-
+- Ubicate en la carpeta clonada o descargada
+- Cambia a la rama main
+  
+      cd Proyecto_FrontEnd_II
       git checkout main
 
 Paso 3
