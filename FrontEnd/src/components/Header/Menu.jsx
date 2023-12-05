@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
+
 const Menu = (props) => {
   const location = useLocation();
   const isTokenPresent = document.cookie.includes("token=");

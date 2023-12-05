@@ -4,10 +4,15 @@ import axios from "axios";
 import { CartContext } from "../contexts/CartContext";
 import ProductModal from "./ModalProducts";
 import { AuthContext } from "../contexts/AuthProvider";
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import CartButton from "./cartButton";
 import Swal from "sweetalert2";
 
 const Card = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const API = import.meta.env.VITE_PRODUCTS_URL;
   const API_FAV = import.meta.env.VITE_URL_ADD_FAV;
 
@@ -202,6 +207,19 @@ const Card = () => {
     }
   };
 
+  const handle_Redirect = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Por favor Iniciar Sesion",
+      text: `Para poder realizar su compra o añadir a favoritos`,
+      confirmButtonText: "Aceptar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/Login")
+      }
+    });
+  };
+  
   const handlePreviousPage = () => {
     setCurrentPage(currentPage - 1);
   };
@@ -270,6 +288,10 @@ const Card = () => {
     fetchCartStatus();
   }, [user.id]);
 
+
+
+
+  
   return (
     <>
       <div className="pb-8 mx-4 md:mx-20 mt-16">
@@ -394,6 +416,27 @@ const Card = () => {
                             ) : (
                               <FaHeart className="text-azulC dark:text-white" />
                             )}
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {!loggedIn && (
+                    <>
+                      <div className="flex justify-end space-x-1">
+                        <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white ">
+                          <button
+                            onClick={handle_Redirect}
+                          >
+                          <FaShoppingCart className="text-azulC dark:text-white" />
+                          </button>
+                        </div>
+                        <div className="pt-1 pr-1 pl-1 border-2 border-azulC rounded-full  dark:border-white">
+                        <button
+                            onClick={handle_Redirect}
+                          >
+                           <FaHeart className="text-azulC dark:text-white" />
                           </button>
                         </div>
                       </div>
