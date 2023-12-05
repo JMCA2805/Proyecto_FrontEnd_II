@@ -5,6 +5,17 @@ import EditProfile from "./Modal/EditProfile";
 import EditPhoto from "./Modal/EditPhoto";
 import Favoritos from "../favoritos";
 import Swal from "sweetalert2";
+import * as Yup from "yup";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+const validationSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(8, "La contraseña debe tener al menos 8 caracteres")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/,
+      "La contraseña debe incluir al menos una letra mayúscula, una letra minúscula, un número y un carácter especial"
+    ),
+});
 
 const API = import.meta.env.VITE_USER_URL;
 const API2 = import.meta.env.VITE_EDITPASSWORD_URL;
@@ -18,6 +29,24 @@ const UserProfile = () => {
   const [password, setPassword] = useState("");
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [respuesta, setRespuesta] = useState("");
+  const [contraseñaError, setContraseñaError] = useState("");
+  const [error, setError] = useState("");
+  const [showPasswordAct, setShowPasswordAct] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordNew, setShowPasswordNew] = useState(false);
+
+
+  const handleShowPasswordAct = () => {
+    setShowPasswordAct(!showPasswordAct);
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleShowPasswordNew = () => {
+    setShowPasswordNew(!showPasswordNew);
+  };
 
   const [openModal, setOpenModal] = useState(false);
   const handleModalSet = () => setOpenModal(!openModal);
@@ -60,6 +89,9 @@ const UserProfile = () => {
       return;
     }
     try {
+      await validationSchema.validate({
+        password,
+      });
       const response = await axios.post(API2, {
         id: user.id,
         oldPassword,
@@ -73,10 +105,11 @@ const UserProfile = () => {
       setMostrarMensaje(false);
       const form = document.getElementById("change_password");
       form.reset();
-      setPassword("")
-      setNewPassword("")
-      setOldPassword("")
+      setPassword("");
+      setNewPassword("");
+      setOldPassword("");
     } catch (error) {
+      setContraseñaError(error.message);
       setMostrarMensaje(false);
       console.error("Error update password", error);
       Swal.fire({
@@ -218,45 +251,86 @@ const UserProfile = () => {
                   <label className="text-white font-bold">
                     Contraseña Actual
                   </label>
-                  <input
-                    type="password"
-                    id="contraseña"
-                    name="contraseña"
-                    onChange={(e) => {
-                      setOldPassword(e.target.value);
-                    }}
-                    className="dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
-                  />
+                  <div className="relative flex items-center">
+                    <input
+                      className={
+                        "dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
+                      }
+                      type={showPasswordAct ? "text" : "password"}
+                      id="contraseña"
+                      name="contraseña"
+                      onChange={(e) => {
+                        setOldPassword(e.target.value);
+                      }}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={handleShowPasswordAct}
+                      className="absolute ml-56 top-1/2 transform -translate-y-1/2 text-white focus:outline-none"
+                    >
+                      {showPasswordAct ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
                 </div>
+
                 <div>
-                  <label className="text-white font-bold">
-                    Nueva Contraseña
-                  </label>
-                  <input
-                    type="password"
-                    id="nuevacontraseña"
-                    name="nuevacontraseña"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                    className="dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
-                  />
+                  <label className="text-white font-bold">Contraseña</label>
+                  <div className="relative">
+                    <input
+                      className={`dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5 ${
+                        contraseñaError ? "border-red-500/50" : ""
+                      }`}
+                      type={showPassword ? "text" : "password"}
+                      id="nuevacontraseña"
+                      name="nuevacontraseña"
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={handleShowPassword}
+                      className="absolute ml-56 top-1/2 transform -translate-y-1/2 text-white focus:outline-none"
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
+                  {contraseñaError && (
+                    <p className="text-white font-bold mb-4 text-sm mt-1">
+                      {contraseñaError}
+                    </p>
+                  )}
                 </div>
-             
+
                 <div>
                   <label className="text-white font-bold">
                     Confirmar Contraseña
                   </label>
-                  <input
-                    type="password"
-                    id="confirm"
-                    name="confirm"
-                    onChange={(e) => {
-                      setNewPassword(e.target.value);
-                    }}
-                    className="dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
-                  />
+                  <div className="relative flex items-center">
+                    <input
+                      className={
+                        "dark:bg-woodsmoke/50 bg-azulW/50 border-azulO dark:text-white text-azulO placeholder:text-azulO/80 dark:placeholder:text-gray-500 m:text-sm rounded-lg border-2 focus:border-azul focus:ring-0 block w-64 p-2.5"
+                      }
+                      type={showPasswordNew ? "text" : "password"}
+                      name="confirm"
+                      id="confirm"
+                      onChange={(e) => {
+                        setNewPassword(e.target.value);
+                      }}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={handleShowPasswordNew}
+                      className="absolute ml-56 top-1/2 transform -translate-y-1/2 text-white focus:outline-none"
+                    >
+                      {showPasswordNew ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
                 </div>
+
               </div>
               {mostrarMensaje && (
                 <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 mb-8 rounded">
@@ -271,12 +345,9 @@ const UserProfile = () => {
                   Cambiar Contraseña
                 </button>
               </div>
-             
             </form>
           </div>
           <Favoritos />
-                
-         
         </div>
       </div>
     </>
