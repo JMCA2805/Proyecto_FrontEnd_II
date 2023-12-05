@@ -18,7 +18,7 @@ Además, si lo deseas, puedes importar los datos JSON que dejamos en Documentos,
 # Instrucciones Detalladas
   Paso 1 
 
-- Descarga el repositorio (https://github.com/JMCA2805/Proyecto_FrontEnd_II)
+- Descarga el repositorio o clonalo (https://github.com/JMCA2805/Proyecto_FrontEnd_II)
 
       git clone https://github.com/JMCA2805/Proyecto_FrontEnd_II.git
 
@@ -30,53 +30,41 @@ Además, si lo deseas, puedes importar los datos JSON que dejamos en Documentos,
 
   Paso 3
 
-- Abrir carpeta con tu editor de código de preferencia (Visual Studio Code)
+- Abre la carpeta con tu editor de código de preferencia
+- Abre 2 consolas del editor, una para el FrontEnd y otra para el BackEnd
 
   Paso 4
-
-  - Abrir 2 consolas del editor, una para el FrontEnd y otra para el BackEnd (Visual Studio Code (Ctrl + J o Ctrl ñ))
-
-  Paso 5 
 - En una de las consolas ubicate en la ruta del FrontEnd
+- Ejecuta el comando npm i (Instala todas las dependencias necesarias)
 
       cd FrontEnd
-  
-  Paso 6
-- Ejecutar el comando npm i (Instala todas las dependencias necesarias)
-
       npm i
   
- Paso 7
+ Paso 5
 - Crea el archivo .env.local para las rutas del FrontEnd ubicalo en la carpeta FrontEnd
-  
-  Paso 8
+
+  Paso 6
 
 - Ejecuta el comando npm run dev (Inicia el servidor de front-end)
 
       npm run dev
 
-  Paso 9
+  Paso 7
 - En una de las consolas ubicate en la ruta del BackEnd
+- Ejecuta el comando npm i (Instala todas las dependencias necesarias)
 
       cd BackEnd
-  
-  Paso 10
-- Ejecutar el comando npm i (Instala todas las dependencias necesarias)
-
       npm i
 
-  Paso 11
-
+  Paso 8
 - Crea el archivo .env para las configuraciones del backend ubicalo en la carpeta BackEnd
   
--  Paso 12
-
+  Paso 9
 - Ejecuta el comando npm run start (Inicia el servidor del back-end)
 
       npm run start
 
-
-  Paso 13
+  Paso 10
 
 - Abre tu Navegador y coloca http://localhost:3000
 
