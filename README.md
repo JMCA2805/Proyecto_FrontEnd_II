@@ -15,6 +15,75 @@ Es una aplicación web creada utilizando ReactJS con Vite como bundler, Tailwind
 
 Además, si lo deseas, puedes importar los datos JSON que dejamos en Documentos, a la Base de Datos del Sistema con MongoDB u Compass
 
+# Instrucciones Detalladas
+  Paso 1 
+
+- Descarga el repositorio (https://github.com/JMCA2805/Proyecto_FrontEnd_II)
+
+      git clone https://github.com/JMCA2805/Proyecto_FrontEnd_II.git
+
+  Paso 2 
+
+- Ubicate en la rama main
+
+      git checkout main
+
+  Paso 3
+
+- Abrir carpeta con tu editor de código de preferencia (Visual Studio Code)
+
+  Paso 4
+
+  - Abrir 2 consolas del editor, una para el FrontEnd y otra para el BackEnd (Visual Studio Code (Ctrl + J o Ctrl ñ))
+
+  Paso 5 
+- En una de las consolas ubicate en la ruta del FrontEnd
+
+      cd FrontEnd
+  
+  Paso 6
+- Ejecutar el comando npm i (Instala todas las dependencias necesarias)
+
+      npm i
+  
+ Paso 7
+- Crea el archivo .env.local para las rutas del FrontEnd ubicalo en la carpeta FrontEnd
+  
+  Paso 8
+
+- Ejecuta el comando npm run dev (Inicia el servidor de front-end)
+
+      npm run dev
+
+  Paso 9
+- En una de las consolas ubicate en la ruta del BackEnd
+
+      cd BackEnd
+  
+  Paso 10
+- Ejecutar el comando npm i (Instala todas las dependencias necesarias)
+
+      npm i
+
+  Paso 11
+
+- Crea el archivo .env para las configuraciones del backend ubicalo en la carpeta BackEnd
+  
+-  Paso 12
+
+- Ejecuta el comando npm run start (Inicia el servidor del back-end)
+
+      npm run start
+
+
+  Paso 13
+
+- Abre tu Navegador y coloca http://localhost:3000
+
+      http://localhost:3000
+  
+  Fin
+
 # **Equipo Desarrollador y Motivo del Desarrollo:** 
 
 - TSU. Camacho José
