@@ -74,6 +74,19 @@ const PaymentForm = () => {
     
       fetchData();
     }, []);
+    
+    useEffect(() => {
+      if (userData) {
+        setClientData(prevData => ({
+          ...prevData,
+          nombre: userData.nombre,
+          apellido: userData.apellido,
+          cedula: userData.cedula,
+          telefono: userData.telefono,
+          correo: userData.correo
+        }));
+      }
+    }, [userData]);
 
 
     useEffect(() => {

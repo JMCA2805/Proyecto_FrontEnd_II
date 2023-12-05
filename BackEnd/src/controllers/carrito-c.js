@@ -32,6 +32,7 @@ class carritoController {
           descripcion: producto[0].descripcion,
           precio: producto[0].precio,
           cantidad: carritoUsuario[i].cantidad,
+          cantidad2: producto[0].cantidad,
           imagen: imagenCompleta
         }
 
@@ -55,6 +56,8 @@ class carritoController {
 
       const datos = req.body;
       const usuario = await Usuario.findOne({ _id: datos.user });
+      let producto
+      let nuevaCantidad
   
       // Buscar el objeto con el serial correspondiente en el array "carrito"
       const itemCarrito = usuario.carrito
@@ -74,11 +77,15 @@ class carritoController {
               precio: itemCarrito[i].precio,
               cantidad: datos.items[j].quantity
             }
+
+            producto = await productos.findOne({ serial: itemCarrito[i].serial });
+            nuevaCantidad = Number(producto.cantidad) - Number(datos.items[j].quantity);
+
+            await productos.updateOne({ serial: itemCarrito[i].serial }, { $set: { cantidad: nuevaCantidad } });
           }
         }
       }
 
-      console.log(carritoUpdate)
       await Usuario.updateOne({ _id: datos.user }, { $set: { carrito: carritoUpdate } });
 
         res.status(201).send('gracias');

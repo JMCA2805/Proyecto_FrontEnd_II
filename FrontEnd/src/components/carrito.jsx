@@ -90,8 +90,16 @@ const Carrito = () => {
               <input
                 type="number"
                 min="1"
+                max={item.cantidad2}
                 value={item.quantity || 1}
-                onChange={event => handleQuantityChange(item.serial, event)}
+                onChange={event => {
+                  const inputValue = parseInt(event.target.value);
+                  if (inputValue > item.cantidad2) {
+                    event.target.value = item.cantidad2;
+                  }
+                  handleQuantityChange(item.serial, event);
+                }}
+
                 className="border border-gray-400 rounded px-2 py-1 w-12 dark:text-black"
               />
             </p>

@@ -248,7 +248,8 @@ const Card = () => {
         });
 
         if (Array.isArray(response.data)) {
-          setItems(response.data);
+          const filteredItems = response.data.filter(item => item.cantidad > 0);
+          setItems(filteredItems);
         } else {
           setItems([]);
         }
@@ -314,6 +315,8 @@ const Card = () => {
                 />
               )}
 
+              
+
               <button
                 type="submit"
                 value={buscarButton}
@@ -338,6 +341,7 @@ const Card = () => {
           <div className="container mx-auto mb-12">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 p-4 sm:p-0">
               {currentProducts.map((item) => (
+                
                 <div
                   key={item.serial}
                   id={item.serial}
