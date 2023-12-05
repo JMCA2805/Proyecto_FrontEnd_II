@@ -464,8 +464,8 @@
   "serial": "5181MAC8200",
   "nombre": "iMAC",
   "descripcion": "ntel Core i5-3330S 2.7Ghz, 8 GB RAM, 1 TB HDD, 21.5\" FHD, GeForce GT640M",
-  "cantidad": 900,
-  "precio": 1,
+  "cantidad": 1,
+  "precio": 900,
   "categoria": "Computadoras",
   "imagen": {
     "data": {
